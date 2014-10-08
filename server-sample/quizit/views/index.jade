@@ -1,0 +1,65 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  br
+  .item.add-task
+    p Test questionbase
+    div.action
+      form(action='/quiz/contribute', method='post')
+        input(type='hidden', value=locals._csrf, name='_csrf')
+        div.name
+          input(type='text', name='name', placeholder='Add a new quiz')
+        div.delete
+          input.btn.btn-primary.btn-sm(type="submit", value='add')  
+  br
+  .item.add-task
+    p Test challengebase POST
+    div.action
+      form(action='/challenges', method='post')
+        input(type='hidden', value=locals._csrf, name='_csrf')
+        div.name
+          input(type='text', name='challengerID', placeholder='Add a new challengerID')
+        div.name
+          input(type='text', name='challengeeID', placeholder='Add a new challengeeID')
+        div.name
+          input(type='text', name='result', placeholder='Add a result')
+        div.delete
+          input.btn.btn-primary.btn-sm(type="submit", value='add')
+  br
+  .item.add-task
+    p Test challengebase GET
+    div.action
+      form(action='/challenges/youknowbest', method='get')
+        div.name
+          input(type='text', name='challengerID', placeholder='Enter challengerID')
+        div.delete
+          input.btn.btn-primary.btn-sm(type="submit", value='search')
+    div.action
+      form(action='/challenges/knowyoubest', method='get')
+        div.name
+          input(type='text', name='challengeeID', placeholder='Enter challengeeID')
+        div.delete
+          input.btn.btn-primary.btn-sm(type="submit", value='search')
+  br
+  .item.add-task
+    p Test bonus query POST
+    div.bonusbase
+      form(action='/bonusquery/challenger',method='post')
+        input(type='hidden', value=locals._csrf, name='_csrf')
+        div.challengerid
+          input(type='text', name='challenger_id', placeholder='challenger_id')
+          input(type='text', name='challengee_id', placeholder='challenger_id')
+        div.submit
+          input.btn.btn-primary.btn-sm(type="submit", value='Get Bonus')
+  br.
+  .item.add-task
+    p Test login POST
+    div
+      form(action='/userlogin',method='post')
+        div
+          input(type='text', name='facebook_account', placebolder='facebook_account')
+          input(type='password', name='password', placebolder='password')
+        div
+          input(type="submit",value="Log In")
