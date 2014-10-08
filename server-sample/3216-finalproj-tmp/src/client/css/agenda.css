@@ -1,0 +1,30 @@
+/*.table 		{ display: table }
+.tr      	{ display: table-row }
+.thead   	{ display: table-header-group }
+.tbody    	{ display: table-row-group }
+.tfoot    	{ display: table-footer-group }
+.col      	{ display: table-column }
+.colgroup   { display: table-column-group }
+.td  		{ display: table-cell }
+.th    		{ display: table-cell }
+.caption  	{ display: table-caption }*/
+
+/* CSS for Agenda */
+
+.a-border-table {
+  display: table;
+
+}
+.a-table {
+  display: table;
+}
+.a-row {
+  display: table-row;
+}
+.a-column {
+  display: table-cell;
+}
+.a-border-column {
+  display: table-cell;
+  border-top: 1px solid #eee;
+}

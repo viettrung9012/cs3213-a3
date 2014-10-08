@@ -1,0 +1,40 @@
+/* Empty. Add your own CSS if you like */
+
+
+.message{
+	width: 80%;
+	top: 18%;
+	bottom: 8%;
+	margin: auto;
+	-webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow:    0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+	box-shadow:         0px 0px 10px 0px black;
+	border: 10px solid white;
+	background-color: #F6F6F6;
+	max-width: 500px;
+}
+
+.message-item{
+	padding: 3%;
+	padding-bottom: 3%;
+	width: 100%;
+	margin: auto;
+	border-bottom: 2px solid white;
+}
+.message-item h1{
+	width: 100%;
+	text-align: left;
+}
+.right{
+	float: right;
+}
+.verify{
+	width: 50%;
+	max-width: 200px;
+	margin: auto;
+	margin-bottom: -3%;
+}
+.verify-hide{
+	margin-left: 35%;
+
+}

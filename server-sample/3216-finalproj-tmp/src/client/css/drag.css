@@ -1,0 +1,47 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/*
+drag element
+*/
+.drag {
+    cursor: move;
+}
+
+.drag:hover {
+    background-color: #ededed;
+}
+
+.drag.hover {
+    background-color: red;
+	padding: 25px;
+	border: 1px dashed #000;
+}
+
+/*
+element being dragged
+*/
+.drag.dragging {
+    opacity: 0.6;
+}
+
+/*
+class added to all .drop elements while dragging
+*/
+.drop.dropable {
+    background: #ededed;
+	opacity: 0.6;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+/*
+ * class added to all .drop elements when a .drag is hovering
+ */
+.drop.dropable.hover {
+    background-color: #9de3a5;
+}

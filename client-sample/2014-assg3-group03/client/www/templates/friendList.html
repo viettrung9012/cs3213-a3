@@ -1,0 +1,37 @@
+<ion-view ng-style="bodyBackground" scroll="true">
+  <div class="header">
+      <h1>Your Friends</h1>
+  </div>
+  <div class="main">
+		<ion-content scroll="true" style="top: 15%">
+	 	<label class="item-input search-bar">
+	    <i class="ion ion-search placeholder-icon"></i>
+	    <input type="text" ng-model="friendSearch.name" placeholder="Search">
+	 	</label>
+
+		<div class="friend-list-container">
+			<div class="row responsive-sm">
+				<div class="col">
+						<div class="row" ng-repeat="friend in friends | filter:friendSearch" ng-if="$index%2==0">
+							<a class="friend-photo button button-clear" ng-click="selectFriend(friend.id)" href="#/app/challenge">
+								<img src="{{friend.image}}" />
+								<h1>{{friend.name}}</h1>
+							</a>
+						</div>
+				</div>
+				<div class="col">
+						<div class="row friend-item" ng-repeat="friend in friends | filter:friendSearch" ng-if="$index%2==1">
+							<a class="friend-photo button button-clear" ng-click="selectFriend(friend.id)" href="#/app/challenge">
+								<img src="{{friend.image}}" />
+								<h1>{{friend.name}}</h1>
+							</a>
+						</div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+	</div>
+	<div class="footer">
+      <h1>2014 All Rights Reserved</h1>
+    </div>
+</ion-view>

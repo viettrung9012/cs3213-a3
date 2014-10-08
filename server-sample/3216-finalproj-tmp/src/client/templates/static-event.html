@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <link rel="stylesheet" href="lib/semantic/build/packaged/css/semantic.css">
+  <link rel="stylesheet" href="lib/normalize-css/normalize.css">
+  <script src="lib/jquery/dist/jquery.js"></script>
+  <script src="lib/semantic/build/packaged/javascript/semantic.js"></script>
+
+</head>
+<body ng-app="destStaticEvent">
+    <!--<script type="text/javascript" src="../lib/angular/angular.js"> </script> 
+    <script type="text/javascript" src="../js/event-view.js"> </script>-->
+    <script type="text/javascript" src="../lib/angular/angular.js"> </script> 
+    <script type="text/javascript" src="../js/event-view.js"> </script>
+
+    <div ng-controller="EventViewController as ctrl" ng-init="init('event')">
+    	<h2>{{determineTitle()}}</h2>
+		
+    	<div class="ui form segment">
+		
+		<div class="field">
+			<label>Event Name</label> 
+			<div class="ui left labeled icon input">
+				<h2>{{ctrl.event.name}}</h2>
+				<i class="empty calendar icon"></i>
+			</div>
+		</div>
+
+    	<div style="display:inline-block;">
+    		<h3>{{showDate()}}</h3>
+    	</div>
+
+    	<div class="field">
+			<label>Description</label> 
+			<p>{{ctrl.event.description}}</p>
+		</div>
+		
+    	<div class="inline field">
+			<label>Event Color</label> 
+			<div class="color-box" style="display:inline-block; background-color: #000FFF"></div>
+		</div>
+    	
+		<p>
+    		Reminders<br>
+    		Privacy
+    	</p>
+		</div>
+    </div>
+
+</body>
+</html><!DOCTYPE html>
+<html>
+<head>
+
+</head>
+
+    
+
+</body>
+</html>

@@ -1,0 +1,204 @@
+#calendar{
+	position: relative;
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+}
+.calendarControls {
+	text-align: right;
+}
+.calendar-day{
+	position: absolute;
+	height: 100%;
+	border-left: 1px solid #ddd;
+	vertical-align: top;
+}
+.CalendarEvent{
+	position: absolute;
+}
+.cal-flex-element{
+
+	color: #fff;
+	box-sizing: border-box;
+	background-color: rgb(108, 199, 119);
+	border: 1px solid #236a2c;
+	width: 96%;
+	height: 100%;
+	padding: 5px;
+	margin: 0 10px;
+	border-radius: 5px;
+	white-space:nowrap;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	
+	//ideally i want margin-box (http://stackoverflow.com/questions/10808413/css3-box-sizing-margin-box-why-not), but this will have to do for now.
+		//angular should be able to support it... with custom directives.
+}
+
+.cal-flex-element:hover {
+	background-color: #9de3a5;
+}
+.display-time{
+	font-family: Arial, sans-serif;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: bold;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}
+
+.display-event{
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	overflow:hidden;
+	text-overflow:ellipsis;
+
+}
+.TimeContainer{
+	position: relative;
+	height: 0px;
+	width: 100%;
+}
+.TimeContainer tbody{
+	position: relative;
+	width: 100%;
+}
+
+.TimeHalfHourItem{
+	box-sizing: border-box;
+	position: absolute;
+	width: 100%;
+}
+
+.TimeHalfHourItem.lined{
+	border-top: 1px dotted #ddd;
+	border-bottom: 1px solid #ddd;
+}
+.timeBlockDivisors{
+	height: 0px;
+	position: absolute;
+}
+.timeDayBlock{
+	border-left: 1px solid #ddd;
+	vertical-align: top;
+}
+.TimeHourContainer{
+	position: relative;
+}
+.TimeHourItem{
+	
+	position: relative;
+	
+}
+.TimeValue{
+	position: absolute;
+	font-size: 8px;
+	padding: 2px;
+	top: 0px;
+}
+
+.CalendarDaysContainer{
+	position: relative;
+}
+.CalendarDayContainer{
+	position: absolute;
+	top: 0px;
+}
+
+.dateheader{
+	position: relative;
+	top: 0px;
+	width: 100%;
+	text-align: center;
+	min-height: 45px;
+	height: auto;
+}
+
+.TimeHeader{
+	border-bottom: 1px solid #ddd;
+}
+
+.calendar-event-popup{
+	background-color: white;
+	width: 240px;
+	min-height: 100px;
+	border: 1px solid;
+	padding: 4px;
+}
+
+/* monthly view */
+
+.month-item {
+	display: block; 
+	position: relative; 
+	cursor: pointer; 
+	overflow: hidden; 
+	text-overflow: ellipsis; 
+	border: 1px solid #236a2c;
+}
+
+/* soft deadlines */
+
+.month-soft {
+	display: block;
+	position: relative;
+	cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        border: 1px solid #236a2c;
+	opacity: 0.5;
+}	
+
+.cal-element-soft{
+        color: #fff;
+        box-sizing: border-box;
+	background-color: rgb(108, 199, 119);
+	border: 1px solid #236a2c;
+        width: 96%;
+        height: 100%;
+        padding: 5px;
+        margin: 0 10px;
+        border-radius: 5px;
+        white-space:nowrap;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+	opacity: 0.5;
+}
+
+.sidebar-soft {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	height: 25px;
+	font-size: 15px;
+	color: #fff;
+	background-color: rgb(108, 199, 119);
+	border: 1px solid #236a2c;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	margin: 5px;
+	padding: 0 15px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	opacity:0.5;
+}
+
+.sidebar-soft:hover {
+	background-color: #ff99cc;
+	color: #9de3a5;
+}
+
+.agenda-soft {
+	background-color: 686868;
+	opacity: 0.5;
+}
+
+.agenda-soft:hover {
+	background-color: 808080;
+}

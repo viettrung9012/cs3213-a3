@@ -1,0 +1,32 @@
+[
+	{
+		"id": "A",
+		"createdBy": 12345,
+		"name": "Issue 1",
+		"color": "#FF00FF",
+		"duration": 10,
+		"location": "hall",
+		"dueDay": 2,
+		"dueDate": 12,
+		"dueMonth": 11,
+		"dueYear": 2014,
+		"dueTimeStart": 1300,
+		"dueTimeEnd": 1400,
+		"description": "Blah blah blah description"
+	},
+	{
+		"id": "B",
+		"createdBy": 54321,
+		"name": "Issue 2",
+		"color": "#FF0000",
+		"duration": 10,
+		"location": "classroom",
+		"dueDay": 5,
+		"dueDate": 15,
+		"dueMonth": 11,
+		"dueYear": 2014,
+		"dueTimeStart": 100,
+		"dueTimeEnd": 300,
+		"description": "Blah blah blah description description"
+	}
+]

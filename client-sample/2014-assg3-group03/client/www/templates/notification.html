@@ -1,0 +1,25 @@
+<ion-view ng-style = "bodyBackground" scroll="true">
+  <div class="header">
+      <h1>Notification</h1>
+  </div>
+	<ion-content  class = "message" scroll="true">
+		<ul>
+			<li class="message-item" ng-repeat="content in data">
+				<h1 ng-show={{content.type=='question'}}>Someone just asked: </br>
+					"{{content.question}}"</br></h1>
+				<h1 ng-show={{content.type=='answer'}}>Your friend {{content.name}} just answered your question <button ng-show="{{content.type=='answer'}}" class="button button-icon icon ion-eye-disabled calm right" ng-click="userResponse(	'{{content.question}}', 'I')"></button></br>
+				"{{content.question}}" </br>
+				with "{{content.answer=='Y'&&'Yes'||'No'}}"</br></h1>
+				<!-- <button class="button button-icon icon ion-close-circled icon-right stable right" ng-click="userResponse('{{content.question}}', 'I')"></button> -->
+
+				<div class="verify">
+					<button ng-show="{{content.type=='question'}}" class="button button-icon icon ion-sad positive" ng-click="userResponse(	'{{content.question}}', 'N')"></button>
+					<button ng-show="{{content.type=='question'}}" class="button button-icon icon ion-happy balanced right" ng-click="userResponse(	'{{content.question}}', 'Y')"></button>
+				</div>
+			</li>
+		</ul>
+	</ion-content>
+  <div class="footer">
+    <h1>2014 All Rights Reserved</h1>
+  </div>
+</ion-view>

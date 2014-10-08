@@ -1,0 +1,30 @@
+<ion-view ng-style="bodyBackground" scroll="true">
+  <div class="header">
+      <h1>Top Quizers</h1>
+  </div>
+
+	<div class="main">
+		<ion-content scroll="true" style="top: 18%; bottom:5%;">
+		<div class="leaderboard-list-container">
+			<h1>Top Quizzers</h1>
+		
+		<div class="row responsive-sm" ng-repeat="item in leaderboardData">
+			<div class="leaderboard-list">
+				<div class="row">
+					<img src="{{item.profile_image}}" />
+				</div>
+				<div class="name">
+					{{item.name}}
+				</div>
+				
+				<div class="score">
+					<p>{{item.score}}</p>
+				</div>
+			</div>	
+		</div>
+		</div>
+		</div>
+		</ion-content>
+	</div>
+
+</ion-view>

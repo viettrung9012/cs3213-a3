@@ -1,0 +1,17 @@
+<ion-side-menus>
+
+  <ion-pane ion-side-menu-content>
+    <ion-nav-view name="content" animation="fade-in"></ion-nav-view>
+  </ion-pane>
+
+  <ion-side-menu side="left" width="100">
+    <ion-content overflow-scroll="true">
+        <ion-list class="menu">
+            <ion-item ng-repeat="data in sidebarData" ng-click="selectSideItem($index)" ng-class="{active: activeIndex == undefined? $index == 0 : activeIndex == $index}" href="{{data.linkAddress}}">
+                    <img src="{{data.imgSrc}}" />
+                    <div class="menuwhole"><div class="menulist">{{data.title}}</div></div>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

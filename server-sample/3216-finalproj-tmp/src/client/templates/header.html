@@ -1,0 +1,34 @@
+<div id="topMenu" class="ui green middle aligned inverted menu" drop="dropEvent" dnd-data="{'actual':issue }">
+  <a class="vertically fitted item" href="/" class="logo">
+	<img src="images/logo.png" class="smallLogo" />
+  </a>
+  <div class="item">
+    Planendar
+  </div>
+
+  <div class="right menu">
+  <!-- Pre-Login button -->
+	  <div id="login">
+	  <div class="item">
+		<div class="ui facebook button"> <i class="facebook icon"></i> Connect to Facebook </div>
+	  </div>
+	  </div>
+  <!-- Post-Login appearance -->
+      <div id="loggedin">
+      <div class="ui dropdown vertically fitted item">
+	    <i id="profile"></i> <a id="status" class="item"></a>
+		<i class="icon dropdown"></i>
+        <div class="menu">
+          <!--<a class="item togglemenu" id="headerToggle"><i class="calendar icon"></i> My Calendars</a>-->
+          <a class="item" href="settings.html"><i class="settings icon"></i> Settings</a>
+		  <a class="item" onclick="logOut()"> Log Out</a>
+        </div>
+      </div>
+	  </div>
+	  
+  </div>
+  
+  <div class="discard">
+	<div class="item"><i class="large circular inverted red trash icon"></i></div>
+  </div>
+</div>

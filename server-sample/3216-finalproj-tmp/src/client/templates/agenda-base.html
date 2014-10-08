@@ -1,0 +1,48 @@
+<div ng-app="destAgenda">
+	<div ng-controller="AgendaController as agenda">
+			<div class="a-table"cellpadding='3' drop="dropEvent" dnd-data="{ 'actual':dummyData }">
+				<div class="a-row">
+					<div class="a-column">
+						Today's date: <b>{{dayLabels[dateDay]}}</b>
+					</div>
+					<div class="a-column">
+						<b>, {{dateDate}} {{monthLabels[dateMonth]}} {{dateYear}} </b>
+						<i class="tiny help icon link popover" data-content="Agenda shows you events on your calendar in a chronological order."></i>
+					</div>
+				</div>
+			</div><br>
+			<div class="a-table" style="width:100%" cellpadding="10">
+				<div drop="dropEvent" dnd-data="{ 'actual':event }" class="a-row" ng-repeat="event in agenda.issues"
+					drag dnd-data="issue" ng-click="openEvent(event)" ng-class="{ 'agenda-soft':event.softdeadline }">
+					<div class="a-border-column">
+						<div class="a-table">
+						<div class="a-row">	
+							<div class="a-column">
+								<h2>{{AgetDayNum(event.start)}}</h2>
+							</div>
+							<div class="a-column">
+								<p style="margin-left:5px; margin-top:0px">{{monthLabels[AgetMonth(event.start)]}} {{AgetYear(event.start)}}, {{dayLabels[AgetDay(event.start)]}}</p>
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="a-border-column">
+						{{ATimeString(event)}}
+					</div>
+					<div class="a-border-column" ns-popover
+													ns-popover-template="/templates/calendar-popup.html"
+													ns-popover-trigger="mouseenter"
+													ns-popover-placement="left"
+													ns-popover-hide-on-click="false"
+													ns-popover-mouse-relative="y"
+													ns-popover-timeout="0"
+													ns-popover-ignore-hover="true">
+						<p>
+							<div class="color-box"></div>
+							{{event.name}}
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" ng-app="destCalendar">
+<head>
+  <meta charset="utf-8">
+  <title>Calendar test</title>
+  <link rel="stylesheet" href="lib/semantic/build/packaged/css/semantic.css">
+  <link rel="stylesheet" href="css/app.css">
+  <script src="lib/jquery/dist/jquery.js"></script>
+  <script src="lib/semantic/build/packaged/javascript/semantic.js"></script>
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular-route/angular-route.js"></script>
+  <script src="lib/underscore/underscore.js"></script>
+  <script src="js/debugutils.js"></script>
+  <script src="js/app.js"></script>
+  <style>
+	#calendar{
+		position: relative;
+	}
+	#calendar-day{
+		position: absolute;
+	}
+	#calendar-day-background{
+		position: absolute;
+	}
+	.CalendarEvent{
+		display: flex;
+		justify-content: space-around;
+		position: absolute;
+	}
+	.cal-flex-element{
+		border: 1px solid;
+		border-color: #373AD7;
+		background-color: #9A9CFF;
+		color: #1d1d1d;
+		box-sizing: border-box;
+		
+		//ideally i want margin-box (http://stackoverflow.com/questions/10808413/css3-box-sizing-margin-box-why-not), but this will have to do for now.
+			//angular should be able to support it... with custom directives.
+		position: relative;
+		width: 96%;
+		height: 100%;
+		margin: auto;
+		padding: 2px;
+	}
+	
+	.display-time{
+		font-family: Arial, sans-serif;
+		font-size: 10px;
+		font-style: normal;
+		font-weight: bold;
+	}
+	
+	.display-event{
+		font-family: Arial, sans-serif;
+		font-size: 12px;
+		font-style: normal;
+	
+	}
+  </style>
+</head>
+<body>
+
+  <div id = "calendar" ng-controller="CalendarController as cal">
+	
+	<div id = "calendar-day">
+		<div id = "calendar-day-background">
+		</div>
+		<div class="CalendarEvent" ng-repeat="event in events" ng-style="position(event)">
+			<div class="cal-flex-element">
+				<div class="display-time">{{event.start+ " - "+event.end}}</div>
+				<div class="display-event">{{event.id}}</div>
+				
+			</div>
+		</div>
+	</div>
+  
+  </div>
+
+</body>
+</html>

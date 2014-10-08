@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html ng-app="destAgenda">
+<head>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+  	<link rel="stylesheet" href="css/drag.css">
+</head>
+<body>
+    <script type="text/javascript" src="lib/angular/angular.js"> </script> 
+    <script type="text/javascript" src="lib/ngDialog/js/ngDialog.js"> </script> 
+    <script type="text/javascript" src="js/angular-dragndrop/angular-dnd.js"> </script>
+    <script type="text/javascript" src="js/agenda.js"> </script>
+  	<script src="js/nsPopover/src/nsPopover.js"></script>
+    
+	<agenda></agenda>
+     
+</body>
+</html>

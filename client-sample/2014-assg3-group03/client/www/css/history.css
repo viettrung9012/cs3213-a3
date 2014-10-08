@@ -1,0 +1,51 @@
+/*For the login, intro and other windows*/
+
+
+.history-list-container{
+	margin-top: 90%;
+	margin: auto;
+	width: 80%;
+	max-width: 400px; 
+	background-color: #F6F6F6;
+	opacity: 1;
+	-webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow:    0px 0px 10px 0px rgba(50, 50, 50, 0.75);
+	box-shadow:         0px 0px 10px 0px black;
+	border: 10px solid white;
+	position: relative;
+}
+.history-list-container h1{
+	position: absolute;
+	top: -10px;
+	left: -20px;
+	padding: 10px;
+	max-width: 400px;
+	font-size: 2em;
+	text-shadow: 2px 2px 0px yellow;
+	text-align: center;
+	background-color: #EEE;
+	box-shadow: 0px 0px 10px 0px black;
+}
+.history-list{
+	width: 60%;
+	height: 100;
+	text-align: center;
+	margin:auto;
+	margin-top: 5%;
+	margin-bottom: 0%;
+	border-bottom: 5px dotted #DDD;
+	font-size: 1.5em;
+	padding: 1%;
+}
+.history-list img{
+	width: auto;
+	margin: auto;
+	border-radius: 50%;
+	border: 2px solid yellow;
+}
+.history-list .score{
+	font-size: 2em;
+	color: #00BFAA;
+	margin-top: 5%;
+	margin-bottom: 5%;
+}

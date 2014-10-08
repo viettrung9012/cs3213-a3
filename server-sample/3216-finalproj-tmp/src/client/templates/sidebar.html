@@ -1,0 +1,22 @@
+<div ng-controller="SidebarController" class="inline">
+<div class="ui dropdown item">
+  <div class="ui small red button" id="mainCreate" ng-click="createEvent(false)">
+    <i class="icon add sign box"></i> CREATE
+  </div>
+  	<div class="menu">
+		<a class="item" id="taskCreate" ng-click="createEvent(true)">Task</a>
+		<a class="item" id="eventCreate" ng-click="createEvent(false)">Event</a>
+	</div>
+</div>
+
+<div class="ui teal segment">
+	<p><b>Tasks</b>
+            <i class="tiny help icon link popover" data-html="Tasks are for events that you want or have to do, but do not have a definite deadline. <p class='smallfont'>(e.g. finding a time to meet up with friends)</p>"></i>
+	</p>
+	<div ng-repeat="category in [] | range: 1:7" drop="dropEvent" dnd-data="{'cat':category-1}">
+			<p>{{categoryNames[category-1]}}</p>
+		<div class="soft" ng-repeat="event in categories[category]" drag dnd-data="{'actual':event}" ng-click="openEvent(event)" ng-class="{ 'sidebar-soft':event.softdeadline }">{{event.name}}</div>
+	</div>
+</div>
+
+</div>

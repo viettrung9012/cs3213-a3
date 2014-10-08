@@ -1,0 +1,54 @@
+<div id = "calendar" resize>
+	<div class = "calendarControls">
+		<div class="ui small teal icon button transitleft" ng-click="calendarShift(-1)">
+		  <i class="left arrow icon"></i>
+		</div>
+		<div class="ui small teal icon button transitright" ng-click="calendarShift(1)">
+		  <i class="right arrow icon"></i>
+		</div>
+	</div>
+	
+	<div class="CalendarDaysContainer">
+	<table class = "TimeContainer">
+			<tbody>
+				<tr>
+					<td class="TimeHeader" ng-style="timeheaderheight()">
+					</td>
+				</tr>
+				<tr class="TimeHourContainer" ng-repeat="hour in [] | range: 0:totalhours" >
+					<td class="TimeHourItem lined" ng-style="timeHourHeight()">
+						<span class="TimeValue">{{hour+":00"}}</span>
+						<div class="TimeHalfHourItem lined" ng-style="timeHalfHourHeight()"></div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	
+	<div class="CalendarDayContainer">
+		<div class = "calendar-day" ng-repeat="day in [] | range: days" ng-controller="CalendarDayController" ng-style="dayposition()" >
+		<table class = "TimeContainer">
+			<tbody>
+				<tr>
+					<td class="TimeHeader" ng-style="timeheaderheight()">
+						<div class="dateheader" observe-height="meow" >
+								{{dayevents[day].date|date}}
+
+								<!--{{header.dayheights[$index]+"px"}}-->
+						</div>
+					</td>
+				</tr>
+				<tr class="TimeHourContainer" ng-repeat="hour in [] | range: 0:totalhours" >
+					<td drop="dropTime" ng-style="timeHourHeight()" dnd-data="{ 'hour': hour, 'day': day, 'date':dayevents[day].date }">
+						<div class="TimeHalfHourItem" drop="dropTime" dnd-data="{ 'hour': hour+0.5, 'day': day, 'date':dayevents[day].date }" ng-style="timeHalfHourHeight()"></div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+			<div class="CalendarEventContainer">
+				<calendar-event ng-repeat="event in dayevents[day].events"> </calendar-event>
+			</div>
+		</div>
+	</div>
+	</div>
+	
+  </div>

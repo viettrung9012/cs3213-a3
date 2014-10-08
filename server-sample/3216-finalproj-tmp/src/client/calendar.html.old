@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" ng-app="destCalendar">
+<head>
+  <meta charset="utf-8">
+  <title>Calendar test</title>
+  <link rel="stylesheet" href="lib/semantic/build/packaged/css/semantic.css">
+  <link rel="stylesheet" href="lib/normalize-css/normalize.css">
+  <link rel="stylesheet" href="css/calendar.css">
+  <link rel="stylesheet" href="css/drag.css">
+  <link rel="stylesheet" href="lib/ngDialog/css/ngDialog.css">
+  <link rel="stylesheet" href="lib/ngDialog/css/ngDialog-theme-default.css">
+  <script src="lib/jquery/dist/jquery.js"></script>
+  <script src="lib/semantic/build/packaged/javascript/semantic.js"></script>
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular-route/angular-route.js"></script>
+  <script src="lib/ngDialog/js/ngDialog.js"></script>
+  <script src="js/angular-dragndrop/angular-dnd.js"></script>
+  <script src="js/nsPopover/src/nsPopover.js"></script>
+  <script src="lib/underscore/underscore.js"></script>
+  <script src="js/debugutils.js"></script>
+  <script src="js/IssueControllerService.js"></script>
+  <script src="js/calendar.js"></script>
+</head>
+
+<body>
+  <calendar></calendar>
+  <calendar ng-init="options({days: 2, colWidthBase :240});"></calendar>
+</body>
+</html>

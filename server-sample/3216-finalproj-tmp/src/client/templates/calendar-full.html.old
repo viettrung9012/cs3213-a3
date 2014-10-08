@@ -1,0 +1,6 @@
+<div class="calendar-full">
+<h1>{{eventName(event)}}</h1>
+  <p>{{eventDesc(event)}}</p>
+  <p>Start date: {{eventStart(event)}}</p>
+  <p>End date: {{eventEnd(event)}}</p>
+</div>

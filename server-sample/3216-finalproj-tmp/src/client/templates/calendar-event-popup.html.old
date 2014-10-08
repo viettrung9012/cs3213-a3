@@ -1,0 +1,6 @@
+<div class="calendar-event-popup">
+
+<h1>{{event.id}}</h1>
+  <p>Some content</p>
+  
+</div>

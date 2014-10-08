@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html ng-app="destAgenda">
+<head>
+	<!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">-->
+</head>
+<body>
+	<!--<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>-->
+	<h2>{{passedItem.name}}</h2>
+	<div class="ui form segment">
+		<h2>Insert at date: <input type="datetime-local" ng-model="enterDate"></h2>
+		<h3>Estimated hours to complete: <input type="number" ng-model="enterHours"></h3>
+		<div class="ui blue button"
+			<button ng-click="insertItemAtDate(passedItem, enterDate, enterHours)">Insert</button>
+		</div>
+	</div>
+</body>
+</html>

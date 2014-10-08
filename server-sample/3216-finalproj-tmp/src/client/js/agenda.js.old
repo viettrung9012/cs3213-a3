@@ -1,0 +1,111 @@
+
+(function (){
+	var app = angular.module('destAgenda', ['nsPopover', 'dragAndDrop', 'ngDialog', 'IssueControllerService']);//, 'ui.bootstrap']);
+
+	app.directive('agenda', ['$compile', function($compile) {
+		return {
+      		templateUrl: "/templates/agenda-base.html",
+	  		controller: "AgendaController",
+	  		scope: true,
+	  		restrict: 'E'
+    	};
+	}]);
+
+	//angular.module('agenda', [])
+    app.controller("AgendaController", ["$scope", "$http", "ngDialog", "IssueController", function ($scope, $http, ngDialog, IssueController) {
+        var date = new Date();
+        var that = this;
+        $scope.dummyData = {
+        	"id": "SE99",
+			"name": "Single Event 99",	
+			"description": "This is an event that starts and ends on the same day.",
+			"start": new Date("Wed Sep 01 2014 8:00:00 GMT+0800 (Malay Peninsula Standard Time)"),	
+			"end": new Date("Wed Sep 01 2014 10:00:00 GMT+0800 (Malay Peninsula Standard Time)")
+        }
+        $scope.dateDay = date.getDay();
+        $scope.dateDate = date.getDate();
+        $scope.dateMonth = date.getMonth();
+        $scope.dateYear = date.getFullYear();
+        $scope.dayRangeStart = todayRelative(0);
+
+		$scope.dayLabels = cal_days_labels;
+        $scope.monthLabels = cal_months_labels;
+
+		reWatch();
+
+		function reWatch()
+		{
+			function watchCallback(events)
+			{
+				that.issues = events;
+			}
+			return IssueController.watch($scope.dayRangeStart._d, dateRelative($scope.dayRangeStart, 60)._d, undefined, watchCallback);
+		}
+
+		$scope.addEvent = function(data, dueDate){
+			var tDate = new Date(data.start);
+			tDate.setDate(dueDate);
+			data.start = tDate;
+			IssueController.addIssues([data]);
+			ngDialog.close($scope.window);
+		}
+
+		$scope.insertDate = function (item, tgtdata) {
+			$scope.window = ngDialog.open({
+				template: '/templates/agenda-insert.html',
+				className: 'ngdialog-theme-default',
+				plain: false,
+				closeByDocument: true,
+				scope: $scope,
+				controller: ['$scope', function($scope) {
+        			$scope.passedItem = item.issue;
+        			$scope.onTopOf = tgtdata.issue;
+        			$scope.enterDate = $scope.onTopOf.dueDate;
+    			}]
+			})
+		};
+		$scope.dropEvent = function(item, tgtelement, tgtdata)
+		{
+			if (item.issue.id != tgtdata.issue.id)
+			{
+				$scope.insertDate(item, tgtdata);
+			}
+		}
+
+		
+		$scope.AgetID = function(issue)
+		{
+			return issue.id;
+		}
+		$scope.AgetDayNum = function(fDate)
+		{
+			return new Date(fDate).getDate();
+		}
+		$scope.AgetMonth = function(fDate)
+		{
+			return new Date(fDate).getMonth();
+		}
+		$scope.AgetYear = function(fDate)
+		{
+			return new Date(fDate).getFullYear();
+		}
+		$scope.AgetTime = function(fDate)
+		{
+			var tDate = new Date(fDate);
+			return tDate.getHours() + ":" + tDate.getMinutes();
+		}
+    }]);
+
+
+
+	// these are labels for the days of the week
+	cal_days_labels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+	// these are human-readable month name labels, in order
+	cal_months_labels = ['January', 'February', 'March', 'April',
+                     'May', 'June', 'July', 'August', 'September',
+                     'October', 'November', 'December'];
+  	// these are the days of the week for each month, in order
+	cal_days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+})();

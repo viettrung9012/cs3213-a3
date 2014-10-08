@@ -1,0 +1,19 @@
+Fixed nested drop zones.
+Reworked API:
+Drop-zone data:
+	dnd-tgt="" ????
+	dnd-item="" ???
+Prefixed namespace:
+	drag -> dnd-drag
+	drop -> dnd-drop
+Documented API:
+drop(item, tgtelem, tgtdata)
+start
+end
+enter
+leave
+
+Bugs fixed:
+-dnd-data now re-evaluates for the drop zone everytime something is dropped.
+TODO:
+-dnd-data needs to re-evaluate item being picked up.

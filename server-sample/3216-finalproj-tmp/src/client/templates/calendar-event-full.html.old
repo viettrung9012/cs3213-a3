@@ -1,0 +1,5 @@
+<div class="calendar-event-full">
+<h1>{{event.id}}</h1>
+  <p>Some content</p>
+  
+</div>

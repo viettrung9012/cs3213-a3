@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+  <meta charset="UTF-8">
+  <meta property="fb:app_id"          content="757128931017445" /> 
+  <meta property="og:type"            content="planendar:calendar" /> 
+  <meta property="og:url"             content="http://54.179.177.82/" /> 
+  <meta property="og:title"           content="Planendar" /> 
+  <meta property="og:image"           content="http://54.179.177.82/images/logo.png" /> 
+  <meta property="og:description"     content="The only organizer app you ever need!" />
+  <link rel="icon" href="images/icon.ico" type="image/x-icon"/>
+
+  <title>Planendar</title>
+  <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/app.css">
+  
+ <!--- copy from Eldric html head -->
+  <link rel="stylesheet" href="lib/semantic/build/packaged/css/semantic.css">
+  <link rel="stylesheet" href="lib/normalize-css/normalize.css">
+  <link rel="stylesheet" href="lib/ngDialog/css/ngDialog.css">
+  <link rel="stylesheet" href="css/agenda.css">
+  <link rel="stylesheet" href="css/ngDialog-theme-dest.css">
+  <link rel="stylesheet" href="css/calendar.css">
+  <link rel="stylesheet" href="css/drag.css">
+  <script src="lib/underscore/underscore.js"></script>
+  <script src="js/debugutils.js"></script>
+  <script src="js/super-json.js"></script>
+  <script src="lib/jquery/dist/jquery.js"></script>
+  <script src="lib/semantic/build/packaged/javascript/semantic.js"></script>
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/moment/moment.js"></script>
+  <script src="lib/cookies-js/src/cookies.js"></script>
+  <script src="js/interval-tree/interval-tree-browser.js"></script>
+  
+  <!-- Angular components -->
+  <script src="lib/angular-route/angular-route.js"></script>
+  <script src="lib/ngDialog/js/ngDialog.js"></script>
+  <script src="js/nsPopover/src/nsPopover.js"></script>
+  <script src="js/angular-dragndrop/angular-dnd.js"></script>
+  <script src="js/jquery-address/src/jquery.address.js"></script>
+  <script src="js/IssueControllerService.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/ngToggle.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/agenda.js"></script>
+  <script src="js/calendar.js"></script>
+  <script src="js/calendar-monthly.js"></script>
+  <script src="js/sidebar.js"></script>
+
+</head>
+
+<body ng-app="planendar">
+<div id="fb-root"></div>
+
+<!----- Top Menu -----> 
+<header></header>
+<p></p>
+
+<!----- Sidebar ----->
+<filters>
+</filters>
+
+
+
+<!----- Dashboard ----->
+<!---bankai
+<div class="ui grid">
+  <div class="column">
+	<div style="width: 100%; height: 200px; border: 1px solid;">Dashboard goes here</div>
+  </div>
+</div>
+bankai--->
+
+<!----- Planendar ----->
+<div class="ui grid">
+
+<!--- Computer --->
+<div class="two column computer only row minheight">
+  <!--- Computer Side Bar --->
+  <div class="four wide column">
+  	<!--<div class="ui launch small black button togglemenu" id="sidebarToggle">
+      <i class="icon list layout"></i>
+    </div>-->
+	<sidebar></sidebar>
+  </div>
+  <!--- Computer Main window --->
+  <div class="twelve wide column">
+  <div class="ui pointing secondary demo menu">
+    <a class="active red item" data-tab="Agenda">Agenda</a>
+    <a class="blue item" data-tab="Week">Week</a>
+    <a class="green item" data-tab="Month">Month</a>
+  </div>
+	<div class="ui active tab segment" data-tab="Agenda">
+		<agenda></agenda>
+	</div>
+	<div class="ui tab segment" data-tab="Week">
+		<calendar ng-init="options(
+			{days: 4, colWidthBase: 223, pixelsperhour: 40}
+			);" ></calendar>
+		<!-- Okay, I give up on this.
+			Idea is this: 
+			If width is less than or equal to 1200, 
+				days: 3
+			If width is more than 1200,
+				days: 4
+			Then, formula for ColWidthBase is "$(window).width()*0.6 / days"
+		-->
+	</div>
+	<div class="ui tab segment" data-tab="Month">
+		<month-table></month-table>
+	</div>
+  </div>
+</div>
+
+<!--- Mobile --->
+<div class="tablet mobile only row">
+  <!--- Mobile Main window --->
+  <div class="column">
+      <div class="ui red segment">
+	<agenda></agenda>
+      </div>
+  </div>
+</div>
+<div class="tablet mobile only row">
+  <!--- Mobile Side Bar --->
+  <div class="column">
+	<sidebar></sidebar>
+  </div>
+</div>
+
+</div>
+
+
+<!----- Footer ----->
+
+<footer></footer>
+
+<!----- Facebook Friends Popup ----->
+
+<div id="friendsPopup" class="ui small modal">
+    <i class="close icon"></i>
+    <div class="ui teal inverted menu">
+        <div class="item">Friends who like Planendar.</div>
+    </div>
+
+</div>
+
+
+</div>
+
+</body>
+</html>

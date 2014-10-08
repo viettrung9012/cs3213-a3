@@ -1,0 +1,17 @@
+<div class="CalendarEvent" ng-style="eventposition(event)" data-position="right center"
+	ns-popover
+	ns-popover-template="/templates/calendar-popup.html"
+	ns-popover-trigger="mouseenter"
+	ns-popover-placement="left"
+	ns-popover-hide-on-click="false"
+	ns-popover-mouse-relative="y"
+	ns-popover-timeout="0"
+	ns-popover-ignore-hover="true"
+	ng-click = "openEvent(event.actual);"
+	drag dnd-data="event"
+	>
+	<div ng-class="{ 'cal-element-soft':event.softdeadline, 'cal-flex-element':!event.softdeadline }">
+		<div class="display-time">{{(event.start|calTime:dayevents[day].date)+ " - "+(event.end|calTime:dayevents[day].date)}}</div>
+		<div class="display-event">{{event.name}}</div>
+	</div>
+</div>

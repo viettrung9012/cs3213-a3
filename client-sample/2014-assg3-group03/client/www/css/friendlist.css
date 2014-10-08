@@ -1,0 +1,41 @@
+/*For the login, intro and other windows*/
+.friend-list-container{
+	margin-top: 90%;
+	margin: auto;
+	width: 100%;
+	max-width: 800px; 
+	padding: 3%;
+	padding-left: 15%;
+	padding-right: 15%;
+	opacity: 0.90;
+}
+
+.friend-photo{
+	width: 90%;
+	background-color: none;
+}
+.friend-photo img{
+	width: 20%;
+	float: left;
+	border-radius: 50%;
+	border: 1px solid yellow;
+	padding: 1%;
+	margin-top: 10%;
+}
+.friend-photo h1{
+	text-align: right;
+	width: 70%;
+	margin-right: 10%;
+	font-size: 1.5em;
+	color: #00BFAA;
+	float: right;
+}
+.friend-photo h1:active{
+	color: yellow;
+}
+.search-bar{
+	opacity: 0.7;
+	height: 5%;
+	width: 80%;
+	margin: auto;
+}

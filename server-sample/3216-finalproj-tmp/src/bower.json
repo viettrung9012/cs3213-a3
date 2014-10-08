@@ -1,0 +1,22 @@
+{
+  "name": "angular-phonecat",
+  "description": "A starter project for AngularJS",
+  "version": "0.0.0",
+  "homepage": "https://github.com/angular/angular-phonecat",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "1.2.x",
+    "angular-mocks": "~1.2.x",
+    "jquery": "2.1.x",
+    "angular-route": "~1.2.x",
+	"semantic": "^0.19.0",
+	"underscore": "^1.6.0",
+	"normalize-css": "^3.0.1",
+	"nsPopover": "^0.5.8",
+	"ngDialog": "^0.2.11",
+	"angular-dragndrop": "^1.1.5",
+	"moment" : "^2.8.2",
+	"cookies-js": "0.4.0"
+  }
+}

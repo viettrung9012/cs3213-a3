@@ -1,0 +1,22 @@
+<div class="ui form segment">
+	<div class="calendar-popup"><!-- style="border:2px solid black; background-color:white;">-->
+		<h3 class="calendar-popup-name">{{eventName(event)}}</h3>
+		<p class="calendar-popup-date">{{showDate(event)}}</p>
+		<div>
+			<b ng-show="event.location" style="display:inline;">Location: </b>
+			<b ng-show="event.origin.location" style="display:inline;">Location: </b>
+			<div class="calendar-popup-location" style="display:inline;">{{showLocation(event)}}</div>
+		</div>
+		<div>
+		 	<b ng-show="event.description" style="display:inline;">Description: </b>
+		 	<b ng-show="event.origin.description" style="display:inline;">Description: </b>
+		 	<div class="calendar-popup-event" style="display:inline;">{{eventDesc(event)}}</div>
+		</div>
+		<div><i>
+		 	<div ng-show="event.softdeadline" style="display:inline;">I want to finish this by </div>
+		 	<div ng-show="event.origin.softdeadline" style="display:inline;">I want to finish this by </div>
+		 	<div class="calendar-popup-event" style="display:inline;">{{softDeadline(event)}}</div>
+		</i></div>
+	  	<!--<p>Cat: {{event.origin.cat}}</p>-->
+	</div>
+</div>

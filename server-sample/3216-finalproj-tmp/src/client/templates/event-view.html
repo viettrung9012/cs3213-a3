@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script>
+$(function() {
+	$('.ui.selection.dropdown')
+	  .dropdown()
+	;
+        
+        $('.ui.checkbox')
+          .checkbox()
+        ;
+});
+</script>
+
+<style>
+input[type="datetime-local"] {
+	margin: 0em;
+	padding: 0.65em 1em;
+	font-size: 1em;
+	background-color: #FFFFFF;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	outline: none;
+	color: rgba(0, 0, 0, 0.7);
+	border-radius: 0.3125em;
+	-webkit-transition: background-color 0.3s ease-out, -webkit-box-shadow 0.2s ease, border-color 0.2s ease;
+	-moz-transition: background-color 0.3s ease-out, box-shadow 0.2s ease, border-color 0.2s ease;
+	transition: background-color 0.3s ease-out, box-shadow 0.2s ease, border-color 0.2s ease;
+	-webkit-box-shadow: 0em 0em 0em 0em rgba(0, 0, 0, 0.3) inset;
+	box-shadow: 0em 0em 0em 0em rgba(0, 0, 0, 0.3) inset;
+	-webkit-appearance: none;
+	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+input[type="checkbox"] {
+line-height: 1;
+width: 1em;
+height: 1em;
+left: 0;
+content: '';
+border-radius: 4px;
+background: #FFF;
+}
+
+.error {
+    color: red; 
+    text-align: center; 
+    position: absolute; 
+    width: 100%; 
+    top: 0px;    
+    transition: .25s ease-in-out;
+   -moz-transition: .25s ease-in-out;
+   -webkit-transition: .25s ease-in-out;
+}
+</style>
+
+</head>
+<body ng-app="destAgenda">
+    <!--<script type="text/javascript" src="../lib/angular/angular.js"> </script> 
+    <script type="text/javascript" src="../js/event-view.js"> </script>-->
+
+    <div>
+    	<h2>{{determineTitle()}}</h2>
+		
+    	<div class="ui form segment">
+		
+            <div class="error">
+                        <i>{{getErrorMsg()}}</i><br>
+            </div>
+            
+		<div class="field">
+			<label>Event Name</label> 
+			<div class="ui left labeled icon input">
+				<input type="text" ng-model="eViewName" placeholder="Event Name" name="eventName">
+				<i class="empty calendar icon"></i>
+			</div>
+		</div>
+
+        <div class="field">
+            <label>Location</label> 
+            <div class="ui left labeled icon input">
+                <input type="text" ng-model="eViewLoc" placeholder="Location">
+                <i class="map marker icon"></i>
+            </div>
+        </div>
+
+    	<div style="display:inline-block;" class="inline field">
+    		<div ng-hide="eHideEnd" style="display:inline-block;">From</div> 
+    		<div ng-show="eHideEnd" style="display:inline-block;">On</div> 
+            <input type="datetime-local" ng-model="eViewStart"></input>
+    		<div ng-hide="eHideEnd" style="display:inline-block;"><br>To <input type="datetime-local" ng-model="eViewEnd"></input></div>
+    	
+			<!-- Dropdown 
+            <div ng-show="eHideEnd" style="display:inline-block;">Period </div>
+			<div class="ui selection dropdown" ng-show="eHideEnd" ng-model="ePeriod">
+			  <input type="hidden" name="task">
+			  <div class="default text">Choose a Period</div>
+			  <i class="dropdown icon"></i>
+			  <div class="menu">
+				<div class="item" data-value="0">No Deadline</div>
+				<div class="item" data-value="1">Today</div>
+				<div class="item" data-value="2">Tomorrow</div>
+				<div class="item" data-value="3">This Week</div>
+				<div class="item" data-value="4">Next Week</div>
+				<div class="item" data-value="5">This Month</div>
+				<!-- <div class="item" data-value="{{cat}}" ng-repeat="cat in categoryNames">{{cat}}</div>
+			  </div>
+			</div>
+			<!--<i class="tiny help icon link popover" data-html="Tasks have no end date."></i>-->
+	</div>
+
+    	<div class="field">
+			<label>Description</label> 
+			<textarea ng-model="eViewDesc" rows="3" placeholder="Enter your description here."></textarea>
+	</div>
+		
+    	<!--<div class="inline field">
+			<label>Event Color</label> 
+			<div class="color-box" style="display:inline-block; background-color: #000FFF"></div>
+		</div>-->
+
+
+                <input id="facebook" type="checkbox" checked ng-model="eFB">
+                <label>Post to Facebook</label>
+
+
+        <p><div class="ui blue submit button" ng-click="updateEventFromView(eventViewItem, eViewName, eViewDesc, eViewStart, eViewEnd, eViewLoc, eFB)" ng-hide="eCreation">
+            Save Changes
+        </div>
+        <div class="ui blue submit button" ng-click="createEventFromView(eventViewItem, eViewName, eViewDesc, eViewStart, eViewEnd, eViewLoc, ePeriod, eFB)" ng-show="eCreation">
+            Create
+        </div></p>
+        <!--<i>{{eventViewItem.id}}</i>-->
+		</div>
+    </div>
+
+</body>
+</html>

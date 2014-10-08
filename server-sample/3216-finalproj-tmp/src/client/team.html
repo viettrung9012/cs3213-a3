@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+  <meta charset="UTF-8">
+  <meta property="fb:app_id"          content="757128931017445" /> 
+  <meta property="og:type"            content="article" /> 
+  <meta property="og:url"             content="http://54.179.177.82/" /> 
+  <meta property="og:title"           content="Planendar: About Us" /> 
+  <meta property="og:image"           content="http://54.179.177.82/images/logo.png" /> 
+  <meta property="og:description"     content="The only organizer app you ever need!" />
+  <link rel="icon" href="images/icon.ico" type="image/x-icon"/>
+
+  <title>Planendar: About Us</title>
+  <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/app.css">
+  
+ <!--- copy from Eldric html head -->
+  <link rel="stylesheet" href="lib/semantic/build/packaged/css/semantic.css">
+  <link rel="stylesheet" href="lib/normalize-css/normalize.css">
+  <link rel="stylesheet" href="lib/ngDialog/css/ngDialog.css">
+  <link rel="stylesheet" href="css/agenda.css">
+  <link rel="stylesheet" href="css/ngDialog-theme-dest.css">
+  <link rel="stylesheet" href="css/calendar.css">
+  <link rel="stylesheet" href="css/drag.css">
+  <script src="lib/underscore/underscore.js"></script>
+  <script src="js/debugutils.js"></script>
+  <script src="js/super-json.js"></script>
+  <script src="lib/jquery/dist/jquery.js"></script>
+  <script src="lib/semantic/build/packaged/javascript/semantic.js"></script>
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/moment/moment.js"></script>
+  <script src="lib/cookies-js/src/cookies.js"></script>
+  <script src="js/interval-tree/interval-tree-browser.js"></script>
+  
+  <!-- Angular components -->
+  <script src="lib/angular-route/angular-route.js"></script>
+  <script src="lib/ngDialog/js/ngDialog.js"></script>
+  <script src="js/nsPopover/src/nsPopover.js"></script>
+  <script src="js/angular-dragndrop/angular-dnd.js"></script>
+  <script src="js/jquery-address/src/jquery.address.js"></script>
+  <script src="js/IssueControllerService.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/ngToggle.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/agenda.js"></script>
+  <script src="js/calendar.js"></script>
+  <script src="js/calendar-monthly.js"></script>
+  <script src="js/sidebar.js"></script>
+  
+</head>
+
+<body ng-app="planendar">
+<div id="fb-root"></div>
+
+<!----- Top Menu -----> 
+<header></header>
+<p></p>
+
+<!----- About ----->
+<div class="ui grid relaxed segment minheight">
+    <div class="row">
+        <div class="two wide column"></div>
+        <div class="two wide column"><img src="/images/logo.png"> </div>
+        <div class="ten wide column">
+            <a class="heading">Planendar.</a>
+            <p>A one-stop integrated platform for all your time planning needs, from remembering small details, 
+                to planning when to solve issues, to time management as a whole. You will never want to use another 
+                organizer app ever again!</p>
+        </div> 
+    </div>
+	
+	<div class="row">
+		<div class="three wide column"></div>
+		<div class="ten wide column">
+			<div class="heading">
+			<i class="headphones icon"></i>
+			<i class="coffee icon"></i>
+			Team Dest</div>
+		</div>
+	</div>
+
+<!-- Eldric -->
+    <div class="row">
+        <div class="three wide column"></div>
+        <div class="two wide column"><img class="circular ui image" src="/images/eldric.jpg"></div>
+        <div class="eight wide column"><div class="ui teal inverted segment">
+            <div class="ui list">
+                <div class="content">
+                    <div class="header">Eldric Liew Chun Tze</div>
+					<div class="description"><i class="desktop icon"></i>Year 4 CS</div>
+                    <div class="description">Class: Tanker</div>
+                </div>
+                <div class="list">
+                    <div class="content">
+                        <div class="item">
+                            From UI/UX, to our core functionality, to the database schema, there is not a single component of the project where 
+                            his presence cannot be felt. Eldric is the team lead for Dest and oversees the progress of each member. 
+							His enthusiasm and vast knowledge  carried the team through multiple roadblocks to where it is today.
+                        </div>
+						<div class="item">
+							His assigned role is the <a href="http://54.179.177.82/#/Week" target="_blank">Week view</a> for Planendar and the chief 
+							debugger for all issues. Subsequently, he assisted with database queries, database integration, and the Issue Controller Service.
+						</div>
+                    </div>
+                </div>
+            </div>        
+        </div></div>
+    </div>
+
+<!-- Daryl (Alphabetical order) -->
+    <div class="row">
+        <div class="three wide column"></div>
+        <div class="two wide column"><img class="circular ui image" src="/images/daryl.jpg"></div>
+        <div class="eight wide column"><div class="ui blue inverted segment">
+            <div class="ui list">
+                <div class="content">
+                    <div class="header">Daryl Ho Ze Wei</div>
+					<div class="description"><i class="sitemap icon"></i>Year 2 IS</div>
+                    <div class="description">Class: Angular.js Programmer</div>
+                </div>
+                <div class="list">
+                    <div class="content">
+                        <div class="item">
+                            Although a late addition to the group, Daryl proved to be critical in contributing to the core functionality of Planendar.
+							An independent learner, he caught up with the group within a few days and has been actively contributing since.
+						</div>
+						<div class="item">
+							He is in charge of the <a href="http://54.179.177.82/#/Agenda" target="_blank">Agenda view</a> for Planendar.
+							He then worked on the detailed view for events.
+                        </div>
+                    </div>
+                </div>
+            </div>        
+        </div></div>
+    </div>
+
+<!-- Tack Kian (Alphabetical order) -->
+    <div class="row">
+        <div class="three wide column"></div>
+        <div class="two wide column"><img class="circular ui image" src="/images/tackkian.jpg"></div>
+        <div class="eight wide column"><div class="ui purple inverted segment">
+            <div class="ui list">
+                <div class="content">
+                    <div class="header">Ho Tack Kian</div>
+					<div class="description"><i class="desktop icon"></i><i class="suitcase icon"></i>Year 4 CS/Biz</div>
+                    <div class="description">Class: Database Programmer</div>
+                </div>
+                <div class="list">
+                    <div class="content">
+                        <div class="item">
+                            Tack Kian is the welfare in-charge for the group. From reserving space in UTown for our meetings to cracking jokes, 
+							he makes sure our welfare is well taken care of. He has even provided the whole team with free breakfast on one occasion!
+                        </div>
+						<div class="item">
+							He is in charge of the back-end functionalities such as database schema and Facebook events pulling. 
+						</div>
+                    </div>
+                </div>
+            </div>        
+        </div></div>
+    </div>
+
+<!-- Dat (Alphabetical order) -->
+    <div class="row">
+        <div class="three wide column"></div>
+        <div class="two wide column"><img class="circular ui image" src="/images/dat.jpg"></div>
+        <div class="eight wide column"><div class="ui red inverted segment">
+            <div class="ui list">
+                <div class="content">
+                    <div class="header">Nguyen Quoc Dat</div>
+					<div class="description"><i class="desktop icon"></i>Year 2 CS</div>
+                    <div class="description">Class: Angular.js Programmer</div>
+                </div>
+                <div class="list">
+                    <div class="content">
+                        <div class="item">
+                            Dat is the chief entertainer-in-charge. Always full of energy, he lifts the spirit of the team with his presence.
+							He picked up Angular.js at the same time when team Dest formed and worked closely with Eldric to ensure a smooth implementation.
+                        </div>
+						<div class="item">
+							He is in charge of the <a href="http://54.179.177.82/#/Month" target="_blank">Month view</a> for Planendar.
+							He then worked on Tasks bar and the drag and drop functionality of events.
+						</div>
+                    </div>
+                </div>
+            </div>        
+        </div></div>
+    </div>
+
+<!-- Shi Xian (Alphabetical order) -->
+    <div class="row">
+        <div class="three wide column"></div>
+        <div class="two wide column"><img class="circular ui image" src="/images/shixian.jpg"></div>
+        <div class="eight wide column"><div class="ui orange inverted segment">
+            <div class="ui list">
+                <div class="content">
+                    <div class="header">Sim Shi Xian</div>
+					<div class="description"><i class="suitcase icon"></i>Year 4 Biz</div>
+                    <div class="description">Class: UI Designer</div>
+                </div>
+                <div class="list">
+                    <div class="content">
+                        <div class="item">
+                            Shi Xian is the project manager for team Dest. When the group gets too ambitious, he is the one conducting reality check to ensure
+							the scope is manageable within the given time. Being the business guy, he provides a fresh perspective to the team to keep Planendar relevant for the public.
+                        </div>
+						<div class="item">
+							He is in charge of the UI Design and HTML/CSS coding. He then proceeded to integrate the Facebook plugins and prepares the write-ups
+							for Planendar.
+						</div>
+                    </div>
+                </div>
+            </div>        
+        </div></div>
+    </div>
+
+    <div class="row">
+        <div class="column"><p></p></div>
+    </div>
+
+</div>
+
+
+<!----- Footer ----->
+
+<footer></footer>
+
+<!----- Facebook Friends Popup ----->
+
+<div id="friendsPopup" class="ui small modal">
+    <i class="close icon"></i>
+    <div class="ui teal inverted menu">
+        <div class="item">Friends who use Planendar.</div>
+    </div>
+
+</div>
+
+</body>
+</html>

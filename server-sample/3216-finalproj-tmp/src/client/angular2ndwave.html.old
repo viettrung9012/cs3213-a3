@@ -1,0 +1,14 @@
+<html ng-app='CalendarMonth'>
+<head>
+	<link rel="stylesheet" href="lib/normalize-css/normalize.css">
+	<link rel="stylesheet" href="lib/ngDialog/css/ngDialog.css">
+	<link rel="stylesheet" href="lib/ngDialog/css/ngDialog-theme-default.css">
+	<script src="lib/angular/angular.js"></script>
+	<script type="text/javascript" src="js/app2.js"></script>
+	<script src="lib/ngDialog/js/ngDialog.js"></script>
+	<script src="js/nsPopover/src/nsPopover.js"></script>
+</head>
+<body>
+	<month-table></month-table>
+</body>
+</html>

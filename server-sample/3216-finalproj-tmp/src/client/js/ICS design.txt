@@ -1,0 +1,80 @@
+ICS rebuild
+-Operations:
+	-Retrieve from database
+		-Uses ICS.addExistingIssue
+			-Meta creation goes here. <-Done
+	-Add items, new.
+		-Uses ICS.addIssue
+	-Update items, existing
+		-Uses ICS.updateIssue
+	-Delete items, existing
+		-Uses ICS.deleteIssue
+
+-Components:
+	-Methodology
+		-Meta info
+			-cversion - stores the current version in the server
+			-tversion - stores the local version
+		-DB backlog
+			-Stores the list of tasks to execute
+			-Executes in order.
+			-Guarantees execution
+			-Suicide if error detected.
+	-DB-sync
+		-Requirements:
+			-Sync in order.
+			-Works offline
+			-Detect online
+		-Methods:
+			-CUD methods:
+				-Each of these methods does the following:
+					-Registers a task to send data to server
+					-When the task executes
+						-It makes sure that its executing in the correct order.
+					-When task is done
+						-if error:
+							-Scream like !@$@!$
+						-if fail:
+							-notifyFailure
+						-if success
+							-dequeue last item
+								-Assumed to be self.
+								-Assert that its self.
+				-db.addIssue
+					-ensure that it has no ID.
+				-db.updateIssue
+					-ensure that issue still exists???
+				-db.deleteIssue
+					-Mark issue as deleted.
+			-db.notifyFailure
+				-blow the DB up.
+			-db.notifySuccess
+				-call syncNext
+			-db.syncNext
+				-try to sync the next item.
+		-Registered watchers:
+			-offline
+				-Pause the loop, set a retry.
+			-online
+				-Try to send out stuff
+		-Helpers:
+			-ICS.relabel <- done
+			-packIssue: <- done
+				Packs the latest version of the Issue to send out.
+
+	-Update from server
+		-KIV.
+
+--------------------------------------
+Task breakdown
+	-Refactor to newer API. <- Done.
+	-Implement cversion and tversion on existing stuff. <- Done.
+	-Implement deletion as a filter. <- Done.
+	-Shift the DB in, stub the functions and integrate them.  <- Done.
+	-Implement add, update, delete issues on db side. <- add done.
+		-Also implement notify success <- Done.
+		-Put a stub to execute immediately. <- Done
+	-Debug event ordering.
+	-Implement notifyfailure, disconnection support.
+		-Implement watchers.
+	

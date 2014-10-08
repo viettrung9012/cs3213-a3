@@ -1,0 +1,19 @@
+<div class="ui sidebar" ng-controller="filterController">
+  <div class="ui large vertical menu">
+	  <div class="header item">
+		<i class="user icon"></i> 
+		My Calendar
+	  </div>
+	  <a class="item" ng-repeat="class in filters" ng-toggle="{{class.id}}">
+		<div class="color-box" ng-class="{ hyperactive: {{class.id}} }"></div> {{class.name}}
+	  </a>
+	  <div class="header item">
+		<i class="users icon"></i>
+		Shared with me
+	  </div>
+	  <a class="item" ng-repeat="class in filtersothers" ng-toggle="{{class.id}}">
+		<div class="color-box" ng-class="{ hyperactive: {{class.id}} }"></div>  {{class.name}}
+	  </a>
+	</div>
+	<p>Global filters implementation delayed till database can provide tags</p>
+</div>

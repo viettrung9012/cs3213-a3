@@ -1,0 +1,19 @@
+<div ng-repeat="event in displayedEvents[week][day]" style="white-space:nowrap; height:auto;"> <!--id="event-{{currentWeek}}-{{currentDay}}-{{$index}}"--> 
+	<div ng-show="eventExists(event)" ng-click = "openEvent(event.origin);">
+		<p 
+			ng-class="{ 'month-soft':isSoft(event), 'month-item':!isSoft(event) }"
+			style="{{eventStyle}}"
+			drag dnd-data="{'actual':event.origin}" 			
+			ng-style="{'background-color':highlighted(event), 'width':eventWidth(event), 'border-radius':borderRadius(event), 'margin-left':eventMargin(event)}"
+			ng-mouseenter="highlightOn(event.origin)"
+			ng-mouseleave="highlightOff(event.origin)" 
+			ns-popover
+			ns-popover-template="/templates/calendar-popup.html"
+			ns-popover-trigger="mouseenter"
+			ns-popover-placement="bottom"
+			ns-popover-hide-on-click="false"
+			ns-popover-ignore-hover="true"
+			ns-popover-timeout="0">{{startTime(event) + eventName(event)}}</p>
+	</div>
+	<div ng-hide="eventExists(event)"><div style="height:{{topMargin + contentHeight}}px;"></div></div>
+</div>

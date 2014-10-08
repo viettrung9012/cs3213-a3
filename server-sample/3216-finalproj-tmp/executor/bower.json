@@ -1,0 +1,19 @@
+{
+ "version": "0.0.0",
+  "private": true,
+  "name": "cc-Executor",
+  "description": "TBD",
+  "dependencies": {
+    "angular": "^1.2.25",
+    "semantic": "^0.19.0",
+    "underscore": "^1.6.0",
+    "normalize-css": "^3.0.1",
+    "jquery": "2.1.x",
+    "jquery-cookie": "^1.4.1",
+    "modernizr": "^2.8.3",
+    "bacon": "^0.7.22"
+  },
+  "devDependencies": {
+  },
+  "appPath": "app"
+}

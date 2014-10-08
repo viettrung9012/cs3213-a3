@@ -1,0 +1,28 @@
+<ion-view ng-style="bodyBackground" scroll="true">
+  <div class="header">
+      <h1>Quizing History</h1>
+  </div>
+  <div class="main">
+		<ion-content scroll="true" style="top: 18%; bottom:5%;">
+		<div class="history-list-container">
+			<h1>Quizzing History</h1>
+
+		<div class="row responsive-sm" ng-repeat="history in historyData">
+			<div class="history-list">
+
+				<div class="row">
+					<img src="{{history.profile_image}}" />
+				</div>
+				<div class="name">
+					{{history.name}}
+				</div>
+				
+				<div class="score">
+					{{history.score}}
+				</div>
+			</div>
+		</div>
+		</div>
+	</ion-content>
+</div>
+</ion-view>

@@ -1,0 +1,165 @@
+/* Global */
+
+body {
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  background: #fff;
+  margin: 0px;
+  padding: 0px;
+  color: #555;
+  text-rendering: optimizeLegibility;
+  min-width: 320px;
+  font-size: 15px;
+  height: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+.color-box {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    background-color: rgb(108, 199, 119);
+    border: 1px solid #236a2c;;
+    /*position: absolute;
+    left: 5px;
+    to: 5px;*/
+}
+
+/* Filter */
+
+.hyperactive{
+	background-color: #fff !important;
+}
+
+/* Top Menu Items */
+
+.smallLogo {
+  height: 30px;
+  width: 30px;
+}
+
+/* Top Menu Discard Animation */
+
+#topMenu.dropable {
+  background-color: red;
+}
+
+#topMenu .discard {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  text-align: center;
+  display: none;
+}
+
+#topMenu.dropable .discard {
+  display: block;
+}
+
+#topMenu.dropable .discard .circular {
+-moz-box-shadow: 0 0 5px #fff;
+-webkit-box-shadow: 0 0 5px #fff;
+box-shadow: 0px 0px 5px #fff;
+}
+
+#topMenu.hover .discard .circular {
+-moz-box-shadow: 0 0 25px #fff;
+-webkit-box-shadow: 0 0 25px #fff;
+box-shadow: 0px 0px 25px #fff;
+}
+
+#topMenu.hover {
+  background-color: #5E2129;
+}
+
+/* Main Body */
+
+.soft {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 25px;
+  font-size: 15px;
+  color: #fff;
+  background-color: #ffba00;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border: 1px solid #dba000;
+  margin: 5px;
+  padding: 0 15px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */
+  
+}
+
+.soft:hover {
+  background-color: #f9d587;
+}
+
+.tab{
+  overflow: hidden;
+}
+
+/* Sidebar */
+.inline {
+  display: inline;
+}
+
+/* Footer */
+
+.foot {
+  text-align: center;
+  font-size: 15px;
+  color: #999;
+}
+
+.visible {
+  overflow: visible;
+}
+
+.smallfont {
+  font-size: 10px;
+}
+
+/* Facebook Friends List */
+
+#friendsPopup a {
+    color: #555;
+}
+
+#friendsPopup a:hover {
+    color: #111;
+}
+
+/* About Page */
+
+.heading {
+    font-size: 3em;
+}
+
+/* Settings Page*/
+select {
+	cursor: pointer;
+	display: inline-block;
+	word-wrap: break-word;
+	white-space: normal;
+	background-color: #FFF;
+	padding: .65em 1em;
+	line-height: 1.33;
+	color: rgba(0,0,0,.8);
+	-webkit-box-shadow: 0 0 0 1px rgba(0,0,0,.1)!important;
+	box-shadow: 0 0 0 1px rgba(0,0,0,.1)!important;
+	border-radius: .3125em!important;
+}
+
+#permSubmit {
+	display: none;
+}

@@ -1,0 +1,30 @@
+/*Chatting or question window display*/
+.chat-background{
+    background-color: #777;
+}
+  .chatbubble {
+    position: absolute;
+    width: 50%;
+    height: 20%;
+    padding: 0px;
+    background: black;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 2px 2px 10px 0px #616161;
+    -moz-box-shadow: 2px 2px 10px 0px #616161;
+    box-shadow: 2px 2px 10px 0px #616161;
+}
+
+  .chatbubble:after {
+    content: "";
+    position: absolute;
+    top: 35px;
+    left: -15px;
+    border-style: solid;
+    border-width: 15px 15px 15px 0;
+    border-color: transparent #eff0da;
+    display: block;
+    width: 0;
+    z-index: 1;
+}

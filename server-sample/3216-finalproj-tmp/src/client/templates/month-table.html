@@ -1,0 +1,42 @@
+
+<div class="ui grid">
+<div class="two column row">
+	<div class="thirteen wide center aligned column">
+			<b>{{months[month]}}, {{year}}</b>
+	</div>
+	<div class="three wide column">
+		<div class = "calendarControls">
+			<div class="ui small teal icon button transitleft" ng-click="shiftCal(-1)">
+			  <i class="left arrow icon"></i>
+			</div>
+			<div class="ui small teal icon button transitright" ng-click="shiftCal(1)">
+			  <i class="right arrow icon"></i>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<div style="display: table; border-collapse:collapse; table-layout:fixed;" resize>
+	<div>
+	<div style="display:table-row;">
+		<div style="display:table-cell; width:{{cellWidth + borderWidth}}px; {{weekDayRowStyle}}" ng-repeat="day in weekDays">
+			{{day}}
+		</div>
+	</div>
+	</div>
+	<div>
+		<div style="display:table-row; height:{{rowHeight}}px;" ng-repeat="week in [] | range: 0:weeks.length">
+			<!--When in doubt, add a div-->
+			<div style="display:table-cell; {{dayStyle}}" ng-repeat="day in [] | range: 0:7" drop="dropEvent" dnd-data="{'week':week, 'day':day}">
+				<div> <!--id="day-{{currentWeek}}-{{currentDay}}"-->
+					{{weeks[week][day].getDate()}}
+					<div style="width:{{cellWidth}}px; height:auto;">
+						<month-event></month-event>
+					</div>				
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div resize>{{windowWidth}}</div>
