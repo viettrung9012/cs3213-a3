@@ -1,1 +1,7 @@
-<h1>These are functions</h1>
+<ul ng-repeat="displayFunction in displayFunctions">
+	<li class="function-list-tab">
+		<span>{{displayFunction.name}} </span>
+		<input class="function-value-input" numbers-only="numbers-only" required="required" ng-show="displayFunction.name=='setX'||displayFunction.name=='setY'||displayFunction.name=='move'" ng-init="fVal=0" ng-model="fVal" ng-change="updateDisplayFunction($index, fVal)"></input>
+		<span ng-show="displayFunction.name=='move'"> steps</span>
+	</li>
+</ul>

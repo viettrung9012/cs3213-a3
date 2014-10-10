@@ -7,3 +7,29 @@
 	height: 360px;
 	border: 1px solid black;
 }
+
+.function-tab{
+	list-style-type: none;
+	border: 1px solid black;
+	padding: 3px;
+	text-align: center;
+	margin-top: 20px;
+}
+
+.function-tab:hover{
+	background-color: yellow;
+}
+
+.function-list-tab{
+	list-style-type: none;
+	border: 1px solid black;
+	padding: 3px;
+	text-align: center;
+	margin: auto;
+	width: 100px;
+	margin-top: 20px;
+}
+
+.function-value-input{
+	width: 25px;
+}

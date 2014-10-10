@@ -1,1 +1,3 @@
-<h1>This is function list</h1>
+<ul class="col-md-2" ng-repeat="function in functions">
+	<li class="function-tab" ng-click="addNewFunction(function.name, function.value)">{{function.name}}</li>
+</ul>
