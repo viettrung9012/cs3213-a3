@@ -1,5 +1,4 @@
 'use strict';
-$(document).foundation();
 
 /**
  * @ngdoc overview
@@ -10,4 +9,6 @@ $(document).foundation();
  * Main module of the application.
  */
 angular
-  .module('frontendApp', []);
+  .module('frontendApp', [
+    'ngTouch'
+  ]);

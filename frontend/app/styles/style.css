@@ -1,0 +1,9 @@
+.small-box{
+	height: 180px;
+	border: 1px solid black;
+}
+
+.big-box{
+	height: 360px;
+	border: 1px solid black;
+}
