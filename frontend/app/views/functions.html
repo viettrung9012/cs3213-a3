@@ -1,3 +1,4 @@
+<div data-drop="true" ng-model="displayFunctions" jqyoui-droppable="{multiple:true, stack: false, animate: false}">
 <ul ng-repeat="displayFunction in displayFunctions">
 	<li class="function-list-tab">
 		<span>{{displayFunction.name}} </span>
@@ -5,3 +6,4 @@
 		<span ng-show="displayFunction.name=='move'"> steps</span>
 	</li>
 </ul>
+</div>
