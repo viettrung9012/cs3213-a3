@@ -8,6 +8,10 @@
 	border: 1px solid black;
 }
 
+.big-box div{
+	min-height: 100%;
+}
+
 .function-tab{
 	list-style-type: none;
 	border: 1px solid black;
@@ -27,6 +31,17 @@
 	text-align: center;
 	margin: auto;
 	width: 200px;
+	margin-top: 20px;
+}
+
+.repeat-tab{
+	list-style-type: none;
+	border: 1px solid black;
+	padding: 3px;
+	text-align: center;
+	margin: auto;
+	width: 200px;
+	height: 300px;
 	margin-top: 20px;
 }
 
