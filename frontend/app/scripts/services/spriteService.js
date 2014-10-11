@@ -3,7 +3,8 @@ angular.module('frontendApp')
 .service('SpriteService', function ($rootScope) {
 	var oSpriteList = [{
 		name: "mainSprite",
-		image: "images/yeoman.png"
+		image: "images/yeoman.png",
+		activityList: []
 	}];
 
 	var spriteList = [];
