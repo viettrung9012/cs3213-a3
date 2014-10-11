@@ -48,3 +48,14 @@
 .function-value-input{
 	width: 25px;
 }
+
+.sprite-tab{
+	list-style-type: none;
+	padding: 3px;
+	text-align: center;
+	margin-top: 20px;
+}
+
+.sprite-tab:hover{
+	background-color: #00ffff;
+}
