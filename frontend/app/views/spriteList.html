@@ -1,1 +1,5 @@
-<h1>This is object list</h1>
+<ul class="col-md-2" ng-repeat="sprites in oList">
+	<li ng-click="addSprite(sprites.name, sprites.image)">
+		<img ng-src="{{sprites.image}}">
+	</li>
+</ul>
