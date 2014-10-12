@@ -5,8 +5,8 @@ angular.module('frontendApp')
  	$scope.list = SpriteService.getSpriteList();
  	
  	$scope.setPosition = function(event, index) {
- 		$scope.list[$scope.list.length - 1].posX = event.offsetX;
- 		$scope.list[$scope.list.length - 1].posY = event.offsetY;
+ 		//$scope.list[$scope.list.length - 1].posX = event.offsetX;
+ 		//$scope.list[$scope.list.length - 1].posY = event.offsetY;
  	}
 
  	$scope.$on('spriteListUpdate', function(){

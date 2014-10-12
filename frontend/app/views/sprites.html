@@ -1,8 +1,6 @@
-<div data-drop="true" ng-model="list" 
-		jqyoui-droppable="{multiple:true, stack: false, animate: false, onDrop:'setPosition'}" >
-<ul>
-	<li class="sprite-tab col-md-2" ng-repeat="sprites in list" ng-style="{left:(sprites.posX + 'px'), top:(sprites.posY + 'px')}">
+<div data-drop="true" ng-model="list" jqyoui-droppable="{multiple:true, stack:false, animate:true , onDrop:'setPosition'}" >
+	<span class="sprite-tab col-md-2" ng-repeat="sprites in list" 
+		 data-drag="true" data-jqyoui-options="{revert: 'invalid', containment:'document'}" jqyoui-draggable="{index:{{$index}},animate:true, placeholder:'keep'}">
 		<img ng-src="{{sprites.image}}">
-	</li>
-</ul>
+	</span>
 </div>
