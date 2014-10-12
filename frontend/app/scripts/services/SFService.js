@@ -1,27 +1,27 @@
 'use strict';
 
-angular.module('frontendapp')
+angular.module('frontendApp')
 .service('SFService', function(){
 	var spriteList = [];
 	//contains the boxes which contains the functions for each sprite
 	var functionBox = [];
 
 	return {
-		var getSpriteList = function() {
+		getSpriteList : function() {
 			return spriteList;
 		},
 
-		var getFunctionBox = function() {
+		getFunctionBox : function() {
 			return functionBox;
-		}
+		},
 
-		var updateSpriteList = function(list) {
-			spriteList = list;
-		}
+		updateSpriteList : function(spr) {
+			spriteList.push(spr);
+		},
 
-		var updateFunctionBox = function(list) {
-			functionBox = list;
+		updateFunctionBox : function(spr) {
+			functionBox.push(spr);
 			//update spriteList in sprite controller
 		}
-	}
+	};
 });
