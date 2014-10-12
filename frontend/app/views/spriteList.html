@@ -1,5 +1,5 @@
 <ul class="col-md-2" ng-repeat="sprites in oList">
-	<li class="sprite-tab" ng-click="addSprite(sprites.name, sprites.image)">
+	<li class="sprite-tab" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="oList" jqyoui-draggable="{index:{{$index}},animate:true, placeholder:'keep'}">
 		<img ng-src="{{sprites.image}}">
 	</li>
 </ul>

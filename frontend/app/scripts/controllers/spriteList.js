@@ -2,11 +2,9 @@
 
 angular.module('frontendApp')
   .controller('SpriteListCtrl', function ($scope, SpriteService) {
-  	$scope.oList = SpriteService.oSpriteList;
-  	$scope.list = SpriteService.spriteList;
-
+  	$scope.oList = SpriteService.getOriginalSpriteList();
+  	$scope.list = SpriteService.getSpriteList();
   	$scope.addSprite = function(sName, sImage) {
-  		$scope.list.push({name:sName, image:sImage});
-  		SpriteService.update($scope.list);
+  		SpriteService.addSpriteList(sName, sImage);
   	}
   });

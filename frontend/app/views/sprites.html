@@ -1,5 +1,8 @@
-<ul class="col-md-2" ng-repeat="sprites in list">
-	<li class="sprite-tab">
+<div data-drop="true" ng-model="list" 
+		jqyoui-droppable="{multiple:true, stack: false, animate: false, onDrop:'setPosition'}" >
+<ul>
+	<li class="sprite-tab col-md-2" ng-repeat="sprites in list" ng-style="{left:(sprites.posX + 'px'), top:(sprites.posY + 'px')}">
 		<img ng-src="{{sprites.image}}">
 	</li>
 </ul>
+</div>

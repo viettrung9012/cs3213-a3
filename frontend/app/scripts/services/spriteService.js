@@ -1,11 +1,16 @@
 'use strict';
 angular.module('frontendApp')
-.service('SpriteService', function ($rootScope) {
+.service('SpriteService', function () {
 	var oSpriteList = [{
-		name: "mainSprite",
-		image: "images/yeoman.png",
-		activityList: []
-	}];
+			name: "mainSprite",
+			image: "images/yeoman.png",
+			activityList: []
+		}, {
+			name: "secondSprite",
+			image: "images/yeoman.png",
+			activityList: []
+		}
+	];
 
 	var spriteList = [];
 	
@@ -13,14 +18,32 @@ angular.module('frontendApp')
 		$rootScope.$broadcast('spriteList.update');
 	};
 
-	var updateSpriteList = function(newList) {
-		spriteList = newList;
-		broadcast(spriteList);
-	};
-
 	return {
-		oSpriteList : oSpriteList,
-		spriteList : spriteList,
-		update : updateSpriteList
+		getOriginalSpriteList : function(){
+			return oSpriteList;
+		},
+
+		getSpriteList : function(){
+			return spriteList;
+		},
+		
+		var addSpriteList = function(sName, sImage) {
+			spriteList.push({
+				name: sName,
+				image: sImage,
+				activityList: []
+			});
+			broadcast(spriteList);
+		};
+
+		/*
+		addSpriteList : function(sName, sImage) {
+			spriteList.push({
+				name: sName,
+				image: sImage,
+				activityList: []
+			});
+		}
+		*/
 	}
 });
