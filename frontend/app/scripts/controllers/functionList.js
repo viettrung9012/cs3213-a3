@@ -9,7 +9,11 @@
  */
 angular.module('frontendApp')
   .controller('FunctionListCtrl', function ($scope, FunctionService) {
-	$scope.functions = FunctionService.getFunctionList();
+	$scope.data = FunctionService.getFunctionList();
+	$scope.log = function(){
+		console.log(JSON.stringify($scope.data));
+		console.log(JSON.stringify(FunctionService.getFunctionList()));
+	}
 	$scope.addNewFunction = function(name, value){
 		FunctionService.addDisplayFunction(name, value);
 	}

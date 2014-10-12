@@ -1,4 +1,4 @@
-<div data-drop="true" ng-model="displayFunctions" jqyoui-droppable="{multiple:true, stack: false, animate: false}">
+<!--<div data-drop="true" ng-model="displayFunctions" jqyoui-droppable="{multiple:true, stack: false, animate: false}">
 <ul ng-repeat="displayFunction in displayFunctions">
 	<li class="function-list-tab">
 		<span>{{displayFunction.name}} </span>
@@ -6,4 +6,29 @@
 		<span ng-show="displayFunction.name=='move'"> steps</span>
 	</li>
 </ul>
+</div>-->
+<!-- Nested node template -->
+<script type="text/ng-template" id="nodes_renderer.html">
+    <div ng-include="'nodes_display_only.html'"></div>
+    <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="node.name=='repeat'&&'nodes_renderer.html'||'nodes_display_only.html'">
+        </li>
+    </ol>
+</script>
+<script type="text/ng-template" id="nodes_display_only.html">
+    <div ui-tree-handle class="tree-node tree-node-content">
+		<a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this);log()"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+        <span>{{node.name}} </span>
+        <input class="function-value-input" data-nodrag name="number-input" type="number" numbers-only="numbers-only" required="required" ng-show="node.name=='setX'||node.name=='setY'||node.name=='move'||node.name=='repeat'" ng-model="node.value"></input>
+		<span ng-show="node.name=='move'||node.name=='repeat'"> {{node.name=='move'&&'steps'||'times'}}</span>
+		<a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
+    </div>
+</script>
+<form name="myForm">
+<div ui-tree id="tree-root">
+    <ol ui-tree-nodes="" ng-model="data">
+        <li ng-repeat="node in data" ui-tree-node ng-include="node.name=='repeat'&&'nodes_renderer.html'||'nodes_display_only.html'"></li>
+    </ol>
 </div>
+<a class="btn btn-success btn-lg play-btn" ng-disabled="data.length==0||myForm.$invalid" ng-click="activity()"><span class="glyphicon glyphicon-play-circle"></a>
+</form>

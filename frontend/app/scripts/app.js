@@ -10,5 +10,5 @@
  */
 angular
   .module('frontendApp', [
-    'ngTouch', 'ngDragDrop'
+    'ngTouch', 'ngDragDrop', 'ui.tree'
   ]);

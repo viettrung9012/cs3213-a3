@@ -22,6 +22,9 @@ angular.module('frontendApp')
 		}, {
 			name : "move",
 			value : 0
+		}, {
+			name : "repeat",
+			value : 0
 		}
 	]
 	var displayFunctionList = [];

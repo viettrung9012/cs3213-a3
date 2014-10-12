@@ -1,3 +1,19 @@
-<ul class="col-md-2" ng-repeat="function in functions">
-	<li class="function-tab" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="functions" jqyoui-draggable="{index: {{$index}},animate:false, placeholder:'keep'}">{{function.name}}</li>
+<ul class="col-md-2" ng-repeat="function in data">
+	<li class="function-tab" ng-model="data" ng-click="addNewFunction(function.name, 0)">{{function.name}}</li>
 </ul>
+
+<!-- Nested node template 
+<script type="text/ng-template" id="nodes_renderer.html">
+  <div ui-tree-handle>
+    {{node.name}}
+  </div>
+  <ol ui-tree-nodes="" ng-model="node.nodes">
+    <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+    </li>
+  </ol>
+</script>
+<div ui-tree data-drag-enabled="tree.enabled" data-drag-delay="500">
+  <ol ui-tree-nodes="" ng-model="functions" id="tree-root">
+    <li ng-repeat="node in functions" ui-tree-node ng-include="'nodes_renderer.html'" ng-click="log()"></li>
+  </ol>
+</div>-->
