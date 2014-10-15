@@ -1,6 +1,7 @@
 Pre-requisite:
 >	1. install Nodejs
 >	2. install Bower by running `npm install -g bower` from command line
+>   3. install Grunt-CLI by running `npm install -g grunt-cli` from command line
 
 Setting up project (frontend):
 >	1. navigate to frontend in command line
