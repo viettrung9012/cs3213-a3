@@ -39,4 +39,12 @@ angular.module('frontendApp')
 			imageUrl : "images/yeoman.png"
 		});
 	}
+	
+	$scope.numInputPattern = function(name){
+		if (name === 'setX' || name === 'setY' || name === 'move') {
+			return /^-?\d+$/;
+		} else {
+			return /^\d+$/;
+		}
+	}
 });
