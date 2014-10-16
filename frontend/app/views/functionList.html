@@ -1,5 +1,5 @@
-<ul class="col-md-2" ng-repeat="function in data">
-	<li class="function-tab" ng-model="data" ng-click="addNewFunction(function.name, 0)">{{function.name}}</li>
+<ul class="col-md-3" ng-repeat="function in data">
+	<li class="function-tab" ng-model="data" ng-click="addNewFunction(function.name, function.value, function.isGlobal)">{{function.name}}</li>
 </ul>
 
 <!-- Nested node template 

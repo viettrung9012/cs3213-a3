@@ -4,8 +4,12 @@
 }
 
 .big-box{
+	position: relative;
 	height: 360px;
 	border: 1px solid black;
+	white-space: nowrap;
+	overflow-y: scroll;
+	overflow-x: scroll;
 }
 
 .big-box div{
@@ -55,6 +59,9 @@
 }
 
 .sprite-tab{
+	display: block;
+	position: absolute;
+	clear: none;
 	list-style-type: none;
 	padding: 3px;
 	text-align: center;
@@ -66,7 +73,6 @@
 }
 
 
-
 /*Copy*/
 
 .btn {
@@ -74,9 +80,8 @@
 }
 
 .angular-ui-tree-handle {
-	width: 50%;
-	margin: auto;
     background: #f8faff;
+	width: 275px;
     border: 1px solid #dae2ea;
     color: #7c9eb2;
     padding: 10px 10px;
@@ -89,9 +94,8 @@
 }
 
 .angular-ui-tree-placeholder {
-    width: 50%;
-	margin: auto;
 	background: #f0f9ff;
+	width: 275px;
     border: 2px dashed #bed2db;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -114,12 +118,48 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .play-btn{
-	float: right;
-	clear: none;
+	position: fixed;
 	padding: 5px;
+	top: 45%;
+	left: 2%;
 }
 
 .angular-ui-tree{
-	float: left;
-	width: 75%;
+	/*float: left;*/
+	display: inline-block;
+	vertical-align:top;
+}
+
+.my-label{
+	position: relative;
+	display: block;
+	width: 150px;
+	margin-right: 125px;
+	margin-top: 5px;
+	margin-left: 0px;
+	background: #f0f9ff;
+	color: #7c9eb2;
+    border: 2px solid #bed2db;
+	padding: 10px;
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.my-label:hover{
+	color: #438eb9;
+    background: #f4f6f7;
+    border-color: #dce2e8;
+}
+
+.my-active-label{
+	background: #CFD7E8;
+}
+
+.my-active-label:hover{
+	background: #CFD7E8;
+}
+
+body{
+	overflow: hidden;
 }

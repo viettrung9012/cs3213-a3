@@ -19,16 +19,22 @@
     <div ui-tree-handle class="tree-node tree-node-content">
 		<a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this);log()"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
         <span>{{node.name}} </span>
-        <input class="function-value-input" data-nodrag name="number-input" type="number" numbers-only="numbers-only" required="required" ng-show="node.name=='setX'||node.name=='setY'||node.name=='move'||node.name=='repeat'" ng-model="node.value"></input>
+        <input class="function-value-input" data-nodrag name="number-input" type="number" required="required" ng-show="node.name=='setX'||node.name=='setY'||node.name=='move'" ng-model="node.value"></input>
+		<input class="function-value-input" data-nodrag name="number-input" type="number" min="0" ng-pattern="/^\d+$/" required="required" ng-show="node.name=='repeat'" ng-model="node.value"></input>
 		<span ng-show="node.name=='move'||node.name=='repeat'"> {{node.name=='move'&&'steps'||'times'}}</span>
+		<span ng-show="node.name=='change background'||node.name=='change costume'"> to </span>
+		 <input class="function-value-input" data-nodrag name="number-input" min="0" type="number" required="required" ng-show="node.name=='change background'||node.name=='change costume'" ng-model="node.value"></input>
 		<a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
     </div>
 </script>
 <form name="myForm">
-<div ui-tree id="tree-root">
-    <ol ui-tree-nodes="" ng-model="data">
-        <li ng-repeat="node in data" ui-tree-node ng-include="node.name=='repeat'&&'nodes_renderer.html'||'nodes_display_only.html'"></li>
+<ul>
+<li ng-repeat="data in alltabs" ui-tree id="tree-root">
+	<div ng-attr-class="my-label {{($index==activeIndex) && 'my-active-label'}}" ng-click="setActive($index)">{{data.name}}</div>
+    <ol ui-tree-nodes="" ng-model="data.data">
+        <li ng-repeat="node in data.data" ui-tree-node ng-include="node.name=='repeat'&&'nodes_renderer.html'||'nodes_display_only.html'"></li>
     </ol>
-</div>
-<a class="btn btn-success btn-lg play-btn" ng-disabled="data.length==0||myForm.$invalid" ng-click="activity()"><span class="glyphicon glyphicon-play-circle"></a>
+</li>
+</ul>
+<a class="btn btn-success btn-lg play-btn" ng-disabled="myForm.$invalid" ng-click="activity()"><span class="glyphicon glyphicon-play-circle"></a>
 </form>
