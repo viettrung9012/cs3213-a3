@@ -7,7 +7,7 @@ angular.module('frontendApp')
 			activityList: []
 		}, {
 			name: "secondSprite",
-			image: "images/yeoman.png",
+			image: "images/hoboman.png",
 			activityList: []
 		}
 	];
@@ -18,10 +18,12 @@ angular.module('frontendApp')
 		$rootScope.$broadcast('spriteList.update');
 	};
 
-	var addSpriteList = function(sName, sImage) {
+	var addSpriteList = function(sName, sImage, x, y) {
 		spriteList.push({
 			name: sName,
 			image: sImage,
+			x: x,
+			y: y,
 			activityList: []
 		});
 		broadcast(spriteList);
@@ -36,6 +38,11 @@ angular.module('frontendApp')
 			return spriteList;
 		},
 		
+		removeSpriteList : function(obj){
+			spriteList.splice(spriteList.indexOf(obj), 1);
+			broadcast(spriteList);
+ 		},
+
 		addSpriteList : addSpriteList
 		/*
 		addSpriteList : function(sName, sImage) {
