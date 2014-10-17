@@ -1,19 +1,38 @@
+html, body{
+	overflow: hidden;
+	height: 100%;
+}
+
+body div{
+	height: 100%;
+}
+
+.app-header{
+	height: 10%;
+}
+
+.app-main{
+	height: 90%;
+}
+
+.small-row{
+	height: 30%;
+}
+
+.big-row{
+	height: 60%;
+}
+
 .small-box{
-	height: 180px;
 	border: 1px solid black;
 }
 
 .big-box{
 	position: relative;
-	height: 360px;
 	border: 1px solid black;
 	white-space: nowrap;
 	overflow-y: scroll;
 	overflow-x: scroll;
-}
-
-.big-box div{
-	min-height: 100%;
 }
 
 .Object{
@@ -22,8 +41,6 @@
 
 .sprite-tab{
 	position:absolute;
-	height:0px;
-	width:0px;
 }
 
 .function-tab{
@@ -60,7 +77,6 @@
 	text-align: center;
 	margin: auto;
 	width: 200px;
-	height: 300px;
 	margin-top: 20px;
 }
 
@@ -75,7 +91,6 @@
 	list-style-type: none;
 	padding: 3px;
 	text-align: center;
-	margin-top: 20px;
 }
 
 /*Copy*/
@@ -109,6 +124,7 @@
 
 .angular-ui-tree-empty {
 	border: none;
+	min-height: 0%;
 }
 
 .group-title {
@@ -125,7 +141,7 @@ input[type=number]::-webkit-outer-spin-button {
 .play-btn{
 	position: fixed;
 	padding: 5px;
-	top: 45%;
+	top: 42%;
 	left: 2%;
 }
 
@@ -133,6 +149,10 @@ input[type=number]::-webkit-outer-spin-button {
 	/*float: left;*/
 	display: inline-block;
 	vertical-align:top;
+}
+
+.function-display-tab{
+	height: 50px;
 }
 
 .my-label{
@@ -163,8 +183,4 @@ input[type=number]::-webkit-outer-spin-button {
 
 .my-active-label:hover{
 	background: #CFD7E8;
-}
-
-body{
-	overflow: hidden;
 }

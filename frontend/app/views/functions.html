@@ -16,8 +16,8 @@
     </ol>
 </script>
 <script type="text/ng-template" id="nodes_display_only.html">
-    <div ui-tree-handle class="tree-node tree-node-content">
-		<a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this);log()"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+    <div ui-tree-handle class="tree-node tree-node-content function-display-tab">
+		<a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this);log()" ng-show="node.name=='repeat'"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
         <span>{{node.name}} </span>
 		<span ng-show="node.name=='change background'||node.name=='change costume'"> to </span>
         <input class="function-value-input" data-nodrag name="number-input" type="number" ng-pattern="numInputPattern(node.name)" required="required" ng-show="node.name=='setX'||node.name=='setY'||node.name=='move'||node.name=='repeat'||node.name=='change background'||node.name=='change costume'" ng-model="node.value"></input>
@@ -27,7 +27,7 @@
 </script>
 <form name="myForm">
 <ul>
-<li ng-repeat="data in alltabs" ui-tree id="tree-root">
+<li ng-repeat="data in alltabs" ui-tree="treeOptions" id="tree-root">
 	<div ng-attr-class="my-label {{($index==activeIndex) && 'my-active-label'}}" ng-click="setActive($index)">{{data.name}}</div>
     <ol ui-tree-nodes="" ng-model="data.data">
         <li ng-repeat="node in data.data" ui-tree-node ng-include="node.name=='repeat'&&'nodes_renderer.html'||'nodes_display_only.html'"></li>

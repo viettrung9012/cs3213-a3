@@ -25,16 +25,16 @@
 
     <!-- Add your site or application content here -->
     <div class="container-fluid">
-		<div class="navbar navbar-default" ng-include="'views/header.html'" ng-controller="HeaderCtrl"></div>
+		<div class="navbar navbar-default app-header" ng-include="'views/header.html'" ng-controller="HeaderCtrl"></div>
 
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-6 small-box FunctionList" ng-include="'views/functionList.html'" ng-controller="FunctionListCtrl"></div>
-				<div class="col-md-6 small-box ObjectList" ng-include="'views/spriteList.html'" ng-controller="SpriteListCtrl"></div>
+		<div class="container-fluid app-main">
+			<div class="row small-row">
+				<div class="col-md-6 FunctionList small-box" ng-include="'views/functionList.html'" ng-controller="FunctionListCtrl"></div>
+				<div class="col-md-6 ObjectList small-box" ng-include="'views/spriteList.html'" ng-controller="SpriteListCtrl"></div>
 			</div>
-			<div class="row">
-				<div class="col-md-6 big-box Functions" ng-include="'views/functions.html'" ng-controller="FunctionsCtrl"></div>
-				<div id="spriteContainer" class="col-md-6 big-box Objects" ng-include="'views/sprites.html'" ng-controller="SpritesCtrl"></div>
+			<div class="row big-row">
+				<div class="col-md-6 Functions big-box" ng-include="'views/functions.html'" ng-controller="FunctionsCtrl"></div>
+				<div id="spriteContainer" class="col-md-6 Objects big-box" ng-include="'views/sprites.html'" ng-controller="SpritesCtrl"></div>
 			</div>
 		</div>
 
