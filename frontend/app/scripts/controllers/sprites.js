@@ -4,6 +4,7 @@ angular.module('frontendApp')
   .controller('SpritesCtrl', function ($scope, SpriteService, SFService) {
  	$scope.list = SpriteService.getSpriteList();
  	$scope.index = -1;
+ 	$scope.play = false;
 
  	$scope.setPosition = function(that) {
  		//console.log($index);
@@ -28,10 +29,11 @@ angular.module('frontendApp')
  		//console.log(index);
  	}
 
- 	$scope.runCommands = function(func){
- 		var activityList = func.activityList;
- 		for(activity in activityList) {
- 			switch(activity.name) {
+ 	$scope.runCommands = function(){
+ 		console.log("Running Commands");
+ 		//var activityList = func.activityList;
+ 		for(var obj in $scope.list) {
+ 			switch(obj.name) {
  				case "setX":
  					break;
  				case "setY":
@@ -41,11 +43,16 @@ angular.module('frontendApp')
  				case "hide":
  					break;
  				case "move":
+ 					obj.x += 100;
+ 					obj.y += 100;
  					break;
  				case "repeat":
  					//runCommands(activity.activity);
  					break;
  				default:
+ 				obj.x += 100;
+ 				obj.y += 100;
+ 				console.log(obj.name);
  			}
  		}
 

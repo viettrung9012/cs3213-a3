@@ -12,6 +12,16 @@
 	min-height: 100%;
 }
 
+.Object{
+	position:relative;
+}
+
+.sprite-tab{
+	position:absolute;
+	height:0px;
+	width:0px;
+}
+
 .function-tab{
 	margin: auto;
     background: #f8faff;
@@ -60,12 +70,6 @@
 	text-align: center;
 	margin-top: 20px;
 }
-
-.sprite-tab:hover{
-	background-color: #00ffff;
-}
-
-
 
 /*Copy*/
 
