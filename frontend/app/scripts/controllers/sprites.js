@@ -19,6 +19,7 @@ angular.module('frontendApp')
  	$scope.$on('spriteListUpdate', function(){
  		SFService.updateSpriteList($scope.list);
  	});
+	
 
  	$scope.remove = function(index) {
  		$scope.list.splice(index, 1);
