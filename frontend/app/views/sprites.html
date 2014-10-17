@@ -6,8 +6,8 @@
 	>
 -->
 <span ng-repeat="sprites in list" class="sprite-tab col-md-2">
-	<drag model="sprites" ng-click="runCommands()">
-		<a class="btn btn-danger btn-xs" ng-click="remove($index)" ng-show="{{!play}}">
+	<drag model="sprites" ng-show="sprites.show">
+		<a class="btn btn-danger btn-xs" ng-click="remove($index)" ng-show="!play">
 		<span class="glyphicon glyphicon-remove"></span></a>
 		<img ng-src="{{sprites.image}}">
 	</drag>

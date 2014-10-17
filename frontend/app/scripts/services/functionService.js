@@ -8,60 +8,44 @@
  * FunctionService class model of the frontendApp
  */
 angular.module('frontendApp')
-.service('FunctionService', function () {
+.service('FunctionService', function ($rootScope) {
 	var functionList = [{
 			name : "setX",
-			isGlobal : false,
 			value : 0
 		}, {
 			name : "setY",
-			isGlobal : false,
 			value : 0
 		}, {
 			name : "show",
-			isGlobal : true,
 			value : 0
 		}, {
 			name : "hide",
-			isGlobal : true,
 			value : 0
 		}, {
 			name : "move",
-			isGlobal : false,
 			value : 0
 		}, {
 			name : "change costume",
-			isGlobal : false,
 			value : 0
 		}, {
 			name : "change background",
-			isGlobal : true,
 			value : 0
 		}, {
 			name : "repeat",
-			isGlobal : true,
 			value : 0
 		}
 	]
-	var global = {
-		"name" : "global",
-		"data" : []
-	};
-	var tempObj = {
-		"name" : "temp",
-		"data" : []
-	};
-	var tempObj1 = {
-		"name" : "temp1",
-		"data" : []
-	}
 	
 	var alltabs = [];
-	alltabs.push(global);
-	alltabs.push(tempObj);
-	alltabs.push(tempObj1);
-	
 	var activeIndex = 0;
+
+	var updateTabs = function(list){
+		alltabs = list;
+	}
+
+	var broadcastRun = function(spriteList) {
+		$rootScope.$broadcast('runCommands');
+	};
 
 	return {
 		getActive : function(){
@@ -77,24 +61,20 @@ angular.module('frontendApp')
 			return alltabs;
 		},
 		addDisplayFunction : function (fName, fValue, isGlobal, tabIndex) {
-			if (tabIndex == 0) {
-				if (isGlobal) {
-					alltabs[tabIndex]["data"].push({
-						name : fName,
-						value : fValue
-					});
-				}
-			} else {
-				if (fName !== "change background") {
-					alltabs[tabIndex]["data"].push({
-						name : fName,
-						value : fValue
-					});
-				}
+			if(alltabs.length > 0) {
+				alltabs[tabIndex]['data'].push({
+					name : fName,
+					value : fValue
+				});
 			}
+			$rootScope.$broadcast('updateDisplayFunction');
 		},
 		setDisplayFunctionValue : function (index, fValue) {
 			displayFunctionList[index]['value'] = (fValue == undefined || fValue == '') ? "0" : fValue;
-		}
+		},
+
+		updateTabs : updateTabs,
+
+		broadcastRun : broadcastRun
 	}
 });

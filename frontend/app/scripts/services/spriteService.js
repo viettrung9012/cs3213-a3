@@ -3,28 +3,27 @@ angular.module('frontendApp')
 .service('SpriteService', function ($rootScope) {
 	var oSpriteList = [{
 			name: "mainSprite",
-			image: "images/yeoman.png",
-			activityList: []
+			image: "images/yeoman.png"
 		}, {
 			name: "secondSprite",
-			image: "images/hoboman.png",
-			activityList: []
+			image: "images/hoboman.png"
 		}
 	];
 
 	var spriteList = [];
 	
 	var broadcast = function(spriteList) {
-		$rootScope.$broadcast('spriteList.update');
+		$rootScope.$broadcast('spriteListUpdate');
 	};
 
 	var addSpriteList = function(sName, sImage, x, y) {
 		spriteList.push({
-			name: sName,
+			name: sName + spriteList.length,
 			image: sImage,
+			show: true,
 			x: x,
 			y: y,
-			activityList: []
+			data: []
 		});
 		broadcast(spriteList);
 	};
@@ -44,14 +43,5 @@ angular.module('frontendApp')
  		},
 
 		addSpriteList : addSpriteList
-		/*
-		addSpriteList : function(sName, sImage) {
-			spriteList.push({
-				name: sName,
-				image: sImage,
-				activityList: []
-			});
-		}
-		*/
 	}
 });
