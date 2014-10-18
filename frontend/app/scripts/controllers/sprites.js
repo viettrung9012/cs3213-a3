@@ -93,7 +93,7 @@ angular.module('frontendApp')
  	var commandMove = function(index, value, degrees) {
 	 	//console.log("Before Move: ", $scope.list[index].x, $scope.list[index].y);
  		var distance = value * $scope.steps;
- 		degrees += 180;
+ 		degrees = (degrees + 180) * -1;
  		var angle = degrees - 360 * Math.floor(degrees/360);
  		var horizontal = Math.floor(Math.sin(angle * (Math.PI / 180)) * distance);
  		var vertical = Math.floor(Math.cos(angle * (Math.PI / 180)) * distance);
@@ -112,9 +112,7 @@ angular.module('frontendApp')
  	}
 
  	var commandChangeBackground = function(value) {
- 		console.log($scope.background);
  		$scope.background = SpriteService.getBackgroundList()[value].image;
- 		console.log($scope.background);
  	}
 
   });
