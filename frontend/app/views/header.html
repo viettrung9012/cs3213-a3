@@ -1,9 +1,18 @@
 <div class="navbar-header">
-    <a class="navbar-brand" href="/"><i class="ion-ios7-pulse-strong"></i> Satellizer</a>
-  </div>
-  <ul ng-if="!isAuthenticated()" class="nav navbar-nav pull-right">
-    <li><button ng-click="authenticate('google')">Sign in with Google</button></li>
-  </ul>
-  <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
-    <li><a href="/logout">Logout</a></li>
+  <h1 class="header-main">Kodeless</h1>
+</div>
+<ul class="nav navbar-nav pull-left title header-left">
+	<li><span class="navbar-brand" ng-show="!isEditing">{{projectName}}</span></li>
+	<li><span class="btn btn-warning btn-xs title-btn" ng-click="editTitle()" ng-show="!isEditing">Edit</span></li>
+	<li><input type="text" ng-show="isEditing" ng-model="projectName"></input></li>
+	<li><span class="btn btn-primary btn-xs title-btn" ng-click="saveTitle()" ng-show="isEditing">Save</span></li>
+</ul>
+<ul class="nav navbar-nav pull-right header-right">
+    <li>
+		<div id="signinButton"><google-plus-signin clientid="353055755298-lvrfqibegsmulqs1hvqk6mdegu9ldegs.apps.googleusercontent.com"></div>
+		<div id="save-load-buttons">
+			<span class="btn btn-primary btn-md">Save</span>
+			<span class="btn btn-info btn-md">Load</span>
+		</div>
+	</li>
 </ul>
