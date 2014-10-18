@@ -1,1 +1,9 @@
-<h1>This is header</h1>
+<div class="navbar-header">
+    <a class="navbar-brand" href="/"><i class="ion-ios7-pulse-strong"></i> Satellizer</a>
+  </div>
+  <ul ng-if="!isAuthenticated()" class="nav navbar-nav pull-right">
+    <li><button ng-click="authenticate('google')">Sign in with Google</button></li>
+  </ul>
+  <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
+    <li><a href="/logout">Logout</a></li>
+</ul>

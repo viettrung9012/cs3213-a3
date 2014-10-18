@@ -17,13 +17,15 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/style.css">
     <!-- endbuild -->
+	
   </head>
-  <body ng-app="frontendApp">
+  <body ng-app="frontendApp" ng-controller="MainCtrl">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
+	
     <div class="container-fluid">
 		<div class="navbar navbar-default app-header" ng-include="'views/header.html'" ng-controller="HeaderCtrl"></div>
 
@@ -83,6 +85,7 @@
     <script src="bower_components/angular-dragdrop/src/angular-dragdrop.js"></script>
     <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
     <script src="bower_components/sweetalert/lib/sweet-alert.js"></script>
+    <script src="bower_components/satellizer/satellizer.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -92,6 +95,7 @@
 		<script src="scripts/services/spriteService.js"></script>
 		<script src="scripts/services/SFService.js"></script>
 		<script src="scripts/directives/dragDropper.js"></script>
+		<script src="scripts/controllers/main.js"></script>
 		<script src="scripts/controllers/header.js"></script>
 		<script src="scripts/controllers/functionList.js"></script>
 		<script src="scripts/controllers/functions.js"></script>
