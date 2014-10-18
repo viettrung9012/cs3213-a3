@@ -1,18 +1,27 @@
 'use strict';
 angular.module('frontendApp')
 .service('SpriteService', function ($rootScope) {
-	var oSpriteList = [{
-			name: "mainSprite",
-			image: "images/yeoman.png"
-		}, {
-			name: "secondSprite",
-			image: "images/hoboman.png"
-		}
+	function useableObject(name, image) {
+		this.name = name;
+		this.image = image;
+	}
+
+	var oSpriteList = [
+		new useableObject("mainSprite", "images/yeoman.png"),
+		new useableObject("secondSprite", "images/hoboman.png")
+	];
+
+	var costumeList = [
+		new useableObject("costume", "images/costume1.png")
+	];
+
+	var backgroundList = [
+		new useableObject("background", "images/BG.jpg")
 	];
 
 	var spriteList = [];
 	
-	var broadcast = function(spriteList) {
+	var broadcastSpriteList = function() {
 		$rootScope.$broadcast('spriteListUpdate');
 	};
 
@@ -23,14 +32,36 @@ angular.module('frontendApp')
 			show: true,
 			x: x,
 			y: y,
-			data: []
+			data: [],
+			costume: null
 		});
-		broadcast(spriteList);
+		
+		for(var i = 0; i < spriteList.length; i++) {
+			if(spriteList[i].x == "auto") {
+				spriteList[i].x = 0;
+				spriteList[i].y = 0;
+			}
+		}
+		
+		broadcastSpriteList();
 	};
+
+	var updateSpriteList = function(list) {
+		spriteList = list;
+		broadcastSpriteList();
+	}
 
 	return {
 		getOriginalSpriteList : function(){
 			return oSpriteList;
+		},
+
+		getCostumeList : function(){
+			return costumeList;
+		},
+
+		getBackgroundList: function(){
+			return backgroundList;
 		},
 
 		getSpriteList : function(){
@@ -42,6 +73,8 @@ angular.module('frontendApp')
 			broadcast(spriteList);
  		},
 
-		addSpriteList : addSpriteList
+		addSpriteList : addSpriteList,
+
+		updateSpriteList : updateSpriteList
 	}
 });

@@ -36,7 +36,8 @@ body div{
 }
 
 .Object{
-	position:relative;
+	position: relative;
+	padding: 0px;
 }
 
 .sprite-tab{
@@ -84,13 +85,35 @@ body div{
 	width: 25px;
 }
 
-.sprite-tab{
+.spriteList-tab{
 	display: block;
 	position: absolute;
 	clear: none;
 	list-style-type: none;
 	padding: 3px;
 	text-align: center;
+}
+
+.sprite-tab{
+	display: inline;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0px;
+	height: 0px;
+}
+
+.draggable_sprite{
+	position: relative;
+}
+
+.sprite-image{
+	position: absolute;
+}
+
+.background-image{
+	height: 100%;
+	width: 100%;
 }
 
 /*Copy*/
@@ -208,4 +231,14 @@ input[type=number]::-webkit-outer-spin-button {
 .header-main{
 	margin-top: 5%;
 	margin-left: 10%;
+}
+
+/* animation */
+.show-hide {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.show-hide.ng-hide {
+  opacity:0;
 }

@@ -5,10 +5,12 @@
 		 ng-style="{'top':sprites.posY+'px', 'left':sprites.posX+'px'}"
 	>
 -->
-<span ng-repeat="sprites in list" class="sprite-tab col-md-2">
-	<drag model="sprites" ng-show="sprites.show">
+<img class="background-image" ng-src="{{background}}">
+<span ng-repeat="sprites in list" class="sprite-tab">
+	<drag model="sprites" ng-show="sprites.show" class="draggable_sprite">
 		<a class="btn btn-danger btn-xs" ng-click="remove($index)" ng-show="!play">
 		<span class="glyphicon glyphicon-remove"></span></a>
-		<img ng-src="{{sprites.image}}">
+		<img ng-src="{{sprites.image}}" class="sprite-image">
+		<img ng-src="{{sprites.costume}}" class="sprite-image">
 	</drag>
 </span>
