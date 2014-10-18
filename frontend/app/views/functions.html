@@ -22,6 +22,10 @@
 		<span ng-show="node.name=='change background'||node.name=='change costume'"> to </span>
         <input class="function-value-input" data-nodrag name="number-input" type="number" ng-pattern="numInputPattern(node.name)" required="required" ng-show="node.name=='setX'||node.name=='setY'||node.name=='move'||node.name=='repeat'||node.name=='change background'||node.name=='change costume'" ng-model="node.value"></input>
 		<span ng-show="node.name=='move'||node.name=='repeat'"> {{node.name=='move'&&'steps'||'times'}}</span>
+
+        <input class="function-value-input" data-nodrag name="number-input" type="number" ng-pattern="numInputPattern(node.name)" required="required" ng-show="node.name=='move'" ng-model="node.degrees"></input>
+        <span ng-show="node.name=='move'">degrees</span>
+
 		<a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
     </div>
 </script>

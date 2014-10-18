@@ -9,32 +9,22 @@
  */
 angular.module('frontendApp')
 .service('FunctionService', function ($rootScope) {
-	var functionList = [{
-			name : "setX",
-			value : 0
-		}, {
-			name : "setY",
-			value : 0
-		}, {
-			name : "show",
-			value : 0
-		}, {
-			name : "hide",
-			value : 0
-		}, {
-			name : "move",
-			value : 0
-		}, {
-			name : "change costume",
-			value : 0
-		}, {
-			name : "change background",
-			value : 0
-		}, {
-			name : "repeat",
-			value : 0
-		}
-	]
+	function functionObject(name, value) {
+		this.name = name;
+		this.value = value;
+		this.degrees = 0;
+	}
+
+	var functionList = [
+		new functionObject("setX", 0),
+		new functionObject("setY", 0),
+		new functionObject("show", 0),
+		new functionObject("hide", 0),
+		new functionObject("move", 0),
+		new functionObject("change costume", 0),
+		new functionObject("change background", 0),
+		new functionObject("repeat", 0)
+	];
 	
 	var alltabs = [];
 	var activeIndex = 0;
@@ -62,10 +52,7 @@ angular.module('frontendApp')
 		},
 		addDisplayFunction : function (fName, fValue, isGlobal, tabIndex) {
 			if(alltabs.length > 0) {
-				alltabs[tabIndex]['data'].push({
-					name : fName,
-					value : fValue
-				});
+				alltabs[tabIndex]['data'].push(new functionObject(fName, fValue));
 			}
 			$rootScope.$broadcast('updateDisplayFunction');
 		},

@@ -40,12 +40,13 @@ angular.module('frontendApp')
 
 	$scope.activity = function () {
 		FunctionService.broadcastRun();
-		
+		/*
 		swal({
 			title : "HOHOHO!",
 			text : JSON.stringify($scope.alltabs),
 			imageUrl : "images/yeoman.png"
 		});
+		*/
 		
 	}
 	

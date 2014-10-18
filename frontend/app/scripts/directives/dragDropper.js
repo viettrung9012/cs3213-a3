@@ -14,16 +14,18 @@ angular.module('frontendApp')
       element.draggable({
           drag: function() {
             scope.$apply(function read() {
-              scope.model.x = element.css('top');
-              scope.model.y = element.css('left');
+              scope.model.x = element.css('left');
+              scope.model.y = element.css('top');
             });
+          },
+
+          stop: function() {
+            console.log(scope.model.x, scope.model.y);
           }
         });
 
       var elem = document.getElementById("spriteContainer");
       element.draggable("option", "containment", elem);
-      scope.model.x = element.css('top');
-      scope.model.y = element.css('left');
     }
   };
 })
