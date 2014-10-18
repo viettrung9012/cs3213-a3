@@ -54,7 +54,6 @@ angular.module('directive.g+signin', []).
 }).run(['$window','$rootScope',function($window, $rootScope) {
   $window.signinCallback = function (authResult) {
     if (authResult && authResult.access_token){
-	  console.log(authResult);
       $rootScope.$broadcast('event:google-plus-signin-success', authResult);
 	  document.getElementById('signinButton').setAttribute('style', 'display: none');
 	  document.getElementById('save-load-buttons').setAttribute('style', 'display: block');

@@ -10,5 +10,5 @@
  */
 angular
   .module('frontendApp', [
-    'ngTouch', 'ngDragDrop', 'ui.tree', 'directive.g+signin', 'uuid4'
+    'ngTouch', 'ngDragDrop', 'ui.tree', 'directive.g+signin', 'uuid4', 'ui.bootstrap', 'oitozero.ngSweetAlert'
   ]);

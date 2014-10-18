@@ -242,3 +242,11 @@ input[type=number]::-webkit-outer-spin-button {
 .show-hide.ng-hide {
   opacity:0;
 }
+
+.new-button{
+	margin-top: 5%;
+}
+
+.no-height{
+	height:auto !important;
+}
