@@ -8,8 +8,14 @@
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-.controller('FunctionsCtrl', function ($scope, FunctionService) {
+.controller('FunctionsCtrl', function ($scope, FunctionService, SpriteService) {
 	$scope.alltabs = FunctionService.getDisplayFunctionList();
+
+	$scope.$on('spriteListUpdate', function(){
+ 		$scope.alltabs = SpriteService.getSpriteList();
+ 		FunctionService.updateTabs($scope.alltabs);
+ 	});
+
 	$scope.log = function () {
 		console.log(JSON.stringify($scope.data));
 		console.log(JSON.stringify(FunctionService.getDisplayFunctionList()));
@@ -33,11 +39,14 @@ angular.module('frontendApp')
 	};
 
 	$scope.activity = function () {
+		FunctionService.broadcastRun();
+		
 		swal({
-			title : "I will do the following:",
+			title : "HOHOHO!",
 			text : JSON.stringify($scope.alltabs),
 			imageUrl : "images/yeoman.png"
 		});
+		
 	}
 	
 	$scope.numInputPattern = function(name){

@@ -1,62 +1,78 @@
 'use strict';
 
 angular.module('frontendApp')
-  .controller('SpritesCtrl', function ($scope, SpriteService, SFService) {
+  .controller('SpritesCtrl', function ($scope, SpriteService, FunctionService) {
  	$scope.list = SpriteService.getSpriteList();
  	$scope.index = -1;
  	$scope.play = false;
 
- 	$scope.setPosition = function(that) {
- 		//console.log($index);
- 		//console.log(that);
- 		//$scope.list[$scope.list.length - 1].posX = event.offsetX;
- 		//$scope.list[$scope.list.length - 1].posY = event.offsetY;
-
- 		//console.log($scope.list[$scope.list.length - 1].posX );
- 		//console.log($scope.list[$scope.list.length - 1].posY );
- 	}
-
  	$scope.$on('spriteListUpdate', function(){
- 		SFService.updateSpriteList($scope.list);
+ 		FunctionService.updateTabs($scope.list);
  	});
-	
 
  	$scope.remove = function(index) {
  		$scope.list.splice(index, 1);
- 	}
+ 	};
 
- 	$scope.onDragHandler = function(event, index) {
- 		//$scope.index = index;
- 		//console.log(index);
- 	}
+ 	$scope.$on('runCommands', function(){
+ 		$scope.play = true;
+ 		$scope.runCommands();
+ 		$scope.play = false;
+ 	});
+
+ 	$scope.$on('updateDisplayFunction', function(){
+ 		$scope.list = FunctionService.getDisplayFunctionList();
+ 		//console.log(JSON.stringify($scope.list));
+ 	});
 
  	$scope.runCommands = function(){
- 		console.log("Running Commands");
- 		//var activityList = func.activityList;
- 		for(var obj in $scope.list) {
- 			switch(obj.name) {
- 				case "setX":
- 					break;
- 				case "setY":
- 					break;
- 				case "show":
- 					break;
- 				case "hide":
- 					break;
- 				case "move":
- 					obj.x += 100;
- 					obj.y += 100;
- 					break;
- 				case "repeat":
- 					//runCommands(activity.activity);
- 					break;
- 				default:
- 				obj.x += 100;
- 				obj.y += 100;
- 				console.log(obj.name);
+ 		//console.log(JSON.stringify($scope.list));
+ 		for(var i = 0; i < $scope.list.length; i++) {
+ 			//console.log($scope.list[i].data);
+ 			for(var j = 0; j < $scope.list[i].data.length; j++){
+ 				runDataCommands(i, $scope.list[i].data[j]);
  			}
  		}
+ 	};
 
+ 	var runDataCommands = function(index, data) {
+ 		if (data.name == "setX") {
+
+ 		} else if (data.name == "setY") {
+
+ 		} else if (data.name == "show") {
+ 			commandShow(index);
+ 		} else if (data.name == "hide") {
+ 			commandHide(index);
+ 		} else if (data.name == "move") {
+ 			
+ 		} else if (data.name == "repeat") {
+ 			commandRepeat(index, data);
+ 		} else if (data.name == "change costume") {
+ 			
+ 		}
+ 	}
+
+ 	var commandSetX = function(index, setX) {
+ 		$scope.list[index].x += setX;
+ 		console.log($scope.list[index].x);
+ 	}
+
+ 	var commandShow = function(index) {
+ 		$scope.list[index].show = true;
+ 	}
+
+ 	var commandHide = function(index) {
+ 		$scope.list[index].show = false;
+ 	}
+
+ 	var commandRepeat = function(index, data) {
+ 		for(var j = 0; j < data.value; j++) {
+	 		console.log("Repeating ", j, "th time");
+	 		for(var i = 0; i < data.nodes.length; i++) {
+				runDataCommands(index, data.nodes[i]);	
+			}
+		}
  	}
 
   });
