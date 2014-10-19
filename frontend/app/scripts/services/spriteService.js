@@ -7,13 +7,21 @@ angular.module('frontendApp')
 	}
 
 	var oSpriteList = [
-		new useableObject("mainSprite", "images/yeoman.png"),
-		new useableObject("secondSprite", "images/hoboman.png")
+		new useableObject("YeoMan", "images/yeoman.png"),
+		new useableObject("HoboMan", "images/hoboman.png"),
+		new useableObject("ChocoMan", "images/chocoman.png"),
+		new useableObject("WhiteMan", "images/whiteman.png"),
+		new useableObject("Baldwin", "images/baldwin.png"),
+		new useableObject("Machamp", "images/machamp.png")
 	];
 
 	var costumeList = [
 		new useableObject("costume", "images/empty.png"),
-		new useableObject("costume", "images/costume1.png")
+		new useableObject("costume", "images/costume1.png"),
+		new useableObject("costume", "images/costume2.png"),
+		new useableObject("costume", "images/costume3.png"),
+		new useableObject("costume", "images/costume4.png"),
+		new useableObject("costume", "images/costume5.png")
 	];
 
 	var backgroundList = [
@@ -22,8 +30,8 @@ angular.module('frontendApp')
 		new useableObject("background 2", "images/BG2.jpg"),
 		new useableObject("background 3", "images/BG3.jpg"),
 		new useableObject("background 4", "images/BG4.jpg"),
-		new useableObject("background 5", "images/BG5.jpg"),
-		new useableObject("background 6", "images/BG6.jpg"),
+		new useableObject("background 5", "images/BG5.png"),
+		new useableObject("background 6", "images/BG6.png"),
 		new useableObject("background 7", "images/BG7.jpg"),
 		new useableObject("background 8", "images/BG8.jpg"),
 		new useableObject("background 9", "images/BG9.jpg"),
