@@ -1,15 +1,26 @@
+<div class="one-third one-third-right">
 <ul class="col-md-2" ng-repeat="sprites in oList">
 	<!--<li class="sprite-tab" data-drag="true" data-jqyoui-options="{revert: 'invalid', containment:'document'}" ng-model="oList" jqyoui-draggable="{index:{{$index}},animate:true, placeholder:'keep'}">
 	-->
 	<li class="spriteList-tab" ng-click="addSprite(sprites)">
-		<img ng-src="{{sprites.image}}">
+		<img class="thumb" ng-src="{{sprites.image}}">
 		{{sprites.name}}
 	</li>
 </ul>
-
+</div>
+<div class="one-third">
 <ul class="col-md-2" ng-repeat="sprites in cList">
 	<li class="spriteList-tab">
-		<img ng-src="{{sprites.image}}">
-		{{sprites.name}}
+		<img class="thumb" ng-src="{{sprites.image}}">
+		{{$index}}
 	</li>
 </ul>
+</div>
+<div class="one-third one-third-left">
+<ul class="col-md-2" ng-repeat="sprites in bgList">
+	<li class="spriteList-tab">
+		<img class="thumb" ng-src="{{sprites.image}}">
+		{{$index}}
+	</li>
+</ul>
+</div>
