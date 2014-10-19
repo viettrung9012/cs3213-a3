@@ -27,23 +27,20 @@ angular.module('frontendApp')
  		$scope.list = FunctionService.getDisplayFunctionList();
  	});
 
- 	var executeDelayedFunction = function(index, data, isMain) {
+ 	var executeDelayedFunction = function(index, data, isLongest) {
  		var iter = 0;
 		var wait = 500;
 		var cancel = false;
-		console.log(data);
-		var linearData = getLinearFunctionsArray(data);
-		console.log(linearData);
 		var doActions = function(delay, j){
 			$timeout.cancel(cancel);
 			if(!cancel) {
 				$timeout(function(){
-	 				if(j < linearData.length) {
-		 				runDataCommands(index, linearData[j]);
+	 				if(j < data.length) {
+		 				runDataCommands(index, data[j]);
 		 				j++;
 		 			} else {
 		 				cancel = true;
-		 				if(isMain) {
+		 				if(isLongest) {
 		 					$scope.play = false;
 		 				}
 		 			}
@@ -83,8 +80,17 @@ angular.module('frontendApp')
  	}
 
  	$scope.runCommands = function(){
+ 		var list = [];
+ 		var max = 0;
  		for(var i = 0; i < $scope.list.length; i++) {
- 			executeDelayedFunction(i, $scope.list[i].data, true);
+			list.push(getLinearFunctionsArray($scope.list[i].data));
+			if(list[i].length > max) {
+				max = list[i].length;
+			}
+ 		}
+
+ 		for(var i = 0; i < $scope.list.length; i++) {
+ 			executeDelayedFunction(i, list[i], (list[i].length == max));
  		}
  	};
 

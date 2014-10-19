@@ -8,6 +8,7 @@ angular.module('frontendApp')
     transclude: true,
     replace: true,
     scope: {
+      disable: '=',
       model: '='
     },
     link: function postLink(scope, element, iAttrs, ctrl) {
@@ -17,15 +18,20 @@ angular.module('frontendApp')
               scope.model.x = element.css('left');
               scope.model.y = element.css('top');
             });
-          },
-
-          stop: function() {
-            //console.log(scope.model.x, scope.model.y);
           }
-        });
-
+      });
       var elem = document.getElementById("spriteContainer");
       element.draggable("option", "containment", elem);
+      scope.$watch(function(){return scope.disable;}, function(){
+        if(scope.disable) {
+          console.log("Disabling");
+          element.draggable("disable");
+        } else {
+          console.log("Enabling");
+          element.draggable("enable");
+        }
+      }, true);
+
     }
   };
 })

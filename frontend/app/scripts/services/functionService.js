@@ -39,6 +39,9 @@ angular.module('frontendApp')
 
 	return {
 		getActive : function(){
+			if(activeIndex >= alltabs.length) {
+				activeIndex = 0;
+			}
 			return activeIndex;
 		},
 		setActive : function(index){

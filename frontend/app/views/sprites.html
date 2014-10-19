@@ -7,7 +7,7 @@
 -->
 <img class="background-image" ng-src="{{background}}">
 <span ng-repeat="sprites in list" class="sprite-tab">
-	<drag model="sprites" ng-hide="!sprites.show" class="draggable-sprite">
+	<drag model="sprites" disable="play" ng-hide="!sprites.show" class="draggable-sprite">
 		<span ng-show="sprites.show" class="show-hide">
 		<a class="btn btn-danger btn-xs" ng-click="remove($index)" ng-show="!play">
 		<span class="glyphicon glyphicon-remove"></span></a>
