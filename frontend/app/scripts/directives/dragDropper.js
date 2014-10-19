@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('frontendApp')
-.directive('drag',function() {
+.directive('drag', function() {
   return {
     template: '<div id="drag" ng-style="{ top: model.y, left: model.x}"><div ng-transclude></div></drag>',
     restrict: 'E',
@@ -20,7 +20,7 @@ angular.module('frontendApp')
           },
 
           stop: function() {
-            console.log(scope.model.x, scope.model.y);
+            //console.log(scope.model.x, scope.model.y);
           }
         });
 

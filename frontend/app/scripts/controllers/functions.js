@@ -49,7 +49,7 @@ angular.module('frontendApp')
 		*/
 		
 	}
-	
+	/*
 	$scope.numInputPattern = function(name){
 		if (name === 'setX' || name === 'setY' || name === 'move') {
 			return /^-?\d+$/;
@@ -57,4 +57,5 @@ angular.module('frontendApp')
 			return /^\d+$/;
 		}
 	}
+	*/
 });
