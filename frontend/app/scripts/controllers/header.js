@@ -107,6 +107,7 @@ angular.module('frontendApp')
 		}
 		var initialize = function(){
 			SpriteService.replaceSpriteList([]);
+			SpriteService.updateBackground(0);
 			$scope.projectId = uuid4.generate();
 			$scope.$apply(function() {
 				$scope.projectName = "Untitled";
@@ -117,7 +118,7 @@ angular.module('frontendApp')
 			$scope.save();
 			callback();
 		}
-		if ($scope.userId !== undefined&&
+		if ($scope.userId !== undefined&&lastSaved!==undefined&&
 		(lastSaved.data!==SpriteService.getSpriteList()
 			|| lastSaved.userId !== $scope.userId
 			|| lastSaved.projectId !== $scope.projectId
@@ -126,6 +127,7 @@ angular.module('frontendApp')
 				showAlert();
 		} else {
 			SpriteService.replaceSpriteList([]);
+			SpriteService.updateBackground(0);
 			$scope.projectId = uuid4.generate();
 			$scope.projectName = "Untitled";
 			$scope.inputObject = {name: $scope.projectName};
