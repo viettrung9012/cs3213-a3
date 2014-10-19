@@ -45,6 +45,11 @@ angular.module('frontendApp')
 		
 		broadcastSpriteList();
 	};
+	
+	var replaceSpriteList = function(list){
+		spriteList = list;
+		broadcastSpriteList();
+	}
 
 	var updateSpriteList = function(index, list) {
 		spriteList[index] = list;
@@ -75,6 +80,8 @@ angular.module('frontendApp')
 
 		addSpriteList : addSpriteList,
 
-		updateSpriteList : updateSpriteList
+		updateSpriteList : updateSpriteList,
+		
+		replaceSpriteList : replaceSpriteList
 	}
 });

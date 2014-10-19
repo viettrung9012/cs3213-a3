@@ -19,23 +19,27 @@ userbasequery.init = function(req,res,next){
 };
 
 userbasequery.getUserData = function(req, res, next) {
+	console.log(JSON.stringify(req.body));
 	req.db.userbase.find({"id":req.body[0]}).toArray(function(error,data){
 		res.send(data);
 	});
 }
 
 userbasequery.saveUserData = function(req, res, next){
-	var req_userID = req.body[0];
-	var req_projectID = req.body[1];
-	var req_projectName = req.body[2];
-	var req_projectData = req.body[3].data;
+	console.log(JSON.stringify(req.body));
+	var req_userID = req.body["userId"];
+	var req_projectID = req.body["projectId"];
+	var req_projectName = req.body["projectName"];
+	var req_projectData = req.body["data"];
+	var req_lastModified = req.body["lastModified"];
 
 	req.db.userbase.update(
-		{id: req_userID, projectID: req_projectID}, 
+		{userId: req_userID, projectId: req_projectID}, 
 		{
 			$set:{
 				projectName : req_projectName,
-				projectData : req_projectData
+				data : req_projectData,
+				lastModified : req_lastModified
 			}
 		},
 		{
