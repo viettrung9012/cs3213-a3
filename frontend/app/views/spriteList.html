@@ -3,11 +3,13 @@
 	-->
 	<li class="spriteList-tab" ng-click="addSprite(sprites)">
 		<img ng-src="{{sprites.image}}">
+		{{sprites.name}}
 	</li>
 </ul>
 
 <ul class="col-md-2" ng-repeat="sprites in cList">
 	<li class="spriteList-tab">
 		<img ng-src="{{sprites.image}}">
+		{{sprites.name}}
 	</li>
 </ul>

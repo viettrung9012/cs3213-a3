@@ -87,7 +87,7 @@ body div{
 
 .spriteList-tab{
 	display: block;
-	position: absolute;
+	position: relative;
 	clear: none;
 	list-style-type: none;
 	margin: 5%;
