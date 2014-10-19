@@ -208,6 +208,31 @@ input[type=number]::-webkit-outer-spin-button {
 	background: #CFD7E8;
 }
 
+#save-load-buttons{
+	display: none;
+}
+
+.header-right{
+	margin-top: 1%;
+}
+
+.header-left{
+	margin-left: 3%;
+}
+
+.header-left .title-btn{
+	margin-top: 35%;
+}
+
+.header-left input{
+	margin-top: 10%;
+}
+
+.header-main{
+	margin-top: 5%;
+	margin-left: 10%;
+}
+
 /* animation */
 
 .show-hide {
@@ -217,4 +242,12 @@ input[type=number]::-webkit-outer-spin-button {
 
 .show-hide.ng-hide {
   opacity:0;
+}
+
+.new-button{
+	margin-top: 5%;
+}
+
+.no-height{
+	height:auto !important;
 }

@@ -10,7 +10,8 @@ angular.module('frontendApp')
 
  	$scope.$on('spriteListUpdate', function(){
  		FunctionService.updateTabs($scope.list);
- 		//console.log(JSON.stringify($scope.list));
+ 		$scope.list=SpriteService.getSpriteList();
+		//console.log(JSON.stringify($scope.list));
  	});
 
  	$scope.remove = function(index) {
@@ -82,7 +83,7 @@ angular.module('frontendApp')
  	}
 
  	$scope.runCommands = function(){
- 		//console.log(JSON.stringify($scope.list));
+		//console.log(JSON.stringify($scope.list));
  		for(var i = 0; i < $scope.list.length; i++) {
  			executeDelayedFunction(i, $scope.list[i].data, true);
  		}
@@ -110,10 +111,9 @@ angular.module('frontendApp')
  	}
 
  	var commandSetX = function(index, setX) {
- 		$scope.list[index].x = parseInt(setX);
- 		//wait();
+		$scope.list[index].x = parseInt(setX);
  	}
-
+	
  	var commandSetY = function(index, setY) {
  		$scope.list[index].y = parseInt(setY);
  	}

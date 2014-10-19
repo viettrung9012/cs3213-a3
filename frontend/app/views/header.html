@@ -1,1 +1,41 @@
-<h1>This is header</h1>
+<div class="navbar-header">
+  <h1 class="header-main">Kodeless</h1>
+</div>
+<ul class="nav navbar-nav pull-left title header-left">
+	<li><span class="btn btn-primary btn-md new-button" ng-click="newProject()">New Project</span></li>
+	<li><span class="navbar-brand" ng-show="!isEditing">{{projectName}}</span></li>
+	<li><span class="btn btn-warning btn-xs title-btn" ng-click="editTitle()" ng-show="!isEditing">Edit</span></li>
+	<li><input type="text" ng-show="isEditing" ng-model="inputObject.name"></input></li>
+	<li><span class="btn btn-primary btn-xs title-btn" ng-click="saveTitle(inputObject.name)" ng-show="isEditing">Save</span></li>
+</ul>
+<ul class="nav navbar-nav pull-right header-right">
+    <li>
+		<div id="signinButton"><google-plus-signin clientid="353055755298-lvrfqibegsmulqs1hvqk6mdegu9ldegs.apps.googleusercontent.com"></div>
+		<div id="save-load-buttons">
+			<span class="btn btn-primary btn-md" ng-click="save()">Save</span>
+			<span class="btn btn-info btn-md" ng-click="load()">Load</span>
+			<span class="btn btn-danger btn-md" ng-click="signOut()">Sign out</span>
+		</div>
+	</li>
+</ul>
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="no-height">
+	<div class="modal-header">
+        <h3 class="modal-title">I'm a modal!</h3>
+    </div>
+    <div class="modal-body">
+        <ul>
+            <li ng-repeat="item in items">
+                <a ng-click="selected.item = item">{{item.projectName}}</a>
+            </li>
+        </ul>
+        <span ng-show="selected.item != undefined">
+		Selected: <b>{{ selected.item.projectName }}</b> last modified on: {{ selected.item.lastModified }}
+		</span>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+	</div>
+</script>
