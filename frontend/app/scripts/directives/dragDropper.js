@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('frontendApp')
-.directive('drag', function() {
+.directive('drag', ['$animate', function($animate) {
   return {
     template: '<div id="drag" ng-style="{ top: model.y, left: model.x}"><div ng-transclude></div></drag>',
     restrict: 'E',
@@ -22,16 +22,24 @@ angular.module('frontendApp')
       });
       var elem = document.getElementById("spriteContainer");
       element.draggable("option", "containment", elem);
-      scope.$watch(function(){return scope.disable;}, function(){
-        if(scope.disable) {
-          console.log("Disabling");
-          element.draggable("disable");
-        } else {
-          console.log("Enabling");
-          element.draggable("enable");
-        }
-      }, true);
+      scope.$watch(
+        function(){return scope.disable;}, 
+        function(){
+          if(scope.disable) {
+            element.draggable("disable");
+          } else {
+            element.draggable("enable");
+          }
+        }, true
+      );
 
+      scope.$watch(
+          function(){return scope.model.moving;}, 
+          function(){
+            console.log("Value changed");
+          },
+          true
+      );
     }
   };
-})
+}])

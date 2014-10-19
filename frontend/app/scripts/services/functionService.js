@@ -31,6 +31,9 @@ angular.module('frontendApp')
 
 	var updateTabs = function(list){
 		alltabs = list;
+		if(activeIndex >= alltabs.length) {
+			activeIndex = alltabs.length - 1;
+		}
 	}
 
 	var broadcastRun = function(spriteList) {
@@ -39,9 +42,6 @@ angular.module('frontendApp')
 
 	return {
 		getActive : function(){
-			if(activeIndex >= alltabs.length) {
-				activeIndex = 0;
-			}
 			return activeIndex;
 		},
 		setActive : function(index){

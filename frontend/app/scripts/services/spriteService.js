@@ -12,15 +12,19 @@ angular.module('frontendApp')
 	];
 
 	var costumeList = [
+		new useableObject("costume", "images/empty.png"),
 		new useableObject("costume", "images/costume1.png")
 	];
 
 	var backgroundList = [
-		new useableObject("background", "images/BG.jpg")
+		new useableObject("empty", "images/empty.png"),
+		new useableObject("background 1", "images/BG.jpg"),
+		new useableObject("background 2", "images/BG2.jpg")
 	];
 
 	var spriteList = [];
-	
+	var background = 0;
+
 	var broadcastSpriteList = function() {
 		$rootScope.$broadcast('spriteListUpdate');
 	};
@@ -32,6 +36,7 @@ angular.module('frontendApp')
 			show: true,
 			x: x,
 			y: y,
+			moving: false,
 			data: [],
 			costume: null
 		});
@@ -56,6 +61,10 @@ angular.module('frontendApp')
 		broadcastSpriteList();
 	}
 
+	var updateBackground = function(index) {
+		background = index;
+	}
+
 	return {
 		getOriginalSpriteList : function(){
 			return oSpriteList;
@@ -73,6 +82,10 @@ angular.module('frontendApp')
 			return spriteList;
 		},
 		
+		getBackground : function(){
+			return background;
+		},
+
 		removeSpriteList : function(obj){
 			spriteList.splice(spriteList.indexOf(obj), 1);
 			broadcast(spriteList);
@@ -82,6 +95,8 @@ angular.module('frontendApp')
 
 		updateSpriteList : updateSpriteList,
 		
-		replaceSpriteList : replaceSpriteList
+		replaceSpriteList : replaceSpriteList,
+
+		updateBackground : updateBackground
 	}
 });

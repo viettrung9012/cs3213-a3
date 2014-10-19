@@ -24,8 +24,6 @@
 <ul>
 <li ng-repeat="data in alltabs" ui-tree="treeOptions" id="tree-root">
 	<div ng-attr-class="my-label {{($index==activeIndex) && 'my-active-label'}}" ng-click="setActive($index)">{{data.name}}</div>
-    {{$index}} YOLO
-    {{activeIndex}}
     <ol ui-tree-nodes="" ng-model="data.data">
         <li ng-repeat="node in data.data" ui-tree-node ng-include="node.name=='repeat'&&'nodes_renderer.html'||'nodes_display_only.html'"></li>
     </ol>

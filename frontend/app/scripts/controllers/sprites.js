@@ -3,6 +3,14 @@
 angular.module('frontendApp')
   .controller('SpritesCtrl', function ($scope, $timeout, SpriteService, FunctionService) {
  	$scope.list = SpriteService.getSpriteList();
+ 	$scope.background = SpriteService.getBackgroundList()[SpriteService.getBackground()].image;
+ 	$scope.$watch(
+ 		function() {return SpriteService.getBackground();},
+ 		function() {
+ 			$scope.background = SpriteService.getBackgroundList()[SpriteService.getBackground()].image;
+ 		}
+ 	);
+
  	$scope.background = null;
  	$scope.index = -1;
  	$scope.steps = 10;
@@ -16,6 +24,7 @@ angular.module('frontendApp')
 
  	$scope.remove = function(index) {
  		$scope.list.splice(index, 1);
+ 		FunctionService.updateTabs($scope.list);
  	};
 
  	$scope.$on('runCommands', function(){
@@ -33,6 +42,7 @@ angular.module('frontendApp')
 		var cancel = false;
 		var doActions = function(delay, j){
 			$timeout.cancel(cancel);
+			$scope.list[index].moving = false;
 			if(!cancel) {
 				$timeout(function(){
 	 				if(j < data.length) {
@@ -134,7 +144,7 @@ angular.module('frontendApp')
  	}
 
  	var commandMove = function(index, value, degrees) {
-	 	//console.log("Before Move: ", $scope.list[index].x, $scope.list[index].y);
+ 		$scope.list[index].moving = true;
  		var distance = value * $scope.steps;
  		degrees = (degrees + 180) * -1;
  		var angle = degrees - 360 * Math.floor(degrees/360);
@@ -155,7 +165,7 @@ angular.module('frontendApp')
  	}
 
  	var commandChangeBackground = function(value) {
- 		$scope.background = SpriteService.getBackgroundList()[value].image;
+ 		SpriteService.updateBackground(value);
  	}
 
   });

@@ -10,6 +10,13 @@
 angular.module('frontendApp')
 .controller('FunctionsCtrl', function ($scope, FunctionService, SpriteService) {
 	$scope.alltabs = FunctionService.getDisplayFunctionList();
+	$scope.activeIndex = FunctionService.getActive();
+	$scope.$watch(
+		function(){return FunctionService.getActive();},
+		function(){
+			$scope.activeIndex = FunctionService.getActive();
+		}
+	);
 
 	$scope.$on('spriteListUpdate', function(){
  		$scope.alltabs = SpriteService.getSpriteList();
@@ -20,7 +27,7 @@ angular.module('frontendApp')
 		console.log(JSON.stringify($scope.data));
 		console.log(JSON.stringify(FunctionService.getDisplayFunctionList()));
 	};	
-	$scope.activeIndex = FunctionService.getActive();
+	
 	$scope.setActive = function(index){
 		FunctionService.setActive(index);
 		$scope.activeIndex = FunctionService.getActive();
