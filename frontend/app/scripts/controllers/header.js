@@ -8,7 +8,7 @@
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-.controller('HeaderCtrl', function ($scope, uuid4, SpriteService, $modal, $log, $rootScope, SweetAlert) {
+.controller('HeaderCtrl', function ($scope, uuid4, SpriteService, $modal, $log, $rootScope, SweetAlert, $http) {
 	$scope.awesomeThings = [
 		'HTML5 Boilerplate',
 		'AngularJS',
@@ -25,6 +25,7 @@ angular.module('frontendApp')
 		$scope.projectName = text;
 		$scope.isEditing = false;
 	}
+	var lastSaved;
 	window.localStorage['KodelessStorage']="[]"
 	$scope.projectId = uuid4.generate();
 	$scope.save = function(){
@@ -33,54 +34,52 @@ angular.module('frontendApp')
 			userId: $scope.userId,
 			projectName: $scope.projectName,
 			projectId: $scope.projectId,
-			lastModified: Date(),
-			data: content
+			data: content,
+			lastModified: Date()
 		}
-		var data = JSON.parse(window.localStorage['KodelessStorage']);
-		var alreadyExisted = false;
-		for (var i=0; i<data.length; i++){
-			var tempData = data[i];
-			if (tempData.userId===saveData.userId
-			&&tempData.projectId===saveData.projectId){
-				data.splice(i, 1, saveData);
-				alreadyExisted = true;
-			}
-		}
-		if (!alreadyExisted){
-			data.push(saveData);
-		}
-		window.localStorage['KodelessStorage']=JSON.stringify(data);
-		console.log(window.localStorage['KodelessStorage']);
+		$http.post("http://localhost:8000/users/save", saveData).
+			success(function(res){
+				console.log("SUCCESS POST");
+				lastSaved = saveData;
+				SweetAlert.swal("Success!", $scope.projectName+" saved successfully!", "success");
+			}).
+			error(function(res){
+				console.log("ERROR POST");
+				SweetAlert.swal("Oops!", "Something went wrong.. "+console.log(res), "error");
+				//log error
+		});
 	};
 	$scope.load = function () {
-		var savedData = JSON.parse(window.localStorage['KodelessStorage']);
-		console.log(JSON.stringify(savedData));
-		$scope.loadedData = [];
-		for (var i = 0; i < savedData.length; i++) {
-			if (savedData[i]['userId'] === $scope.userId) {
-				$scope.loadedData.push(savedData[i]);
-				console.log($scope.loadedData);
-			}
-		}
-		var modalInstance = $modal.open({
-				templateUrl : 'myModalContent.html',
-				controller : 'ModalInstanceCtrl',
-				size: 'lg',
-				resolve : {
-					items : function () {
-						console.log(JSON.stringify($scope.loadedData));
-						return $scope.loadedData;
+		$http.get("http://localhost:8000/users/").
+		success(function (res) {
+			console.log("SUCCESS POST");
+			$scope.loadedData = res;
+			var modalInstance = $modal.open({
+					templateUrl : 'myModalContent.html',
+					controller : 'ModalInstanceCtrl',
+					size : 'lg',
+					resolve : {
+						items : function () {
+							return $scope.loadedData;
+						}
 					}
-				}
+				});
+			modalInstance.result.then(function (selectedItem) {
+				$scope.selected = selectedItem;
+				SpriteService.replaceSpriteList(selectedItem.data);
+				$scope.projectId = selectedItem.projectId;
+				$scope.projectName = selectedItem.projectName;
+				$scope.inputObject = {
+					name : $scope.projectName
+				};
+			}, function () {
+				$log.info('Modal dismissed at: ' + new Date());
 			});
-		modalInstance.result.then(function (selectedItem) {
-			$scope.selected = selectedItem;
-			SpriteService.updateSpriteList(selectedItem.data);
-			$scope.projectId = selectedItem.projectId;
-			$scope.projectName = selectedItem.projectName;
-			$scope.inputObject = {name: $scope.projectName};
-		}, function () {
-			$log.info('Modal dismissed at: ' + new Date());
+		}).
+		error(function (res) {
+			console.log("ERROR POST");
+			SweetAlert.swal("Oops!", "Something went wrong.. " + console.log(res), "error");
+			//log error
 		});
 	};
 	$scope.signOut = function(){
@@ -106,7 +105,7 @@ angular.module('frontendApp')
 			});
 		}
 		var initialize = function(){
-			SpriteService.updateSpriteList([]);
+			SpriteService.replaceSpriteList([]);
 			$scope.projectId = uuid4.generate();
 			$scope.$apply(function() {
 				$scope.projectName = "Untitled";
@@ -117,10 +116,15 @@ angular.module('frontendApp')
 			$scope.save();
 			callback();
 		}
-		if ($scope.userId !== undefined) {
+		if ($scope.userId !== undefined&&
+		(lastSaved.data!==SpriteService.getSpriteList()
+			|| lastSaved.userId !== $scope.userId
+			|| lastSaved.projectId !== $scope.projectId
+			|| lastSaved.projectName !== $scope.projectName)
+		){
 				showAlert();
 		} else {
-			SpriteService.updateSpriteList([]);
+			SpriteService.replaceSpriteList([]);
 			$scope.projectId = uuid4.generate();
 			$scope.projectName = "Untitled";
 			$scope.inputObject = {name: $scope.projectName};
