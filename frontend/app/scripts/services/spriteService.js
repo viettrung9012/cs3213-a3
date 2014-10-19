@@ -46,8 +46,8 @@ angular.module('frontendApp')
 		broadcastSpriteList();
 	};
 
-	var updateSpriteList = function(list) {
-		spriteList = list;
+	var updateSpriteList = function(index, list) {
+		spriteList[index] = list;
 		broadcastSpriteList();
 	}
 

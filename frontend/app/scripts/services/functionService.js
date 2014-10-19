@@ -53,8 +53,8 @@ angular.module('frontendApp')
 		addDisplayFunction : function (fName, fValue, isGlobal, tabIndex) {
 			if(alltabs.length > 0) {
 				alltabs[tabIndex]['data'].push(new functionObject(fName, fValue));
+				$rootScope.$broadcast('updateDisplayFunction');
 			}
-			$rootScope.$broadcast('updateDisplayFunction');
 		},
 		setDisplayFunctionValue : function (index, fValue) {
 			displayFunctionList[index]['value'] = (fValue == undefined || fValue == '') ? "0" : fValue;
