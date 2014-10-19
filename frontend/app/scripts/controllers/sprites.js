@@ -19,39 +19,27 @@ angular.module('frontendApp')
  	};
 
  	$scope.$on('runCommands', function(){
- 		//console.log("Running");
  		$scope.play = true;
  		$scope.runCommands();
- 		//console.log("Finished");
  	});
 
  	$scope.$on('updateDisplayFunction', function(){
  		$scope.list = FunctionService.getDisplayFunctionList();
- 		//console.log(JSON.stringify($scope.list));
  	});
 
  	var executeDelayedFunction = function(index, data, isMain) {
  		var iter = 0;
 		var wait = 500;
 		var cancel = false;
+		console.log(data);
+		var linearData = getLinearFunctionsArray(data);
+		console.log(linearData);
 		var doActions = function(delay, j){
-			//console.log("Delay", delay, ",", j);
 			$timeout.cancel(cancel);
-
 			if(!cancel) {
-		 		//console.log("J: ", j, " doActions(", delay , ")");
 				$timeout(function(){
-	 				if(j < data.length) {
-		 				//console.log(data[j].name);
-		 				if(data[j].name == "repeat") {
-		 					//console.log(data[j].nodes.length, ",", data[j].value);
-		 					//delay = data[j].nodes.length * 500 * parseInt(data[j].value);
-		 					delay = getRepeatLength(data[j]) * 550;
-		 					//console.log("Before Repeat, RepeatLength: ", getRepeatLength(data[j]));
-		 				} else {
-		 					delay = 400;
-		 				}
-		 				runDataCommands(index, data[j]);
+	 				if(j < linearData.length) {
+		 				runDataCommands(index, linearData[j]);
 		 				j++;
 		 			} else {
 		 				cancel = true;
@@ -59,13 +47,25 @@ angular.module('frontendApp')
 		 					$scope.play = false;
 		 				}
 		 			}
-		 			//console.log(" Delay: ", delay);
 	 				doActions(delay, j);
 				}, delay);
 			}
 		};
-		//console.log(isMain, " ", wait);
 		doActions(wait, iter);
+ 	}
+
+ 	var getLinearFunctionsArray = function(array){
+ 		var linear = [];
+ 		for(var i = 0; i < array.length; i++) {
+ 			if(array[i].name === "repeat") {
+ 				for(var j = 0; j < array[i].value; j++) {
+ 					linear = linear.concat(getLinearFunctionsArray(array[i].nodes));
+ 				}
+ 			} else {
+ 				linear.push(array[i]);
+ 			}
+ 		}
+ 		return linear;
  	}
 
  	var getRepeatLength = function(repeatData){
@@ -83,7 +83,6 @@ angular.module('frontendApp')
  	}
 
  	$scope.runCommands = function(){
-		//console.log(JSON.stringify($scope.list));
  		for(var i = 0; i < $scope.list.length; i++) {
  			executeDelayedFunction(i, $scope.list[i].data, true);
  		}
@@ -100,8 +99,6 @@ angular.module('frontendApp')
  			commandHide(index);
  		} else if (data.name == "move") {
  			commandMove(index, data.value, data.degrees);
- 		} else if (data.name == "repeat") {
- 			commandRepeat(index, data);
  		} else if (data.name == "change costume") {
  			commandChangeCostume(index, data.value);
  		} else if (data.name == "change background") {
@@ -124,21 +121,6 @@ angular.module('frontendApp')
 
  	var commandHide = function(index) {
 	 	$scope.list[index].show = false;
- 	}
-
- 	var commandRepeat = function(index, data) {
- 		var wait = (getRepeatLength(data) / data.nodes.length) * 400;
- 		var repeatMoves = function(j, delay) {
- 			$timeout(function() {
-	 			if(j < data.value) {
-	 				executeDelayedFunction(index, data.nodes, false);
-	 				j++;
-	 				repeatMoves(j);
-	 			}
- 			}, 400);
- 		};
-
- 		repeatMoves(0, wait);
  	}
 
  	var commandChangeCostume = function(index, value) {
