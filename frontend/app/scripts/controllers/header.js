@@ -14,6 +14,7 @@ angular.module('frontendApp')
 		'AngularJS',
 		'Karma'
 	];
+	$scope.serverURL = "http://localhost:8000"; // to be updated
 	$scope.userId;
 	$scope.projectName = "Untitled";
 	$scope.inputObject = {name: $scope.projectName};
@@ -37,7 +38,7 @@ angular.module('frontendApp')
 			data: content,
 			lastModified: Date()
 		}
-		$http.post("http://localhost:8000/users/save", saveData).
+		$http.post($scope.serverURL+"/users/save", saveData).
 			success(function(res){
 				console.log("SUCCESS POST");
 				lastSaved = saveData;
@@ -50,7 +51,7 @@ angular.module('frontendApp')
 		});
 	};
 	$scope.load = function () {
-		$http.get("http://localhost:8000/users/").
+		$http.get($scope.serverURL+"/users/").
 		success(function (res) {
 			console.log("SUCCESS POST");
 			$scope.loadedData = res;
