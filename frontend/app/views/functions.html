@@ -1,12 +1,3 @@
-<!--<div data-drop="true" ng-model="displayFunctions" jqyoui-droppable="{multiple:true, stack: false, animate: false}">
-<ul ng-repeat="displayFunction in displayFunctions">
-	<li class="function-list-tab">
-		<span>{{displayFunction.name}} </span>
-		<input class="function-value-input" numbers-only="numbers-only" required="required" ng-show="displayFunction.name=='setX'||displayFunction.name=='setY'||displayFunction.name=='move'" ng-init="fVal=0" ng-model="fVal" ng-change="updateDisplayFunction($index, fVal)"></input>
-		<span ng-show="displayFunction.name=='move'"> steps</span>
-	</li>
-</ul>
-</div>-->
 <!-- Nested node template -->
 <script type="text/ng-template" id="nodes_renderer.html">
     <div ng-include="'nodes_display_only.html'"></div>
