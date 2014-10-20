@@ -51,7 +51,7 @@ angular.module('frontendApp')
 		});
 	};
 	$scope.load = function () {
-		$http.get($scope.serverURL+"/users/").
+		$http.get($scope.serverURL+"/users/", {params: { userId: $scope.userId }}).
 		success(function (res) {
 			console.log("SUCCESS POST");
 			$scope.loadedData = res;

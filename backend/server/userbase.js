@@ -19,8 +19,8 @@ userbasequery.init = function(req,res,next){
 };
 
 userbasequery.getUserData = function(req, res, next) {
-	console.log(JSON.stringify(req.body));
-	req.db.userbase.find({"id":req.body[0]}).toArray(function(error,data){
+	console.log(JSON.stringify(req));
+	req.db.userbase.find({"userId":req.query.userId}).toArray(function(error,data){
 		res.send(data);
 	});
 }
