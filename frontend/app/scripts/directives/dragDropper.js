@@ -3,7 +3,7 @@
 angular.module('frontendApp')
 .directive('drag', ['$animate', function($animate) {
   return {
-    template: '<div id="drag" ng-style="{ top: model.y, left: model.x}"><div ng-transclude></div></drag>',
+    template: '<div ng-style="{ top: model.y, left: model.x}"><div ng-transclude></div></drag>',
     restrict: 'E',
     transclude: true,
     replace: true,
@@ -27,8 +27,12 @@ angular.module('frontendApp')
         function(){
           if(scope.disable) {
             element.draggable("disable");
+			element.addClass('swift-transition');
+			$compile(element)(scope);
           } else {
             element.draggable("enable");
+			element.removeClass('swift-transition');
+			$compile(element)(scope);
           }
         }, true
       );
