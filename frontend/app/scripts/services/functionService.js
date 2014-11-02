@@ -13,6 +13,7 @@ angular.module('frontendApp')
 		this.name = name;
 		this.value = value;
 		this.degrees = 0;
+		this.index = 0;
 	}
 
 	var functionList = [
@@ -23,7 +24,8 @@ angular.module('frontendApp')
 		new functionObject("move", 0),
 		new functionObject("change costume", 0),
 		new functionObject("change background", 0),
-		new functionObject("repeat", 0)
+		new functionObject("repeat", 0),
+		new functionObject("repeat forever", 1000000)
 	];
 	
 	var alltabs = [];

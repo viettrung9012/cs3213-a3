@@ -2,12 +2,23 @@
 
 angular.module('frontendApp')
   .controller('SpritesCtrl', function ($scope, $timeout, SpriteService, FunctionService) {
+ 	$scope.delay = 500;
+ 	$scope.totalPlay = 0;
  	$scope.list = SpriteService.getSpriteList();
  	$scope.background = SpriteService.getBackgroundList()[SpriteService.getBackground()].image;
  	$scope.$watch(
  		function() {return SpriteService.getBackground();},
  		function() {
  			$scope.background = SpriteService.getBackgroundList()[SpriteService.getBackground()].image;
+ 		}
+ 	);
+
+ 	$scope.$watch(
+ 		function() {return $scope.totalPlay;},
+ 		function() {
+ 			if($scope.totalPlay <= $scope.list.length) {
+ 				$scope.play = false;
+ 			}
  		}
  	);
 
@@ -35,74 +46,86 @@ angular.module('frontendApp')
  	$scope.$on('updateDisplayFunction', function(){
  		$scope.list = FunctionService.getDisplayFunctionList();
  	});
+	
+ 	function CommandStream(SpriteObject) {
+ 		this.functionIndex = 0;
+ 		this.functionList = JSON.parse(JSON.stringify(SpriteObject.data));
+ 		this.getNext = function(){
+ 			if(this.functionIndex >= this.functionList.length) {
+ 				return null;
+ 			}
 
- 	var executeDelayedFunction = function(index, data, isLongest) {
- 		var iter = 0;
-		var wait = 500;
-		var cancel = false;
-		var doActions = function(delay, j){
-			$timeout.cancel(cancel);
-			$scope.list[index].moving = false;
-			if(!cancel) {
-				$timeout(function(){
-	 				if(j < data.length) {
-		 				runDataCommands(index, data[j]);
-		 				j++;
-		 			} else {
-		 				cancel = true;
-		 				if(isLongest) {
-		 					$scope.play = false;
-		 				}
-		 			}
-	 				doActions(delay, j);
-				}, delay);
-			}
-		};
-		doActions(wait, iter);
- 	}
+ 			var current = this.functionList[this.functionIndex];
+ 			current.base = true;
+ 			console.log(JSON.stringify(current));
+ 			return this.getNextCommand(current, this.functionIndex);
+ 		};
 
- 	var getLinearFunctionsArray = function(array){
- 		var linear = [];
- 		for(var i = 0; i < array.length; i++) {
- 			if(array[i].name === "repeat") {
- 				for(var j = 0; j < array[i].value; j++) {
- 					linear = linear.concat(getLinearFunctionsArray(array[i].nodes));
+ 		this.getNextCommand = function(current, functionIndex) {
+ 			var next;
+ 			
+ 			if(functionIndex >= current.length) {
+ 				return null;
+ 			}
+
+ 			//console.log("Before:", JSON.stringify(current));
+ 			if(current.name == "repeat" || current.name == "repeat forever") {
+ 				if(current.value > 0) {
+	 				if(current.index >= current.nodes.length) {
+	 					current.index = 0;
+	 					current.value--;
+	 				}
+
+	 				if(current.value > 0) {
+		 				next = current.nodes[current.index];
+		 				current.index++;
+	 				}
+ 				} else {
+ 					console.log("Value = 0");
+ 					functionIndex++;
+ 					next = this.getNextCommand(next, functionIndex);
  				}
  			} else {
- 				linear.push(array[i]);
+ 				next = current;
+ 				functionIndex++;
+ 				if(current.hasOwnProperty('base')) {
+ 					this.functionIndex++;
+ 				}
  			}
- 		}
- 		return linear;
+
+ 			if(next != null && next.name.indexOf("repeat") > -1) {
+ 				next = this.getNextCommand(next, functionIndex);
+ 			}
+
+ 			return next;
+ 		};
  	}
 
- 	var getRepeatLength = function(repeatData){
- 		console.log(JSON.stringify(repeatData));
- 		var total = 0;
- 		for(var i = 0; i < repeatData.nodes.length; i++) {
- 			if(repeatData.nodes[i].name == "repeat") {
- 				total += getRepeatLength(repeatData.nodes[i]);
- 			} else {
- 				total++;
- 			}
+ 	$scope.runCommands = function() {
+ 		$scope.totalPlay = 0;
+ 		for(var i = 0; i < $scope.list.length; i++) {
+ 			$scope.executeFunctions(i);
  		}
-
- 		return total * repeatData.value;
  	}
 
- 	$scope.runCommands = function(){
- 		var list = [];
- 		var max = 0;
- 		for(var i = 0; i < $scope.list.length; i++) {
-			list.push(getLinearFunctionsArray($scope.list[i].data));
-			if(list[i].length > max) {
-				max = list[i].length;
-			}
- 		}
+	$scope.executeFunctions = function(spriteIndex) {
+		var sprite = $scope.list[spriteIndex];
+		var functionQueue = new CommandStream(sprite);
+		var doActions = function() {
+			$timeout(function(){
+				var data = functionQueue.getNext();
+				//console.log(JSON.stringify(data));
+				if(data != null) {
+					runDataCommands(spriteIndex, data);
+					doActions();
+				} else {
+					$scope.totalPlay++;
+				}
+			}, $scope.delay);
+		};
 
- 		for(var i = 0; i < $scope.list.length; i++) {
- 			executeDelayedFunction(i, list[i], (list[i].length == max));
- 		}
- 	};
+		doActions();
+	}
 
  	var runDataCommands = function(index, data) {
  		if (data.name == "setX") {
@@ -119,7 +142,7 @@ angular.module('frontendApp')
  			commandChangeCostume(index, data.value);
  		} else if (data.name == "change background") {
  			commandChangeBackground(data.value);
- 		}
+ 		} 
  		SpriteService.updateSpriteList(index, $scope.list[index]);
  	}
 

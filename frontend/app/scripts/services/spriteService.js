@@ -81,6 +81,11 @@ angular.module('frontendApp')
 		background = index;
 	}
 
+	var resetProject = function(indec) {
+		spriteList = [];
+		background = backgroundList[0];
+	}
+
 	return {
 		getOriginalSpriteList : function(){
 			return oSpriteList;
