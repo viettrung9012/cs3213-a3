@@ -39,7 +39,7 @@ angular.module('frontendApp')
 	];
 
 	var soundList = {
-		new useableObject("sound 1", "sound/sound1.wav")
+		new useableObject("sound 1", "sound/elephant1.wav")
 	};
 
 	var spriteList = [];
