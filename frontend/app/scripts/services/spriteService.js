@@ -38,9 +38,9 @@ angular.module('frontendApp')
 		new useableObject("background 10", "images/BG10.jpg")
 	];
 
-	var soundList = {
+	var soundList = [
 		new useableObject("sound 1", "sound/elephant1.wav")
-	};
+	];
 
 	var spriteList = [];
 	var background = 0;

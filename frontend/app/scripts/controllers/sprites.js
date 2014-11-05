@@ -125,7 +125,7 @@ angular.module('frontendApp')
 
  	$scope.stop = function() {
  		$scope.stopPlay = true;
-
+ 		$scope.totalPlay = $scope.list.length;
  		while($scope.timers.length > 0) {
  			$timeout.cancel($scope.timers.pop());
  		}
@@ -144,18 +144,16 @@ angular.module('frontendApp')
 		var sprite = $scope.list[spriteIndex];
 		var functionQueue = new CommandStream(sprite);
 		var doActions = function() {
-			var promise = $timeout(function(){
+			$scope.timers.push($timeout(function(){
 				var data = getNext(functionQueue);
-				//console.log(JSON.stringify(data));
-				if(data != null && !$scope.stopPlay) {
+				console.log($scope.timers.length);
+				if(data != null && $scope.stopPlay == false) {
 					runDataCommands(spriteIndex, data);
 					doActions();
 				} else {
 					$scope.totalPlay++;
 				}
-			}, $scope.delay);
-
-			$scope.timers.push(promise);
+			}, $scope.delay));
 		};
 
 		doActions();
