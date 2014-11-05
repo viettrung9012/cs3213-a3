@@ -3,6 +3,8 @@
 angular.module('frontendApp')
   .controller('SpritesCtrl', function ($scope, $timeout, SpriteService, FunctionService) {
  	$scope.delay = 500;
+ 	$scope.timers = [];
+ 	$scope.stopPlay = false;
  	$scope.totalPlay = 0;
  	$scope.list = SpriteService.getSpriteList();
  	$scope.background = SpriteService.getBackgroundList()[SpriteService.getBackground()].image;
@@ -18,6 +20,7 @@ angular.module('frontendApp')
  		function() {
  			if($scope.totalPlay <= $scope.list.length) {
  				$scope.play = false;
+ 				$scope.totalPlay = 0;
  			}
  		}
  	);
@@ -43,6 +46,10 @@ angular.module('frontendApp')
  		$scope.runCommands();
  	});
 
+ 	$scope.$on('stopCommands', function(){
+ 		$scope.stop();
+ 	});
+	
  	$scope.$on('updateDisplayFunction', function(){
  		$scope.list = FunctionService.getDisplayFunctionList();
  	});
@@ -55,54 +62,78 @@ angular.module('frontendApp')
  				return null;
  			}
 
- 			var current = this.functionList[this.functionIndex];
- 			current.base = true;
- 			console.log(JSON.stringify(current));
- 			return this.getNextCommand(current, this.functionIndex);
+ 			var next;
+ 			do {
+ 				next = getNextCom(this.functionList, this.functionIndex, true);
+ 			} while(next.name === "stop");
+ 			
+ 			return next;
  		};
 
- 		this.getNextCommand = function(current, functionIndex) {
- 			var next;
- 			
- 			if(functionIndex >= current.length) {
+ 		var getNextCom = function(list, index, base) {
+ 			if(index >= list.length) {
  				return null;
  			}
+ 			var current = list[index];
+ 			if(current.value === -1) {
+ 				current.value = current.initialValue;
+ 			}
+ 			var next;
 
- 			//console.log("Before:", JSON.stringify(current));
- 			if(current.name == "repeat" || current.name == "repeat forever") {
- 				if(current.value > 0) {
-	 				if(current.index >= current.nodes.length) {
-	 					current.index = 0;
-	 					current.value--;
-	 				}
-
-	 				if(current.value > 0) {
-		 				next = current.nodes[current.index];
-		 				current.index++;
-	 				}
- 				} else {
- 					console.log("Value = 0");
- 					functionIndex++;
- 					next = this.getNextCommand(next, functionIndex);
+ 			console.log(current);
+ 			if(current.name.indexOf("repeat") > -1) {
+ 				if(current.degrees == 0) {
+ 					current.nodes.push({name:"stop"});
+ 					current.degrees = 1;
  				}
+
+ 				if(current.index >= current.nodes.length) {
+ 					current.index = 0;
+ 					current.value--;
+ 				}
+
+ 				if(current.value > 0) {
+ 					next = getNextCom(current.nodes, current.index, false);
+ 					if(current.nodes[current.index].name.indexOf("repeat") > -1) {
+ 						if(current.nodes[current.index].value <= 0) {
+ 							current.index++;
+ 						}
+ 					} else {
+ 						current.index++;
+ 					}
+ 				} else {
+ 					index++;
+ 					if(base) {
+ 						this.functionIndex = index;
+ 					}
+					next = getNextCom(list, index, base);
+					// problem here. in repeat, if nested repeat is last, returns null
+					current.value = -1;
+ 				}
+ 			} else if (current.name == "if") {
+
  			} else {
  				next = current;
- 				functionIndex++;
- 				if(current.hasOwnProperty('base')) {
+ 				if(base) {
  					this.functionIndex++;
  				}
  			}
 
- 			if(next != null && next.name.indexOf("repeat") > -1) {
- 				next = this.getNextCommand(next, functionIndex);
- 			}
-
  			return next;
- 		};
+		};
+ 	}
+
+ 	$scope.stop = function() {
+ 		$scope.stopPlay = true;
+ 		while($scope.timers.length > 0) {
+ 			$timeout.cancel($scope.timers.pop());
+ 		}
+ 		
  	}
 
  	$scope.runCommands = function() {
  		$scope.totalPlay = 0;
+ 		$scope.stopPlay = false;
  		for(var i = 0; i < $scope.list.length; i++) {
  			$scope.executeFunctions(i);
  		}
@@ -112,16 +143,20 @@ angular.module('frontendApp')
 		var sprite = $scope.list[spriteIndex];
 		var functionQueue = new CommandStream(sprite);
 		var doActions = function() {
-			$timeout(function(){
+			var promise = $timeout(function(){
 				var data = functionQueue.getNext();
 				//console.log(JSON.stringify(data));
-				if(data != null) {
-					runDataCommands(spriteIndex, data);
-					doActions();
-				} else {
-					$scope.totalPlay++;
+				if(!$scope.stopPlay) {
+					if(data != null) {
+						runDataCommands(spriteIndex, data);
+						doActions();
+					} else {
+						$scope.totalPlay++;
+					}
 				}
 			}, $scope.delay);
+
+			$scope.timers.push(promise);
 		};
 
 		doActions();

@@ -56,6 +56,11 @@ angular.module('frontendApp')
 		*/
 		
 	}
+
+	$scope.stop = function (){
+		FunctionService.broadcastStop();
+	}
+
 	/*
 	$scope.numInputPattern = function(name){
 		if (name === 'setX' || name === 'setY' || name === 'move') {

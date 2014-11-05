@@ -11,7 +11,8 @@ angular.module('frontendApp')
 .service('FunctionService', function ($rootScope) {
 	function functionObject(name, value) {
 		this.name = name;
-		this.value = value;
+		this.initialValue = value;
+		this.value = -1;
 		this.degrees = 0;
 		this.index = 0;
 	}
@@ -42,6 +43,10 @@ angular.module('frontendApp')
 		$rootScope.$broadcast('runCommands');
 	};
 
+	var broadcastStop = function() {
+		$rootScope.$broadcast('stopCommands');
+	}
+
 	return {
 		getActive : function(){
 			return activeIndex;
@@ -66,7 +71,7 @@ angular.module('frontendApp')
 		},
 
 		updateTabs : updateTabs,
-
-		broadcastRun : broadcastRun
+		broadcastRun : broadcastRun,
+		broadcastStop : broadcastStop
 	}
 });
