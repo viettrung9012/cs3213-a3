@@ -2,7 +2,7 @@
 <script type="text/ng-template" id="nodes_renderer.html">
     <div ng-include="'nodes_display_only.html'"></div>
     <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
-        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="(node.name=='repeat'||node.name=='repeat forever')&&'nodes_renderer.html'||'nodes_display_only.html'">
+        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="(node.name=='repeat'||node.name=='repeat forever'||node.name=='if')&&'nodes_renderer.html'||'nodes_display_only.html'">
         </li>
     </ol>
 </script>
@@ -15,6 +15,8 @@
         <input class="function-value-input" data-nodrag name="number-input" type="number" ng-pattern="numInputPattern(node.name)" required="required" ng-show="node.name=='setX'||node.name=='setY'||node.name=='move'||node.name=='repeat'||node.name=='change background'||node.name=='change costume'" ng-model="node.initialValue"></input>
 		<span ng-show="node.name=='move'||node.name=='repeat'"> {{node.name=='move'&&'steps'||'times'}}</span>
 
+        <input class="function-value-input" data-nodrag type="text" required="required" ng-show="node.name=='if'" ng-model="node.expression"></input>
+
         <input class="function-value-input" data-nodrag name="number-input" type="number" ng-pattern="numInputPattern(node.name)" required="required" ng-show="node.name=='move'" ng-model="node.degrees"></input>
         <span ng-show="node.name=='move'">degrees</span>
 
@@ -26,7 +28,7 @@
 <li ng-repeat="data in alltabs" ui-tree="treeOptions" id="tree-root">
 	<div ng-attr-class="my-label {{($index==activeIndex) && 'my-active-label'}}" ng-click="setActive($index)">{{data.name}}</div>
     <ol ui-tree-nodes="" ng-model="data.data">
-        <li ng-repeat="node in data.data" ui-tree-node ng-include="(node.name=='repeat'||node.name=='repeat forever')&&'nodes_renderer.html'||'nodes_display_only.html'"></li>
+        <li ng-repeat="node in data.data" ui-tree-node ng-include="(node.name=='repeat'||node.name=='repeat forever'||node.name=='if')&&'nodes_renderer.html'||'nodes_display_only.html'"></li>
     </ol>
 </li>
 </ul>
