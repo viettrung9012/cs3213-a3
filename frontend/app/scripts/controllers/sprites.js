@@ -147,24 +147,25 @@ angular.module('frontendApp')
 		var exp = "";
 
 		for(var i = 0; i < arr.length; i++) {
-			if(!isNaN(arr[i]) || contains($scope.operators, arr[i])) {
-				exp += arr[i];
-			} else if (arr[i] === "true" || arr[i] === "false"){
-				exp += arr[i];
-			} else if (arr[i] === "pos.x" || arr[i] === "position.x") {
+			var temp = arr[i].split("!");
+			for(var j = 0; j < temp.length - 1; j++) {
+				exp += "!";
+			}
+			var foo = temp[temp.length - 1];
+
+			if(!isNaN(foo) || contains($scope.operators, foo)) {
+				exp += foo;
+			} else if (foo === "true" || foo === "false"){
+				exp += foo;
+			} else if (foo === "pos.x" || foo === "position.x") {
 				exp += $scope.list[index].x.toString();
-			} else if(arr[i] === "pos.y" || arr[i] === "position.y")  {
+			} else if(foo === "pos.y" || foo === "position.y")  {
 				exp += $scope.list[index].y.toString();
 			} else {
-				var temp = arr[i].split("!");
-				for(var j = 0; j < temp.length - 1; j++) {
-					exp += "!";
-				}
-
 				if(contains($scope.varList)) {
-					exp += $scope.varValue.indexOf(arr[i]);
+					exp += $scope.varValue.indexOf(foo);
 				} else {
-					$scope.varList.push(arr[i]);
+					$scope.varList.push(foo);
 					$scope.varValue.push(0);
 					exp += "0";
 				}
