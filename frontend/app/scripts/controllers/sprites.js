@@ -114,6 +114,29 @@ angular.module('frontendApp')
 				current.value = -1;
 			}
 		} else if (current.name == "if") {
+			if(current.degrees == 0) {
+				current.nodes.push({name:"stop"});
+				current.degrees = 1;
+			}
+
+			if($scope.evaluateExpression(current.expression, objIndex) && current.index < current.nodes.length) {
+				next = getNextCom(current.nodes, current.index, false, com, objIndex);
+				if(current.nodes[current.index].name.indexOf("repeat") > -1) {
+					if(current.nodes[current.index].value <= 0) {
+						current.index++;
+					}
+				} else {
+					current.index++;
+				}
+			} else {
+				index++;
+				if(base) {
+					com.functionIndex = index;
+				}
+				next = getNextCom(list, index, base, com, objIndex);
+			}
+
+			/*
 			console.log(current);
 			console.log($scope.evaluateExpression(current.expression, objIndex));
 			if($scope.evaluateExpression(current.expression, objIndex) && current.index < current.nodes.length) {
@@ -132,6 +155,7 @@ angular.module('frontendApp')
 				}
 				next = getNextCom(list, index, base, com, objIndex);
 			}
+			*/
 		} else {
 			next = current;
 			if(base) {
