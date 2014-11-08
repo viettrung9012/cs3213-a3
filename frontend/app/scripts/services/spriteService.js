@@ -39,7 +39,12 @@ angular.module('frontendApp')
 	];
 
 	var soundList = [
-		new useableObject("sound 1", "sound/elephant1.wav")
+		new useableObject("cat", "sound/cat.wav"),
+		new useableObject("cow", "sound/cow.wav"),
+		new useableObject("goat", "sound/goat.wav"),
+		new useableObject("elephant", "sound/elephant.wav"),
+		new useableObject("pig", "sound/pig.wav"),
+		new useableObject("hello", "sound/hello.wav"),
 	];
 
 	var spriteList = [];
@@ -97,6 +102,10 @@ angular.module('frontendApp')
 
 		getCostumeList : function(){
 			return costumeList;
+		},
+
+		getSoundList : function() {
+			return soundList;
 		},
 
 		getBackgroundList: function(){

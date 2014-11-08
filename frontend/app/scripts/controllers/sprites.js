@@ -2,6 +2,10 @@
 
 angular.module('frontendApp')
   .controller('SpritesCtrl', function ($scope, $timeout, SpriteService, FunctionService) {
+<<<<<<< HEAD
+=======
+ 	$scope.sounds = SpriteService.getSoundList();
+>>>>>>> ae8da0e57958fc9eda4cb0657733ff2cd4cea9a5
  	$scope.delay = 500;
  	$scope.timers = [];
  	$scope.varList = [];
@@ -100,11 +104,20 @@ angular.module('frontendApp')
 					if(current.nodes[current.index].value <= 0) {
 						current.index++;
 					}
-				}  
+				} 
+				else if(current.nodes[current.index].name == "while") {
+					if(!((current.nodes[current.index].index < 0 && current.nodes[current.index].index < current.nodes[current.index].nodes.length) ||
+						($scope.evaluate(current.nodes[current.index].expression))))
+					{
+						current.index++;
+					} 
+				} 
 				//next command is an "IF"
-				else if(current.nodes[current.index].name === "if" && current.nodes[current.index].index >= current.nodes[current.index].nodes.length) {
-					current.nodes[current.index].index = 0;
-					current.index++;	
+				else if(current.nodes[current.index].name === "if") {
+					if(current.nodes[current.index].index >= current.nodes[current.index].nodes.length) {
+						current.nodes[current.index].index = 0;
+						current.index++;
+					}	
 				}
 				// do next command
 				else {
@@ -129,7 +142,22 @@ angular.module('frontendApp')
 					if(current.nodes[current.index].value <= 0) {
 						current.index++;
 					}
-				} else {
+				} 
+				else if(current.nodes[current.index].name == "while") {
+					if(!((current.nodes[current.index].index < 0 && current.nodes[current.index].index < current.nodes[current.index].nodes.length) ||
+						($scope.evaluate(current.nodes[current.index].expression))))
+					{
+						current.index++;
+					} 
+				} 
+				//next command is an "IF"
+				else if(current.nodes[current.index].name === "if") {
+					if(current.nodes[current.index].index >= current.nodes[current.index].nodes.length) {
+						current.nodes[current.index].index = 0;
+						current.index++;
+					}	
+				}
+				else {
 					current.index++;
 				}
 			} else {
@@ -141,6 +169,50 @@ angular.module('frontendApp')
 				next = getNextCommand(list, index, base, com, objIndex);
 				current.index = 0;
 			}
+ 		} else if(current.name === "while") {
+ 			if(current.degrees === 0) {current.nodes.push({name:"stop"}); current.degrees = 1;}
+ 			 //already in the middle of evaluating
+ 			if(current.index > 0 && current.index < current.nodes.length) {
+ 			 	next = getNextCommand(current.nodes, current.index, false, com, objIndex);
+				//if the next command is a nested repeat
+ 				if(current.nodes[current.index].name.indexOf("repeat") != -1) {
+					//skip to next command if repeat is completed
+					if(current.nodes[current.index].value <= 0) {
+						current.index++;
+					}
+				} 
+				else if(current.nodes[current.index].name == "while") {
+					if(!((current.nodes[current.index].index < 0 && current.nodes[current.index].index < current.nodes[current.index].nodes.length) ||
+						($scope.evaluate(current.nodes[current.index].expression))))
+					{
+						current.index++;
+					} 
+				} 
+				//next command is an "IF"
+				else if(current.nodes[current.index].name === "if") {
+					if(current.nodes[current.index].index >= current.nodes[current.index].nodes.length) {
+						current.nodes[current.index].index = 0;
+						current.index++;
+					}	
+				}
+				// do next command
+				else {
+					current.index++;
+				}
+ 			} else {
+ 			 	current.index = 0;
+ 			 	var expression = $scope.evaluate(current.expression);
+ 			 	if(expression) {
+ 			 		next = getNextCommand(current.nodes, current.index, false, com, objIndex);
+ 			 		current.index++;
+ 			 	} else {
+ 			 		index++;
+ 			 		if(base) {
+ 			 			com.functionIndex = index;
+ 			 		}
+ 			 		next = getNextCommand(list, index, base, com , objIndex);
+ 			 	}
+ 			 }
  		} else {
 			next = current;
 			if(base) {
@@ -150,81 +222,6 @@ angular.module('frontendApp')
 
 		return next;
  	}
-
-
- 	var getNextCom = function(list, index, base, com, objIndex) {
-		if(index >= list.length) {
-			return null;
-		}
-		var current = list[index];
-		if(current.value === -1) {
-			current.value = current.initialValue;
-		}
-		var next;
-
-		if(current.name.indexOf("repeat") > -1) {
-			if(current.degrees == 0) {
-				current.nodes.push({name:"stop"});
-				current.degrees = 1;
-			}
-
-			if(current.index >= current.nodes.length) {
-				current.index = 0;
-				current.value--;
-			}
-
-			if(current.value > 0) {
-				next = getNextCom(current.nodes, current.index, false, com, objIndex);
-				if(current.nodes[current.index].name.indexOf("repeat") > -1) {
-					if(current.nodes[current.index].value <= 0) {
-						current.index++;
-					}
-				} else {
-					current.index++;
-				}
-			} else {
-				index++;
-				if(base) {
-					com.functionIndex = index;
-				}
-				next = getNextCom(list, index, base, com, objIndex);
-				current.value = -1;
-			}
-		} else if (current.name == "if") {
-			if(current.degrees == 0) {
-				current.nodes.push({name:"stop"});
-				current.degrees = 1;
-			}
-
-			if($scope.evaluate(current.expression, objIndex) && current.index < current.nodes.length) {
-				next = getNextCom(current.nodes, current.index, false, com, objIndex);
-				if(current.nodes[current.index].name.indexOf("repeat") > -1) {
-					if(current.nodes[current.index].value <= 0) {
-						current.index++;
-					}
-				} else {
-					current.index++;
-				}
-			} else {
-				current.index = 0;
-				index++;
-				if(base) {
-					com.functionIndex = index;
-				}
-				next = getNextCom(list, index, base, com, objIndex);
-				current.index = 0;
-			}
-
-			if(current.index >= current.nodes.length) current.index = 0;
-		} else {
-			next = current;
-			if(base) {
-				com.functionIndex++;
-			}
-		}
-
-		return next;
-	};
 
 	$scope.evaluate = function(expression, index) {
 		var lexemes = new ExpressionLexer(expression);
@@ -287,19 +284,19 @@ angular.module('frontendApp')
 	$scope.executeFunctions = function(spriteIndex) {
 		var sprite = $scope.list[spriteIndex];
 		var functionQueue = new CommandStream(sprite);
-		var doActions = function() {
+		var doActions = function(delay) {
 			$scope.timers.push($timeout(function(){
 				var data = getNext(functionQueue);
 				if(data != null && $scope.stopPlay == false) {
 					runDataCommands(spriteIndex, data);
-					doActions();
+					doActions(data.delay);
 				} else {
 					$scope.totalPlay++;
 				}
-			}, $scope.delay));
+			}, delay));
 		};
 
-		doActions();
+		doActions($scope.delay);
 	}
 
  	var runDataCommands = function(index, data) {
@@ -319,6 +316,8 @@ angular.module('frontendApp')
  			commandChangeBackground(data.value);
  		} else if (data.name == "=") {
  			commandAssign(index, data.expression2, data.expression);
+ 		} else if (data.name == 'play sound') {
+ 			commandPlaySound(data.value);
  		}
  		SpriteService.updateSpriteList(index, $scope.list[index]);
  	}
@@ -341,6 +340,11 @@ angular.module('frontendApp')
 
  	var commandChangeCostume = function(index, value) {
  		$scope.list[index].costume = SpriteService.getCostumeList()[value].image;
+ 	}
+
+ 	var commandPlaySound = function(value) {
+ 		var audio = new Audio($scope.sounds[value].image);
+ 		audio.play();
  	}
 
  	var commandAssign = function(index, op1, op2) {
