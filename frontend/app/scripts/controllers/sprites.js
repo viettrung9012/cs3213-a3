@@ -6,7 +6,8 @@ angular.module('frontendApp')
  	$scope.timers = [];
  	$scope.varList = [];
  	$scope.varValue = [];
- 	$scope.operators = ["+","-","*","/","||", "&&", "==", ">", "<", ">=", "<=", "!=", "/="];
+ 	$scope.operators = ["+","-","*","/","|", "&", "=", ">", "<", "!"];
+ 	$scope.validOperators = ["+", "-", "*", "||", "&&", "==", "===", ">", ">=", "<", "<=", "!="];
  	$scope.stopPlay = false;
  	$scope.totalPlay = 0;
  	$scope.list = SpriteService.getSpriteList();
@@ -119,7 +120,7 @@ angular.module('frontendApp')
 				current.degrees = 1;
 			}
 
-			if($scope.evaluateExpression(current.expression, objIndex) && current.index < current.nodes.length) {
+			if($scope.evaluate(current.expression, objIndex) && current.index < current.nodes.length) {
 				next = getNextCom(current.nodes, current.index, false, com, objIndex);
 				if(current.nodes[current.index].name.indexOf("repeat") > -1) {
 					if(current.nodes[current.index].value <= 0) {
@@ -135,27 +136,6 @@ angular.module('frontendApp')
 				}
 				next = getNextCom(list, index, base, com, objIndex);
 			}
-
-			/*
-			console.log(current);
-			console.log($scope.evaluateExpression(current.expression, objIndex));
-			if($scope.evaluateExpression(current.expression, objIndex) && current.index < current.nodes.length) {
-				next = getNextCom(current.nodes, current.index, false, com, objIndex);
-				if(current.nodes[current.index].name.indexOf("repeat") > -1) {
-					if(current.nodes[current.index].value <= 0) {
-						current.index++;
-					}
-				} else {
-					current.index++;
-				}
-			} else {
-				index++;
-				if(base) {
-					com.functionIndex = index;
-				}
-				next = getNextCom(list, index, base, com, objIndex);
-			}
-			*/
 		} else {
 			next = current;
 			if(base) {
@@ -166,53 +146,45 @@ angular.module('frontendApp')
 		return next;
 	};
 
-	$scope.evaluateExpression = function(expression, index) {
-		var arr = expression.trim().split(/\s+/);
+	$scope.evaluate = function(expression, index) {
+		var lexemes = new ExpressionLexer(expression);
+		var token = lexemes.getNextToken();
 		var exp = "";
-
-		for(var i = 0; i < arr.length; i++) {
-			var temp = arr[i].split("!");
-			for(var j = 0; j < temp.length - 1; j++) {
-				exp += "!";
-			}
-			var foo = temp[temp.length - 1];
-
-			if(!isNaN(foo) || contains($scope.operators, foo)) {
-				exp += foo;
-			} else if (foo === "true" || foo === "false"){
-				exp += foo;
-			} else if (foo === "pos.x" || foo === "position.x") {
-				exp += $scope.list[index].x.toString();
-			} else if(foo === "pos.y" || foo === "position.y")  {
-				exp += $scope.list[index].y.toString();
+		while(token !== "EOL") {
+			if(!isNaN(token)) {
+				exp += token;
+			} else if ($scope.validOperators.indexOf(token) != -1) {
+				exp += token;
+			} else if (token === "posX" || token === "positionX") {
+				exp += parseInt($scope.list[index].x).toString();
+			} else if (token === "posY" || token === "positionY") {
+				exp += parseInt($scope.list[index].y).toString();
+			} else if (token === "true" || token === "false") {
+				exp += token;
 			} else {
-				if(contains($scope.varList)) {
-					exp += $scope.varValue.indexOf(foo);
+				if($scope.varList.indexOf(token) != -1) {
+					exp += $scope.varValue[$scope.varList.indexOf(token)];
 				} else {
-					$scope.varList.push(foo);
+					$scope.varList.push(token);
 					$scope.varValue.push(0);
-					exp += "0";
+					exp += 0;
 				}
 			}
+			token = lexemes.getNextToken();
 		}
 
-		try {
-			return eval(exp);
-		} catch (e) {
-			if (e instanceof SyntaxError) {
-       			alert("Syntax Error at expression: " + expression);
-   			}
-		}
-	}
+		//console.log(exp);
+		return eval(exp);
+ 	}
 
 	function contains(a, obj) {
-    	var i = a.length;
-    	while (i--) {
+    	var i = a.length - 1;
+    	while (i >= 0) {
        		if (a[i] === obj) {
-           		return true;
+           		return i;
        		}
     	}
-    	return false;
+    	return i;
 	}
 
  	$scope.stop = function() {
@@ -265,7 +237,9 @@ angular.module('frontendApp')
  			commandChangeCostume(index, data.value);
  		} else if (data.name == "change background") {
  			commandChangeBackground(data.value);
- 		} 
+ 		} else if (data.name == "=") {
+ 			commandAssign(index, data.expression2, data.expression);
+ 		}
  		SpriteService.updateSpriteList(index, $scope.list[index]);
  	}
 
@@ -288,6 +262,49 @@ angular.module('frontendApp')
  	var commandChangeCostume = function(index, value) {
  		$scope.list[index].costume = SpriteService.getCostumeList()[value].image;
  	}
+
+ 	var commandAssign = function(index, op1, op2) {
+ 		var temp = $scope.evaluate(op2, index);
+ 		if($scope.varList.indexOf(op1) != -1) {
+ 			var i = $scope.varList.indexOf(op1);
+ 			$scope.varValue[i] = temp;
+ 		} else {
+ 			$scope.varList.push(op1);
+ 			$scope.varValue.push(temp);
+ 		}
+
+ 		console.log($scope.varList);
+ 		console.log($scope.varValue);
+ 	}
+
+ 	/*
+ 	var commandAssign = function(index, variable, expression) {
+ 		var temp = $scope.evaluateExpression(expression, index);
+ 		var arr = variable.trim().split(/\s+/);
+ 		if(arr.length > 1) {
+ 			$scope.stop();
+ 			alert("Syntax Error: " + variable + "is not a valid variable");
+ 		} else {
+ 			var arr2 = arr[0].split("!");
+ 			if(arr2.length > 1) {
+ 				$scope.stop();
+ 				alert("Syntax Error: " + variable + "is not a valid variable");
+ 			} else {
+ 				if(contains($scope.varList, variable) >= 0) {
+ 					$scope.varValue[$scope.varList.indexOf(variable)] = temp;
+ 				} else {
+ 					$scope.varList.push(variable);
+ 					$scope.varValue.push(temp);
+ 				}
+ 			}
+ 		} 
+ 		console.log("Assign START");
+ 		console.log($scope.varList);
+ 		console.log($scope.varValue);
+ 		console.log($scope.varList.indexOf(variable));
+ 		console.log("Assign END");
+ 	}
+ 	*/
 
  	var commandMove = function(index, value, degrees) {
  		$scope.list[index].moving = true;
@@ -312,6 +329,82 @@ angular.module('frontendApp')
 
  	var commandChangeBackground = function(value) {
  		SpriteService.updateBackground(value);
+ 	}
+
+ 	var ExpressionLexer = function(expression) {
+ 		this.Lexemes = expression.split("");
+ 		this.LexemeTypes = (function(exp){
+ 			var foo = [];
+ 			var temp = expression.split("");
+ 			for(var i = 0; i < temp.length; i++) {
+ 				if($scope.operators.indexOf(temp[i]) != -1) {
+ 					foo.push(0);
+ 				} else if(!isNaN(temp[i])) {
+ 					foo.push(1);
+ 				} else if(temp[i] == ".") {
+ 					foo.push(3);
+ 				} else if(temp[i] == " ") {
+ 					foo.push(4);
+ 				} else if(temp[i] == "_") {
+ 					foo.push(5);
+ 				} else if(/^[a-zA-Z]{1}$/.test(temp[i])) {
+ 					foo.push(6);
+ 				} else if(temp[i] == "(" || temp[i] == ")") {
+ 					foo.push(7);
+ 				} else {
+ 					foo.push(-1);
+ 				}
+ 			}
+ 			return foo;
+ 		})(expression);
+ 		this.index = 0;
+ 	}
+ 	//-1: Error
+ 	// 0: Operators
+ 	// 1: INTEGER
+ 	// 2: !
+ 	// 3: .
+ 	// 4: WHITESPACE
+ 	// 5: _
+ 	// 6: Alphabet
+ 	// 7: BRACKETS
+ 	ExpressionLexer.prototype.getNextToken = function() {
+ 		if(this.index >= this.Lexemes.length) {
+ 			return "EOL";
+ 		}
+ 		while(this.LexemeTypes[this.index] === 4) {
+ 			this.index++;
+ 		}
+ 		var type = this.LexemeTypes[this.index];
+ 		var current = this.Lexemes[this.index++];
+ 		switch(type) {
+ 			case 2: case 7:
+ 				return current;
+ 			case 0:
+ 				while(this.LexemeTypes[this.index] === 0) {
+ 					current += this.Lexemes[this.index++];
+ 				} 
+ 				return current;
+ 			case 1:
+ 				while(this.LexemeTypes[this.index] === 1) {
+ 					current += this.Lexemes[this.index++];
+ 				}
+ 				if (this.LexemeTypes[this.index] === ".") {
+ 					current += "."
+ 					this.index++;
+ 					while(this.LexemeTypes[this.index] === 1) {
+ 						current += this.Lexemes[this.index++];
+ 					}
+ 				}
+ 				return current;
+ 			case 5: case 6:
+ 				while(this.LexemeTypes[this.index] === 1 || this.LexemeTypes[this.index] === 5 || this.LexemeTypes[this.index] === 6) {
+ 					current += this.Lexemes[this.index++];
+ 				}
+ 				return current;
+ 			default:
+ 				return "ERROR";
+ 		}
  	}
 
   });

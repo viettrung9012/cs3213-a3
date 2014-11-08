@@ -15,6 +15,7 @@ angular.module('frontendApp')
 		this.value = -1;
 		this.degrees = 0;
 		this.index = 0;
+		this.expression2 = "x";
 		this.expression = "true";
 	}
 
@@ -29,6 +30,7 @@ angular.module('frontendApp')
 		new functionObject("repeat", 0),
 		new functionObject("repeat forever", 1000000),
 		new functionObject("if", 0),
+		new functionObject("=", 0),
 		new functionObject("play sound", 0)
 	];
 	
