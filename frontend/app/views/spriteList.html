@@ -1,26 +1,34 @@
-<div class="one-third one-third-right">
-<ul class="col-md-2" ng-repeat="sprites in oList">
-	<!--<li class="sprite-tab" data-drag="true" data-jqyoui-options="{revert: 'invalid', containment:'document'}" ng-model="oList" jqyoui-draggable="{index:{{$index}},animate:true, placeholder:'keep'}">
-	-->
-	<li class="spriteList-tab" ng-click="addSprite(sprites)">
-		<img class="thumb" ng-src="{{sprites.image}}">
-		{{sprites.name}}
-	</li>
+<ul id="tabs" class="nav nav-pills" data-tabs="tabs">
+	<li class="active"><a href="#characters" data-toggle="tab">Characters</a></li>
+		<li><a href="#costumes" data-toggle="tab">Costumes</a></li>
+		<li><a href="#backgrounds" data-toggle="tab">Backgrounds</a></li>
 </ul>
-</div>
-<div class="one-third">
-<ul class="col-md-2" ng-repeat="sprites in cList">
-	<li class="spriteList-tab">
-		<img class="thumb" ng-src="{{sprites.image}}">
-		{{$index}}
-	</li>
-</ul>
-</div>
-<div class="one-third one-third-left">
-<ul class="col-md-2" ng-repeat="sprites in bgList">
-	<li class="spriteList-tab">
-		<img class="thumb" ng-src="{{sprites.image}}">
-		{{$index}}
-	</li>
-</ul>
+
+<div id="my-tab-content" class="tab-content">
+	<div class="tab-pane active" id="characters">
+		<ul class="col-md-4 spriteList" ng-repeat="sprites in oList">
+			<li class="spriteList-tab" ng-click="addSprite(sprites)">
+				<img class="thumb" ng-src="{{sprites.image}}">
+				{{sprites.name}}
+			</li>
+		</ul>
+	</div>
+	
+	<div class="tab-pane" id="costumes">
+		<ul class="col-md-4 spriteList" ng-repeat="sprites in cList">
+			<li class="spriteList-tab">
+				<img class="thumb" ng-src="{{sprites.image}}">
+				{{$index}}
+			</li>
+		</ul>
+	</div>
+	
+	<div class="tab-pane" id="backgrounds">
+		<ul class="col-md-4 spriteList" ng-repeat="sprites in bgList">
+			<li class="spriteList-tab">
+				<img class="thumb" ng-src="{{sprites.image}}">
+				{{$index}}
+			</li>
+		</ul>
+	</div>
 </div>

@@ -11,9 +11,9 @@
 		<a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this);log()" ng-show="node.name=='repeat'"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
         <input class="function-value-input" data-nodrag type="text" required="required" ng-show="node.name=='='" ng-model="node.expression2"></input>
         <span>{{node.name}} </span>
-        <span ng-show="node.name=='change background'||node.name=='change costume'"> to </span>
+		<span ng-show="node.name=='set background'||node.name=='set costume'"> to </span>
        
-        <input class="function-value-input" data-nodrag name="number-input" type="number" ng-pattern="numInputPattern(node.name)" required="required" ng-show="node.name=='setX'||node.name=='setY'||node.name=='move'||node.name=='repeat'||node.name=='change background'||node.name=='change costume'" ng-model="node.initialValue"></input>
+        <input class="function-value-input" data-nodrag name="number-input" type="number" ng-pattern="numInputPattern(node.name)" required="required" ng-show="node.name=='setX'||node.name=='setY'||node.name=='move'||node.name=='repeat'||node.name=='set background'||node.name=='set costume'" ng-model="node.initialValue"></input>
 		<span ng-show="node.name=='move'||node.name=='repeat'"> {{node.name=='move'&&'steps'||'times'}}</span>
 
         <input class="function-value-input" data-nodrag type="text" required="required" ng-show="node.name=='if'||node.name=='='" ng-model="node.expression"></input>
@@ -25,7 +25,7 @@
     </div>
 </script>
 <form name="myForm">
-<ul>
+<ul class="function-display">
 <li ng-repeat="data in alltabs" ui-tree="treeOptions" id="tree-root">
 	<div ng-attr-class="my-label {{($index==activeIndex) && 'my-active-label'}}" ng-click="setActive($index)">{{data.name}}</div>
     <ol ui-tree-nodes="" ng-model="data.data">
@@ -33,6 +33,6 @@
     </ol>
 </li>
 </ul>
-<a class="btn btn-success btn-lg play-btn" ng-disabled="myForm.$invalid" ng-click="activity()"><span class="glyphicon glyphicon-play-circle"></a>
-<a class="btn btn-success btn-lg stop-btn" ng-click="stop()"><span class="glyphicon glyphicon-stop"></a>
+<a class="btn btn-success btn-lg play-btn" ng-disabled="myForm.$invalid" ng-click="activity()"><span class="glyphicon glyphicon-play"></a>
+<a class="btn btn-danger btn-lg stop-btn" ng-click="stop()"><span class="glyphicon glyphicon-stop"></a>
 </form>

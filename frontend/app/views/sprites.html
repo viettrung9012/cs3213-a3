@@ -5,6 +5,10 @@
 		 ng-style="{'top':sprites.posY+'px', 'left':sprites.posX+'px'}"
 	>
 -->
+<!--
+<div>expr: {{text}} <br> eval: {{$eval(text)}}<br><input ng-model="text"></input><br>
+expr2: {{text2}} <br> eval2: {{$eval(text2)}}<br><input ng-model="text2"></input></div>
+-->
 <img class="background-image" ng-src="{{background}}">
 <span ng-repeat="sprites in list" class="sprite-tab">
 	<drag model="sprites" disable="play" ng-hide="!sprites.show" class="draggable-sprite">

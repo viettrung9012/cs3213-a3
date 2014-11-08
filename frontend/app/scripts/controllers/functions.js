@@ -55,11 +55,11 @@ angular.module('frontendApp')
 		});
 		*/
 		
-	}
+	};
 
 	$scope.stop = function (){
 		FunctionService.broadcastStop();
-	}
+	};
 
 	/*
 	$scope.numInputPattern = function(name){

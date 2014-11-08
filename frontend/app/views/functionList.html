@@ -1,3 +1,15 @@
-<ul class="col-md-3" ng-repeat="function in data">
+<!--<ul class="col-md-6" ng-repeat="function in data">
 	<li class="function-tab" ng-model="data" ng-click="addNewFunction(function.name, function.initialValue, function.isGlobal)">{{function.name}}</li>
-</ul>
+</ul>-->
+
+ <!-- Nested node template -->
+ <script type="text/ng-template" id="function_renderer.html">
+ 	<div ui-tree-handle class="tree-node tree-node-content function-list">
+ 		{{node.name}}
+ 	</div>
+ </script>
+ <div ui-tree="functionTree" id="function-list" data-nodrop>
+ 	<ol ui-tree-nodes="" ng-model="data" data-nodrop data-horizontal="">
+ 		<li ng-repeat="node in data" ui-tree-node ng-include="'function_renderer.html'"></li>
+ 	</ol>
+ </div>

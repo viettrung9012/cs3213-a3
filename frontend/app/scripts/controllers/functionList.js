@@ -9,13 +9,24 @@
  */
 angular.module('frontendApp')
 .controller('FunctionListCtrl', function ($scope, FunctionService) {
-	$scope.data = FunctionService.getFunctionList();
+	var reinitializeData = function(){
+		$scope.data = JSON.parse(JSON.stringify(FunctionService.getFunctionList()))
+	}
+	reinitializeData();
 	$scope.log = function () {
 		console.log(JSON.stringify($scope.data));
 		console.log(JSON.stringify(FunctionService.getFunctionList()));
-	}
+	};
 	$scope.addNewFunction = function (name, value, bool) {
 		$scope.activeIndex = FunctionService.getActive();
 		FunctionService.addDisplayFunction(name, value, bool, $scope.activeIndex);
-	}
+	};
+	$scope.functionTree = {
+		dragStart: function(event) {
+			reinitializeData();
+		},
+		dragStop: function(event) {
+			reinitializeData();
+		}
+	};
 });
