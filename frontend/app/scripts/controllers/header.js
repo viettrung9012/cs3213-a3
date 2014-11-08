@@ -53,7 +53,7 @@ angular.module('frontendApp')
 	$scope.load = function () {
 		$http.get($scope.serverURL+"/users/", {params: { userId: $scope.userId }}).
 		success(function (res) {
-			console.log("SUCCESS POST");
+			console.log("SUCCESS LOAD");
 			$scope.loadedData = res;
 			var modalInstance = $modal.open({
 					templateUrl : 'myModalContent.html',
@@ -78,7 +78,7 @@ angular.module('frontendApp')
 			});
 		}).
 		error(function (res) {
-			console.log("ERROR POST");
+			console.log("ERROR LOAD");
 			SweetAlert.swal("Oops!", "Something went wrong.. " + console.log(res), "error");
 			//log error
 		});

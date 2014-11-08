@@ -209,11 +209,20 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0; 
 }
 
-.play-btn .stop-btn{
+.play-btn{
 	position: fixed;
-	padding: 5px;
-	top: 42%;
-	left: 2%;
+	padding: 10px;
+	top: 1%;
+	left: 45%;
+	min-width: 7%;
+}
+
+.stop-btn{
+	position: fixed;
+	padding: 10px;
+	top: 1%;
+	left: 55%;
+	min-width: 7%;
 }
 
 .angular-ui-tree{
@@ -338,4 +347,18 @@ input[type=number]::-webkit-outer-spin-button {
   -moz-transition: all 0.5s ease-in-out;
   -o-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
+}
+
+#function-list ol li{
+	display: inline-block;
+}
+
+.function-list{
+	width: 125px;
+	margin: 2px;
+	font-size: 12px;
+}
+
+.function-display{
+	-webkit-padding-start: 10px;
 }

@@ -2,6 +2,7 @@
 
 angular.module('frontendApp')
   .controller('SpritesCtrl', function ($scope, $timeout, SpriteService, FunctionService) {
+ 
  	$scope.delay = 500;
  	$scope.timers = [];
  	$scope.varList = [];
@@ -261,9 +262,9 @@ angular.module('frontendApp')
  			commandHide(index);
  		} else if (data.name == "move") {
  			commandMove(index, data.value, data.degrees);
- 		} else if (data.name == "change costume") {
+ 		} else if (data.name == "set costume") {
  			commandChangeCostume(index, data.value);
- 		} else if (data.name == "change background") {
+ 		} else if (data.name == "set background") {
  			commandChangeBackground(data.value);
  		} 
  		SpriteService.updateSpriteList(index, $scope.list[index]);

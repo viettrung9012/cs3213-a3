@@ -28,11 +28,9 @@ angular.module('frontendApp')
           if(scope.disable) {
             element.draggable("disable");
 			element.addClass('swift-transition');
-			$compile(element)(scope);
           } else {
             element.draggable("enable");
 			element.removeClass('swift-transition');
-			$compile(element)(scope);
           }
         }, true
       );
