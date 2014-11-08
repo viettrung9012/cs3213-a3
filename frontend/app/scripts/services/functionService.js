@@ -29,9 +29,11 @@ angular.module('frontendApp')
 		new functionObject("set background", 0),
 		new functionObject("repeat", 0),
 		new functionObject("repeat forever", 1000000),
+		new functionObject("while", 0),
 		new functionObject("if", 0),
 		new functionObject("=", 0),
-		new functionObject("play sound", 0)
+		new functionObject("play sound", 0),
+
 	];
 	
 	var alltabs = [];
