@@ -131,6 +131,11 @@ body div{
 
 .function-value-input{
 	width: 50px;
+	max-width: 200px;
+}
+
+.big-input{
+	width: 150px;
 }
 
 .spriteList-tab{
@@ -361,4 +366,12 @@ input[type=number]::-webkit-outer-spin-button {
 
 .function-display{
 	-webkit-padding-start: 10px;
+}
+
+.for-clone{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+	vertical-align: top;
 }

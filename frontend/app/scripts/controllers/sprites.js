@@ -2,7 +2,6 @@
 
 angular.module('frontendApp')
   .controller('SpritesCtrl', function ($scope, $timeout, SpriteService, FunctionService) {
- 
  	$scope.delay = 500;
  	$scope.timers = [];
  	$scope.varList = [];

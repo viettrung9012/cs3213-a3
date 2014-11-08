@@ -7,9 +7,15 @@
 <div id="my-tab-content" class="tab-content">
 	<div class="tab-pane active" id="characters">
 		<ul class="col-md-4 spriteList" ng-repeat="sprites in oList">
-			<li class="spriteList-tab" ng-click="addSprite(sprites)">
+			<li class="spriteList-tab" ng-click="">
+				<div class="for-clone" ng-drag="true" ng-drag-data="sprites" draggable="false" ng-drag-success="onDragComplete($data,$event)">
+				</div>
 				<img class="thumb" ng-src="{{sprites.image}}">
 				{{sprites.name}}
+				<div ng-drag-clone="">
+					<img class="thumb" ng-src="{{clonedData.image}}">
+					{{clonedData.name}}
+				</div>
 			</li>
 		</ul>
 	</div>
