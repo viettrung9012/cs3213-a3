@@ -101,7 +101,14 @@ angular.module('frontendApp')
 					if(current.nodes[current.index].value <= 0) {
 						current.index++;
 					}
-				}  
+				} 
+				else if(current.nodes[current.index].name == "while") {
+					if(!((current.nodes[current.index].index < 0 && current.nodes[current.index].index < current.nodes[current.index].nodes.length) ||
+						($scope.evaluate(current.nodes[current.index].expression))))
+					{
+						current.index++;
+					} 
+				} 
 				//next command is an "IF"
 				else if(current.nodes[current.index].name === "if") {
 					if(current.nodes[current.index].index >= current.nodes[current.index].nodes.length) {
@@ -132,7 +139,22 @@ angular.module('frontendApp')
 					if(current.nodes[current.index].value <= 0) {
 						current.index++;
 					}
-				} else {
+				} 
+				else if(current.nodes[current.index].name == "while") {
+					if(!((current.nodes[current.index].index < 0 && current.nodes[current.index].index < current.nodes[current.index].nodes.length) ||
+						($scope.evaluate(current.nodes[current.index].expression))))
+					{
+						current.index++;
+					} 
+				} 
+				//next command is an "IF"
+				else if(current.nodes[current.index].name === "if") {
+					if(current.nodes[current.index].index >= current.nodes[current.index].nodes.length) {
+						current.nodes[current.index].index = 0;
+						current.index++;
+					}	
+				}
+				else {
 					current.index++;
 				}
 			} else {
@@ -145,23 +167,24 @@ angular.module('frontendApp')
 				current.index = 0;
 			}
  		} else if(current.name === "while") {
- 			 if(current.degrees === 0) {current.nodes.push({name:"stop"}); current.degrees = 1;}
- 			//if at the end of commands in current iteration of repeat
- 			//go to next iteration
- 			if(current.index >= current.nodes.length) {
- 				current.index = 0;
- 			}
-
- 			//if not yet finished all repeats
- 			if(current.value > 0) {
- 				next = getNextCommand(current.nodes, current.index, false, com, objIndex);
- 				//if the next command in the repeat is a nested repeat
+ 			if(current.degrees === 0) {current.nodes.push({name:"stop"}); current.degrees = 1;}
+ 			 //already in the middle of evaluating
+ 			if(current.index > 0 && current.index < current.nodes.length) {
+ 			 	next = getNextCommand(current.nodes, current.index, false, com, objIndex);
+				//if the next command is a nested repeat
  				if(current.nodes[current.index].name.indexOf("repeat") != -1) {
 					//skip to next command if repeat is completed
 					if(current.nodes[current.index].value <= 0) {
 						current.index++;
 					}
-				}  
+				} 
+				else if(current.nodes[current.index].name == "while") {
+					if(!((current.nodes[current.index].index < 0 && current.nodes[current.index].index < current.nodes[current.index].nodes.length) ||
+						($scope.evaluate(current.nodes[current.index].expression))))
+					{
+						current.index++;
+					} 
+				} 
 				//next command is an "IF"
 				else if(current.nodes[current.index].name === "if") {
 					if(current.nodes[current.index].index >= current.nodes[current.index].nodes.length) {
@@ -173,15 +196,21 @@ angular.module('frontendApp')
 				else {
 					current.index++;
 				}
- 			} 
- 			// else, completed all repeat iterations in current nest level
- 			else {
- 				index++;
- 				if(base) {com.functionIndex = index;}
- 				next = getNextCommand(list, index, base, com, objIndex);
- 				current.value = -1;
- 			}
- 		}else {
+ 			} else {
+ 			 	current.index = 0;
+ 			 	var expression = $scope.evaluate(current.expression);
+ 			 	if(expression) {
+ 			 		next = getNextCommand(current.nodes, current.index, false, com, objIndex);
+ 			 		current.index++;
+ 			 	} else {
+ 			 		index++;
+ 			 		if(base) {
+ 			 			com.functionIndex = index;
+ 			 		}
+ 			 		next = getNextCommand(list, index, base, com , objIndex);
+ 			 	}
+ 			 }
+ 		} else {
 			next = current;
 			if(base) {
 				com.functionIndex++;
@@ -252,19 +281,19 @@ angular.module('frontendApp')
 	$scope.executeFunctions = function(spriteIndex) {
 		var sprite = $scope.list[spriteIndex];
 		var functionQueue = new CommandStream(sprite);
-		var doActions = function() {
+		var doActions = function(delay) {
 			$scope.timers.push($timeout(function(){
 				var data = getNext(functionQueue);
 				if(data != null && $scope.stopPlay == false) {
 					runDataCommands(spriteIndex, data);
-					doActions();
+					doActions(data.delay);
 				} else {
 					$scope.totalPlay++;
 				}
-			}, $scope.delay));
+			}, delay));
 		};
 
-		doActions();
+		doActions($scope.delay);
 	}
 
  	var runDataCommands = function(index, data) {

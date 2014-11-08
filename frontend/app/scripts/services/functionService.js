@@ -9,7 +9,7 @@
  */
 angular.module('frontendApp')
 .service('FunctionService', function ($rootScope) {
-	function functionObject(name, value) {
+	function functionObject(name, value, delay) {
 		this.name = name;
 		this.initialValue = value;
 		this.value = -1;
@@ -17,22 +17,23 @@ angular.module('frontendApp')
 		this.index = 0;
 		this.expression2 = "x";
 		this.expression = "true";
+		this.delay = delay
 	}
 
 	var functionList = [
-		new functionObject("setX", 0),
-		new functionObject("setY", 0),
-		new functionObject("show", 0),
-		new functionObject("hide", 0),
-		new functionObject("move", 0),
-		new functionObject("set costume", 0),
-		new functionObject("set background", 0),
-		new functionObject("repeat", 0),
-		new functionObject("repeat forever", 1000000),
-		new functionObject("while", 0),
-		new functionObject("if", 0),
-		new functionObject("=", 0),
-		new functionObject("play sound", 0),
+		new functionObject("setX", 0, 500),
+		new functionObject("setY", 0, 500),
+		new functionObject("show", 0, 300),
+		new functionObject("hide", 0, 300),
+		new functionObject("move", 0, 500),
+		new functionObject("set costume", 0, 100),
+		new functionObject("set background", 0, 100),
+		new functionObject("repeat", 0, 100),
+		new functionObject("repeat forever", 1000000, 10),
+		new functionObject("while", 0, 100),
+		new functionObject("if", 0, 100),
+		new functionObject("=", 0, 50),
+		new functionObject("play sound", 0, 500),
 
 	];
 	
