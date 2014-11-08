@@ -72,10 +72,86 @@ angular.module('frontendApp')
 
 		var next;
 		do {
-			next = getNextCom(com.functionList, com.functionIndex, true, com);
+			next = getNextCommand(com.functionList, com.functionIndex, true, com);
 		} while(next != null && next.name === "stop");
 		return next;
  	};
+ 	
+ 	var getNextCommand = function(list, index, base, com, objIndex) {
+ 		if(index >= list.length) return null;
+ 		var current = list[index];
+ 		if(current.value === -1) current.value = current.initialValue;
+ 		var next;
+
+ 		if(current.name.indexOf("repeat") > -1) {
+ 			if(current.degrees === 0) {current.nodes.push({name:"stop"}); current.degrees = 1;}
+ 			//if at the end of commands in current iteration of repeat
+ 			//go to next iteration
+ 			if(current.index >= current.nodes.length) {
+ 				current.index = 0;
+ 				current.value--;
+ 			}
+
+ 			//if not yet finished all repeats
+ 			if(current.value > 0) {
+ 				next = getNextCommand(current.nodes, current.index, false, com, objIndex);
+ 				//if the next command in the repeat is a nested repeat
+ 				if(current.nodes[current.index].name.indexOf("repeat") != -1) {
+					//skip to next command if repeat is completed
+					if(current.nodes[current.index].value <= 0) {
+						current.index++;
+					}
+				}  
+				//next command is an "IF"
+				else if(current.nodes[current.index].name === "if" && current.nodes[current.index].index >= current.nodes[current.index].nodes.length) {
+					current.nodes[current.index].index = 0;
+					current.index++;	
+				}
+				// do next command
+				else {
+					current.index++;
+				}
+ 			} 
+ 			// else, completed all repeat iterations in current nest level
+ 			else {
+ 				index++;
+ 				if(base) {com.functionIndex = index;}
+ 				next = getNextCommand(list, index, base, com, objIndex);
+ 				current.value = -1;
+ 			}
+ 		} else if (current.name === "if") {
+ 			if(current.degrees === 0) {current.nodes.push({name:"stop"});current.degrees = 1;}
+ 			//if expression evaluates to true, and not all commands in "IF" is completed
+			if($scope.evaluate(current.expression, objIndex) && current.index < current.nodes.length) {
+				next = getNextCommand(current.nodes, current.index, false, com, objIndex);
+				//if the next command in the repeat is a nested repeat
+				if(current.nodes[current.index].name.indexOf("repeat") > -1) {
+					//skip to next command if repeat is completed
+					if(current.nodes[current.index].value <= 0) {
+						current.index++;
+					}
+				} else {
+					current.index++;
+				}
+			} else {
+				current.index = 0;
+				index++;
+				if(base) {
+					com.functionIndex = index;
+				}
+				next = getNextCommand(list, index, base, com, objIndex);
+				current.index = 0;
+			}
+ 		} else {
+			next = current;
+			if(base) {
+				com.functionIndex++;
+			}
+		}
+
+		return next;
+ 	}
+
 
  	var getNextCom = function(list, index, base, com, objIndex) {
 		if(index >= list.length) {
@@ -131,12 +207,16 @@ angular.module('frontendApp')
 					current.index++;
 				}
 			} else {
+				current.index = 0;
 				index++;
 				if(base) {
 					com.functionIndex = index;
 				}
 				next = getNextCom(list, index, base, com, objIndex);
+				current.index = 0;
 			}
+
+			if(current.index >= current.nodes.length) current.index = 0;
 		} else {
 			next = current;
 			if(base) {
