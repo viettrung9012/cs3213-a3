@@ -2,10 +2,7 @@
 
 angular.module('frontendApp')
   .controller('SpritesCtrl', function ($scope, $timeout, SpriteService, FunctionService) {
-<<<<<<< HEAD
-=======
  	$scope.sounds = SpriteService.getSoundList();
->>>>>>> ae8da0e57958fc9eda4cb0657733ff2cd4cea9a5
  	$scope.delay = 500;
  	$scope.timers = [];
  	$scope.varList = [];
@@ -76,7 +73,7 @@ angular.module('frontendApp')
 		var next;
 		do {
 			next = getNextCommand(com.functionList, com.functionIndex, true, com, ind);
-		} while(next != null && next.name === "stop");
+		} while (next != null && next.name == "stop");
 		return next;
  	};
  	
@@ -87,7 +84,7 @@ angular.module('frontendApp')
  		var next;
 
  		if(current.name.indexOf("repeat") > -1) {
- 			if(current.degrees === 0) {current.nodes.push({name:"stop"}); current.degrees = 1;}
+ 			if(current.degrees === 0) {current.nodes.push({name:"stop", delay:10}); current.degrees = 1;}
  			//if at the end of commands in current iteration of repeat
  			//go to next iteration
  			if(current.index >= current.nodes.length) {
@@ -97,6 +94,8 @@ angular.module('frontendApp')
 
  			//if not yet finished all repeats
  			if(current.value > 0) {
+ 				console.log(current.nodes);
+ 				console.log("INDEX:", current.index);
  				next = getNextCommand(current.nodes, current.index, false, com, objIndex);
  				//if the next command in the repeat is a nested repeat
  				if(current.nodes[current.index].name.indexOf("repeat") != -1) {
@@ -114,13 +113,25 @@ angular.module('frontendApp')
 				} 
 				//next command is an "IF"
 				else if(current.nodes[current.index].name.indexOf("if") != -1) {
-					if(current.nodes[current.index].index >= current.nodes[current.index].nodes.length) {
+					var temp, ifNode;
+					ifNode = current.nodes[current.index];
+					if (ifNode.name == "if") {
+						temp = $scope.evaluate(ifNode.expression, objIndex, false);
+					} else {
+						temp = $scope.checkCollision(objIndex);
+					}
+
+					//if(!((current.nodes[current.index].index < 0 && current.nodes[current.index].index < current.nodes[current.index].nodes.length) || temp))
+					if((ifNode.index < 0) || (ifNode.index === 0 && temp))
+					{	
+						console.log("Skipped IF");
 						current.nodes[current.index].index = 0;
 						current.index++;
 					}	
 				}
 				// do next command
 				else {
+					console.log("NOT CONTROL :" + next.name);
 					current.index++;
 				}
  			} 
@@ -128,16 +139,17 @@ angular.module('frontendApp')
  			else {
  				index++;
  				if(base) {com.functionIndex = index;}
- 				next = getNextCommand(list, index, base, com, objIndex);
+ 				next = {name:"stop"};
  				current.value = -1;
  			}
  		} else if (current.name.indexOf("if") != -1) {
- 			if(current.degrees === 0) {current.nodes.push({name:"stop"});current.degrees = 1;}
- 			//if expression evaluates to true, and not all commands in "IF" is completed
+ 			if(current.degrees === 0) {current.nodes.push({name:"stop", delay:10});current.degrees = 1;}
 			var bar;
 			if(current.name == "if collision") bar = $scope.checkCollision(objIndex); 
 			else bar = $scope.evaluate(current.expression, objIndex, false);
-			if(bar && current.index < current.nodes.length) {
+			if(current.index === -1) {current.index = 0;}
+			//if expression evaluates to true, and not all commands in "IF" is completed
+			if((current.index === 0 && bar) ||(current.index > 0 && current.index < current.nodes.length)) {
 				next = getNextCommand(current.nodes, current.index, false, com, objIndex);
 				//if the next command in the repeat is a nested repeat
 				if(current.nodes[current.index].name.indexOf("repeat") > -1) {
@@ -155,7 +167,17 @@ angular.module('frontendApp')
 				} 
 				//next command is an "IF"
 				else if(current.nodes[current.index].name.indexOf("if") != -1) {
-					if(current.nodes[current.index].index >= current.nodes[current.index].nodes.length) {
+					var temp, ifNode;
+					ifNode = current.nodes[current.index];
+					if (ifNode.name == "if") {
+						temp = $scope.evaluate(ifNode.expression, objIndex, false);
+					} else {
+						temp = $scope.checkCollision(objIndex);
+					}
+
+					//if(!((current.nodes[current.index].index < 0 && current.nodes[current.index].index < current.nodes[current.index].nodes.length) || temp))
+					if((ifNode.index < 0) || (ifNode.index === 0 && temp))
+					{	
 						current.nodes[current.index].index = 0;
 						current.index++;
 					}	
@@ -164,16 +186,15 @@ angular.module('frontendApp')
 					current.index++;
 				}
 			} else {
-				current.index = 0;
+				current.index = -1;
 				index++;
 				if(base) {
 					com.functionIndex = index;
 				}
-				next = getNextCommand(list, index, base, com, objIndex);
-				current.index = 0;
+				next = {name:"stop"};
 			}
  		} else if(current.name === "while") {
- 			if(current.degrees === 0) {current.nodes.push({name:"stop"}); current.degrees = 1;}
+ 			if(current.degrees === 0) {current.nodes.push({name:"stop", delay:10}); current.degrees = 1;}
  			 //already in the middle of evaluating
  			if(current.index > 0 && current.index < current.nodes.length) {
  			 	next = getNextCommand(current.nodes, current.index, false, com, objIndex);
@@ -191,9 +212,18 @@ angular.module('frontendApp')
 						current.index++;
 					} 
 				} 
-				//next command is an "IF"
 				else if(current.nodes[current.index].name.indexOf("if") != -1) {
-					if(current.nodes[current.index].index >= current.nodes[current.index].nodes.length) {
+					var temp, ifNode;
+					ifNode = current.nodes[current.index];
+					if (ifNode.name == "if") {
+						temp = $scope.evaluate(ifNode.expression, objIndex, false);
+					} else {
+						temp = $scope.checkCollision(objIndex);
+					}
+
+					//if(!((current.nodes[current.index].index < 0 && current.nodes[current.index].index < current.nodes[current.index].nodes.length) || temp))
+					if((ifNode.index < 0) || (ifNode.index === 0 && temp))
+					{	
 						current.nodes[current.index].index = 0;
 						current.index++;
 					}	
@@ -343,6 +373,8 @@ angular.module('frontendApp')
  			commandAssign(index, data.expression2, data.expression);
  		} else if (data.name == 'play sound') {
  			commandPlaySound(data.value);
+ 		} else if (data.name == "stop") {
+
  		}
  		SpriteService.updateSpriteList(index, $scope.list[index]);
  	}

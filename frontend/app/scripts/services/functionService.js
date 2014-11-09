@@ -18,6 +18,7 @@ angular.module('frontendApp')
 		this.expression2 = "x";
 		this.expression = "true";
 		this.delay = delay;
+		this.evaluated = false;
 	}
 
 	var functionList = [
