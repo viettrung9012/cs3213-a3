@@ -184,7 +184,7 @@ body div{
 
 .angular-ui-tree-handle {
     /*background: #f8faff;*/
-	width: 275px;
+	width: 300px;
     /*border: 1px solid #dae2ea;*/
     border-radius: 4px;
     color: white;
@@ -199,7 +199,7 @@ body div{
 
 .angular-ui-tree-placeholder {
 	/*background: #f0f9ff;*/
-	width: 275px;
+	width: 300px;
     border: 2px dashed black;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
