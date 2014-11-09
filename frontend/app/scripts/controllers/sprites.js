@@ -2,10 +2,7 @@
 
 angular.module('frontendApp')
   .controller('SpritesCtrl', function ($scope, $timeout, SpriteService, FunctionService) {
-<<<<<<< HEAD
-=======
  	$scope.sounds = SpriteService.getSoundList();
->>>>>>> ae8da0e57958fc9eda4cb0657733ff2cd4cea9a5
  	$scope.delay = 500;
  	$scope.timers = [];
  	$scope.varList = [];

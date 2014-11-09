@@ -7,8 +7,8 @@
     </ol>
 </script>
 <script type="text/ng-template" id="nodes_display_only.html">
-    <div ui-tree-handle class="tree-node tree-node-content function-display-tab">
-		<a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this);log()" ng-show="node.name=='repeat'"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+    <div ui-tree-handle class="tree-node tree-node-content function-display-tab" ng-style="{'background-color':'{{node.color}}'}">
+		<a class="btn btn-danger btn-xs" data-nodrag ng-click="toggle(this);log()" ng-show="node.name=='repeat'||node.name=='repeat forever'||node.name=='if'||node.name=='while'"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
         <input class="function-value-input" data-nodrag type="text" required="required" ng-show="node.name=='='" ng-model="node.expression2"></input>
         <span>{{node.name}} </span>
 		<span ng-show="node.name=='set background'||node.name=='set costume'"> to </span>
