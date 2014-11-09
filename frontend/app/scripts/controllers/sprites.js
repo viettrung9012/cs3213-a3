@@ -10,8 +10,8 @@ angular.module('frontendApp')
  	$scope.timers = [];
  	$scope.varList = [];
  	$scope.varValue = [];
- 	$scope.operators = ["+","-","*","/","|", "&", "=", ">", "<", "!"];
- 	$scope.validOperators = ["+", "-", "*", "||", "&&", "==", "===", ">", ">=", "<", "<=", "!="];
+ 	$scope.operators = ["+","-","*","/","|", "%", "&", "=", ">", "<", "!"];
+ 	$scope.validOperators = ["+", "-", "*", "/", "%", "||", "&&", "==", ">", ">=", "<", "<=", "!="];
  	$scope.stopPlay = false;
  	$scope.totalPlay = 0;
  	$scope.list = SpriteService.getSpriteList();
@@ -68,14 +68,14 @@ angular.module('frontendApp')
  		this.functionList = JSON.parse(JSON.stringify(SpriteObject.data));
  	};
 
- 	var getNext = function(com){
+ 	var getNext = function(com, ind){
 		if(com.functionIndex >= com.functionList.length) {
 			return null;
 		}
 
 		var next;
 		do {
-			next = getNextCommand(com.functionList, com.functionIndex, true, com);
+			next = getNextCommand(com.functionList, com.functionIndex, true, com, ind);
 		} while(next != null && next.name === "stop");
 		return next;
  	};
@@ -107,13 +107,13 @@ angular.module('frontendApp')
 				} 
 				else if(current.nodes[current.index].name == "while") {
 					if(!((current.nodes[current.index].index < 0 && current.nodes[current.index].index < current.nodes[current.index].nodes.length) ||
-						($scope.evaluate(current.nodes[current.index].expression))))
+						($scope.evaluate(current.nodes[current.index].expression, objIndex, false))))
 					{
 						current.index++;
 					} 
 				} 
 				//next command is an "IF"
-				else if(current.nodes[current.index].name === "if") {
+				else if(current.nodes[current.index].name.indexOf("if") != -1) {
 					if(current.nodes[current.index].index >= current.nodes[current.index].nodes.length) {
 						current.nodes[current.index].index = 0;
 						current.index++;
@@ -131,10 +131,13 @@ angular.module('frontendApp')
  				next = getNextCommand(list, index, base, com, objIndex);
  				current.value = -1;
  			}
- 		} else if (current.name === "if") {
+ 		} else if (current.name.indexOf("if") != -1) {
  			if(current.degrees === 0) {current.nodes.push({name:"stop"});current.degrees = 1;}
  			//if expression evaluates to true, and not all commands in "IF" is completed
-			if($scope.evaluate(current.expression, objIndex) && current.index < current.nodes.length) {
+			var bar;
+			if(current.name == "if collision") bar = $scope.checkCollision(objIndex); 
+			else bar = $scope.evaluate(current.expression, objIndex, false);
+			if(bar && current.index < current.nodes.length) {
 				next = getNextCommand(current.nodes, current.index, false, com, objIndex);
 				//if the next command in the repeat is a nested repeat
 				if(current.nodes[current.index].name.indexOf("repeat") > -1) {
@@ -145,13 +148,13 @@ angular.module('frontendApp')
 				} 
 				else if(current.nodes[current.index].name == "while") {
 					if(!((current.nodes[current.index].index < 0 && current.nodes[current.index].index < current.nodes[current.index].nodes.length) ||
-						($scope.evaluate(current.nodes[current.index].expression))))
+						($scope.evaluate(current.nodes[current.index].expression, objIndex, false))))
 					{
 						current.index++;
 					} 
 				} 
 				//next command is an "IF"
-				else if(current.nodes[current.index].name === "if") {
+				else if(current.nodes[current.index].name.indexOf("if") != -1) {
 					if(current.nodes[current.index].index >= current.nodes[current.index].nodes.length) {
 						current.nodes[current.index].index = 0;
 						current.index++;
@@ -183,13 +186,13 @@ angular.module('frontendApp')
 				} 
 				else if(current.nodes[current.index].name == "while") {
 					if(!((current.nodes[current.index].index < 0 && current.nodes[current.index].index < current.nodes[current.index].nodes.length) ||
-						($scope.evaluate(current.nodes[current.index].expression))))
+						($scope.evaluate(current.nodes[current.index].expression, objIndex, false))))
 					{
 						current.index++;
 					} 
 				} 
 				//next command is an "IF"
-				else if(current.nodes[current.index].name === "if") {
+				else if(current.nodes[current.index].name.indexOf("if") != -1) {
 					if(current.nodes[current.index].index >= current.nodes[current.index].nodes.length) {
 						current.nodes[current.index].index = 0;
 						current.index++;
@@ -201,7 +204,7 @@ angular.module('frontendApp')
 				}
  			} else {
  			 	current.index = 0;
- 			 	var expression = $scope.evaluate(current.expression);
+ 			 	var expression = $scope.evaluate(current.expression, objIndex, false);
  			 	if(expression) {
  			 		next = getNextCommand(current.nodes, current.index, false, com, objIndex);
  			 		current.index++;
@@ -223,12 +226,15 @@ angular.module('frontendApp')
 		return next;
  	}
 
-	$scope.evaluate = function(expression, index) {
+	$scope.evaluate = function(expression, index, checkSyntax) {
 		var lexemes = new ExpressionLexer(expression);
 		var token = lexemes.getNextToken();
 		var exp = "";
 		while(token !== "EOL") {
-			if(!isNaN(token)) {
+			if(token === "ERROR") {
+				exp = "ERROR";
+				break;
+			}else if(!isNaN(token)) {
 				exp += token;
 			} else if ($scope.validOperators.indexOf(token) != -1) {
 				exp += token;
@@ -242,27 +248,46 @@ angular.module('frontendApp')
 				if($scope.varList.indexOf(token) != -1) {
 					exp += $scope.varValue[$scope.varList.indexOf(token)];
 				} else {
-					$scope.varList.push(token);
-					$scope.varValue.push(0);
+					if (checkSyntax == false) {
+						$scope.varList.push(token);
+						$scope.varValue.push(0);
+					}
 					exp += 0;
 				}
 			}
 			token = lexemes.getNextToken();
 		}
 
-		//console.log(exp);
-		return eval(exp);
+		if(exp === "ERROR" && checkSyntax === true) {
+			var error = "Syntax Error in expression \"" + expression + "\" of " + $scope.list[index].name;
+			throw  error;
+		}
+		try {
+			return eval(exp);
+		} catch (e) {
+			if(e instanceof SyntaxError) {
+				var error = "Syntax Error in expression \"" + expression + "\" of " + $scope.list[index].name;
+				throw  error;
+			}
+		}
  	}
 
-	function contains(a, obj) {
-    	var i = a.length - 1;
-    	while (i >= 0) {
-       		if (a[i] === obj) {
-           		return i;
-       		}
-    	}
-    	return i;
-	}
+ 	$scope.checkCollision = function(index) {
+ 		console.log("Checking for collision of object ", index);
+ 		console.log($scope.list[index]);
+ 		console.log("/");
+ 		for(var i = 0; i < $scope.list.length; i++) {
+ 			if(i == index) continue;
+ 			console.log($scope.list[i]);
+ 			var x = Math.abs(parseInt($scope.list[i].x) - parseInt($scope.list[index].x));
+ 			var y = Math.abs(parseInt($scope.list[i].y) - parseInt($scope.list[index].y));
+ 			if(x <= 100 && y <= 100) {
+ 				return true;
+ 			}
+ 		}
+ 		console.log("/");
+ 		return false;
+ 	} 
 
  	$scope.stop = function() {
  		$scope.stopPlay = true;
@@ -286,7 +311,7 @@ angular.module('frontendApp')
 		var functionQueue = new CommandStream(sprite);
 		var doActions = function(delay) {
 			$scope.timers.push($timeout(function(){
-				var data = getNext(functionQueue);
+				var data = getNext(functionQueue, spriteIndex);
 				if(data != null && $scope.stopPlay == false) {
 					runDataCommands(spriteIndex, data);
 					doActions(data.delay);
@@ -348,7 +373,7 @@ angular.module('frontendApp')
  	}
 
  	var commandAssign = function(index, op1, op2) {
- 		var temp = $scope.evaluate(op2, index);
+ 		var temp = $scope.evaluate(op2, index, false);
  		if($scope.varList.indexOf(op1) != -1) {
  			var i = $scope.varList.indexOf(op1);
  			$scope.varValue[i] = temp;
@@ -356,39 +381,7 @@ angular.module('frontendApp')
  			$scope.varList.push(op1);
  			$scope.varValue.push(temp);
  		}
-
- 		console.log($scope.varList);
- 		console.log($scope.varValue);
  	}
-
- 	/*
- 	var commandAssign = function(index, variable, expression) {
- 		var temp = $scope.evaluateExpression(expression, index);
- 		var arr = variable.trim().split(/\s+/);
- 		if(arr.length > 1) {
- 			$scope.stop();
- 			alert("Syntax Error: " + variable + "is not a valid variable");
- 		} else {
- 			var arr2 = arr[0].split("!");
- 			if(arr2.length > 1) {
- 				$scope.stop();
- 				alert("Syntax Error: " + variable + "is not a valid variable");
- 			} else {
- 				if(contains($scope.varList, variable) >= 0) {
- 					$scope.varValue[$scope.varList.indexOf(variable)] = temp;
- 				} else {
- 					$scope.varList.push(variable);
- 					$scope.varValue.push(temp);
- 				}
- 			}
- 		} 
- 		console.log("Assign START");
- 		console.log($scope.varList);
- 		console.log($scope.varValue);
- 		console.log($scope.varList.indexOf(variable));
- 		console.log("Assign END");
- 	}
- 	*/
 
  	var commandMove = function(index, value, degrees) {
  		$scope.list[index].moving = true;
@@ -416,13 +409,15 @@ angular.module('frontendApp')
  	}
 
  	var ExpressionLexer = function(expression) {
- 		this.Lexemes = expression.split("");
+ 		this.Lexemes = expression.split('');
  		this.LexemeTypes = (function(exp){
  			var foo = [];
- 			var temp = expression.split("");
+ 			var temp = expression.split('');
  			for(var i = 0; i < temp.length; i++) {
  				if($scope.operators.indexOf(temp[i]) != -1) {
  					foo.push(0);
+ 				} else if(temp[i] == " ") {
+ 					foo.push(4);
  				} else if(!isNaN(temp[i])) {
  					foo.push(1);
  				} else if(temp[i] == ".") {
@@ -465,8 +460,27 @@ angular.module('frontendApp')
  			case 2: case 7:
  				return current;
  			case 0:
- 				while(this.LexemeTypes[this.index] === 0) {
- 					current += this.Lexemes[this.index++];
+ 				if(current === "=") {
+ 					if(this.Lexemes[this.index] === "=") {
+ 						this.index++;
+ 						current += "=";
+ 					} else {
+ 						return "ERROR";
+ 					}
+ 				}else if(current === "|" || current === "&") {
+ 					if(this.Lexemes[this.index] === current) {
+ 						this.index++;
+ 						current += current;
+ 					}
+ 				} else if (current === "<" || current === ">" || current === "!") {
+ 					if(this.Lexemes[this.index] === "=") {
+ 						this.index++;
+ 						current += "=";
+ 					} else if (current === "!") {
+ 						while(this.Lexemes[this.index] === "!") {
+ 							current += this.Lexemes[this.index++];
+ 						}
+ 					}
  				} 
  				return current;
  			case 1:

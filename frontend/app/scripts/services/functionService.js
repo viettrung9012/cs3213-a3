@@ -17,7 +17,7 @@ angular.module('frontendApp')
 		this.index = 0;
 		this.expression2 = "x";
 		this.expression = "true";
-		this.delay = delay
+		this.delay = delay;
 	}
 
 	var functionList = [
@@ -32,6 +32,7 @@ angular.module('frontendApp')
 		new functionObject("repeat forever", 1000000, 10),
 		new functionObject("while", 0, 100),
 		new functionObject("if", 0, 100),
+		new functionObject("if collision", 0, 100),
 		new functionObject("=", 0, 50),
 		new functionObject("play sound", 0, 500),
 
