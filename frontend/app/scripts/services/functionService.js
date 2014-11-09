@@ -17,13 +17,14 @@ angular.module('frontendApp')
 		this.index = 0;
 		this.expression2 = "x";
 		this.expression = "true";
-		this.delay = delay
+		this.delay = delay;
 		this.color = color;
+		this.evaluated = false;
 	}
 
 	var functionList = [
 		new functionObject("setX", 0, 500, "#428bca"),
-		new functionObject("setY", 0, 500, "#428bca"),
+		new functionObject("setY", 0, 500, "#428bca"),		
 		new functionObject("move", 0, 500, "#428bca"),
 		new functionObject("show", 0, 300, "#ec971f"),
 		new functionObject("hide", 0, 300, "#ec971f"),
@@ -34,6 +35,7 @@ angular.module('frontendApp')
 		new functionObject("repeat forever", 1000000, 10, "#c9302c"),
 		new functionObject("while", 0, 100, "#c9302c"),
 		new functionObject("if", 0, 100, "#c9302c"),
+		new functionObject("if collision", 0, 100, "#c9302c"),
 		new functionObject("=", 0, 50, "#31b0d5"),
 	];
 	
