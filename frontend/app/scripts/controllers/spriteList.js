@@ -9,10 +9,27 @@ angular.module('frontendApp')
   	$scope.addSprite = function(spr) {
   		SpriteService.addSpriteList(spr.name, spr.image, 0, 0);
   	};
-  	$scope.onDragComplete=function(data,evt){
+  	$scope.onDragComplete=function(data,evt,index){
         var divTop = window.innerHeight*1/10+20;
         var divLeft = window.innerWidth*1/2;
-        SpriteService.addSpriteList(data.name, data.image, parseInt(evt.tx-divLeft), parseInt(evt.ty-divTop));
+        var objPosX = parseInt(evt.tx-divLeft);
+        var objPosY = parseInt(evt.ty-divTop);
+        if (data.name!=='costume'&&data.name!=='background'){
+          SpriteService.addSpriteList(data.name, data.image, objPosX, objPosY);
+        } else if (data.name==='costume'){
+          var list = SpriteService.getSpriteList();
+          for (var i = 0; i<list.length; i++){
+            if (list[i].x-50<=objPosX&&objPosX<=(list[i].x+50)
+            && list[i].y-50<=objPosY&&objPosY<=(list[i].y+50)){
+              list[i].costume = SpriteService.getCostumeList()[index].image;
+            }
+          }
+          SpriteService.replaceSpriteList(list);
+        } else if (data.name==='background'){
+          if(divLeft>=0&&divTop>=0){
+            SpriteService.updateBackground(index);
+          }
+        }   
     };
     $scope.sounds = [
 		{index: '0', name: 'cat'},

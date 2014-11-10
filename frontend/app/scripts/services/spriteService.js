@@ -25,17 +25,17 @@ angular.module('frontendApp')
 	];
 
 	var backgroundList = [
-		new useableObject("empty", "images/empty-bg.png"),
-		new useableObject("background 1", "images/BG.jpg"),
-		new useableObject("background 2", "images/BG2.jpg"),
-		new useableObject("background 3", "images/BG3.jpg"),
-		new useableObject("background 4", "images/BG4.jpg"),
-		new useableObject("background 5", "images/BG5.png"),
-		new useableObject("background 6", "images/BG6.png"),
-		new useableObject("background 7", "images/BG7.jpg"),
-		new useableObject("background 8", "images/BG8.jpg"),
-		new useableObject("background 9", "images/BG9.jpg"),
-		new useableObject("background 10", "images/BG10.jpg")
+		new useableObject("background", "images/empty-bg.png"),
+		new useableObject("background", "images/BG.jpg"),
+		new useableObject("background", "images/BG2.jpg"),
+		new useableObject("background", "images/BG3.jpg"),
+		new useableObject("background", "images/BG4.jpg"),
+		new useableObject("background", "images/BG5.png"),
+		new useableObject("background", "images/BG6.png"),
+		new useableObject("background", "images/BG7.jpg"),
+		new useableObject("background", "images/BG8.jpg"),
+		new useableObject("background", "images/BG9.jpg"),
+		new useableObject("background", "images/BG10.jpg")
 	];
 
 	var soundList = [

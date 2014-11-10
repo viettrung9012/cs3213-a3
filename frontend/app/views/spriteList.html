@@ -8,7 +8,7 @@
 	<div class="tab-pane active" id="characters">
 		<ul class="col-md-4 spriteList" ng-repeat="sprites in oList">
 			<li class="spriteList-tab" ng-click="">
-				<div class="for-clone" ng-drag="true" ng-drag-data="sprites" draggable="false" ng-drag-success="onDragComplete($data,$event)">
+				<div class="for-clone" ng-drag="true" ng-drag-data="sprites" draggable="false" ng-drag-success="onDragComplete($data,$event,$index)">
 				</div>
 				<img class="thumb" ng-src="{{sprites.image}}">
 				{{sprites.name}}
@@ -23,8 +23,14 @@
 	<div class="tab-pane" id="costumes">
 		<ul class="col-md-4 spriteList" ng-repeat="sprites in cList">
 			<li class="spriteList-tab">
+				<div class="for-clone" ng-drag="true" ng-drag-data="sprites" draggable="false" ng-drag-success="onDragComplete($data,$event,$index)">
+				</div>
 				<img class="thumb" ng-src="{{sprites.image}}">
 				{{$index}}
+				<div ng-drag-clone="">
+					<img class="thumb" ng-src="{{clonedData.image}}">
+					{{clonedData.name}}
+				</div>
 			</li>
 		</ul>
 	</div>
@@ -32,8 +38,14 @@
 	<div class="tab-pane" id="backgrounds">
 		<ul class="col-md-4 spriteList" ng-repeat="sprites in bgList">
 			<li class="spriteList-tab">
+				<div class="for-clone" ng-drag="true" ng-drag-data="sprites" draggable="false" ng-drag-success="onDragComplete($data,$event,$index)">
+				</div>
 				<img class="thumb" ng-src="{{sprites.image}}">
 				{{$index}}
+				<div ng-drag-clone="">
+					<img class="thumb" ng-src="{{clonedData.image}}">
+					{{clonedData.name}}
+				</div>
 			</li>
 		</ul>
 	</div>
