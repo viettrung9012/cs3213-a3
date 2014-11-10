@@ -14,7 +14,7 @@ angular.module('frontendApp')
 		'AngularJS',
 		'Karma'
 	];
-	$scope.serverURL = "http://localhost:8000"; // to be updated
+	$scope.serverURL = "http://kodeless-backend.herokuapp.com"; // to be updated
 	$scope.userId;
 	$scope.projectName = "Untitled";
 	$scope.inputObject = {name: $scope.projectName};
@@ -42,6 +42,7 @@ angular.module('frontendApp')
 			success(function(res){
 				console.log("SUCCESS POST");
 				lastSaved = saveData;
+				console.log(saveData);
 				SweetAlert.swal("Success!", $scope.projectName+" saved successfully!", "success");
 			}).
 			error(function(res){

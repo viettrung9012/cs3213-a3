@@ -29,9 +29,8 @@ angular.module('frontendApp')
 			reinitializeData();
 		}
 	};
-	$scope.vars = [
-		{name: 'x', value: '15'},
-		{name: 'y', value: '16'},
-		{name: 'z', value: '17'},
-	]
+	$scope.$on('updateVars', function(){
+ 		$scope.vars = FunctionService.getVars();
+ 	});
+	$scope.vars = FunctionService.getVars();
 });

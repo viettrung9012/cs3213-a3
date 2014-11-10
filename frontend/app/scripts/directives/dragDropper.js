@@ -27,10 +27,10 @@ angular.module('frontendApp')
         function(){
           if(scope.disable) {
             element.draggable("disable");
-			element.addClass('swift-transition');
+			      element.addClass('swift-transition');
           } else {
             element.draggable("enable");
-			element.removeClass('swift-transition');
+			      element.removeClass('swift-transition');
           }
         }, true
       );

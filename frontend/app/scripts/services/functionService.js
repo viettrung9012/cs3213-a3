@@ -8,7 +8,7 @@
  * FunctionService class model of the frontendApp
  */
 angular.module('frontendApp')
-.service('FunctionService', function ($rootScope) {
+.service('FunctionService', function ($rootScope, SpriteService) {
 	function functionObject(name, value, delay, color) {
 		this.name = name;
 		this.initialValue = value;
@@ -55,7 +55,9 @@ angular.module('frontendApp')
 
 	var broadcastStop = function() {
 		$rootScope.$broadcast('stopCommands');
-	}
+	};
+
+	var vars = [];
 
 	return {
 		getActive : function(){
@@ -78,6 +80,23 @@ angular.module('frontendApp')
 		},
 		setDisplayFunctionValue : function (index, fValue) {
 			displayFunctionList[index]['value'] = (fValue == undefined || fValue == '') ? "0" : fValue;
+		},
+		getVars : function(){
+			return vars;
+		},
+		updateVars : function(v, t){
+			var newArr = [];
+			var objectList = SpriteService.getSpriteList();
+			console.log(objectList);
+			for (var i = 0; i<objectList.length; i++){
+				newArr.push({name: objectList[i].name+"-x", value: objectList[i].x});
+				newArr.push({name: objectList[i].name+"-y", value: objectList[i].y});
+			}
+			for (var i = 0; i < v.length; i++){
+				newArr.push({name: v[i], value: t[i]});
+			}
+			vars = newArr;
+			$rootScope.$broadcast('updateVars');
 		},
 
 		updateTabs : updateTabs,
