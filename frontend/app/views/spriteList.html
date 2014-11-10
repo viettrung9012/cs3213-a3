@@ -2,6 +2,7 @@
 	<li class="active"><a href="#characters" data-toggle="tab">Characters</a></li>
 		<li><a href="#costumes" data-toggle="tab">Costumes</a></li>
 		<li><a href="#backgrounds" data-toggle="tab">Backgrounds</a></li>
+		<li><a href="#sounds" data-toggle="tab">Sounds</a></li>
 </ul>
 <div id="my-tab-content" class="tab-content">
 	<div class="tab-pane active" id="characters">
@@ -36,4 +37,19 @@
 			</li>
 		</ul>
 	</div>
+	
+	<div class="tab-pane" id="sounds">
+		<table class="col-md-12 table table-striped table-bordered">
+			<tr>
+				<th>Index</th>
+				<th>Sound</th>
+			</tr>
+			<tr ng-repeat="sound in sounds">
+				<td><var>{{sound.index}}</var></td>
+				<td>{{sound.name}}</td>
+			</tr>
+		</table>
+	</div>
 </div>
+
+

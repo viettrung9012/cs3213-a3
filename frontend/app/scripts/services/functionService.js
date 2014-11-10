@@ -20,6 +20,7 @@ angular.module('frontendApp')
 		this.delay = delay;
 		this.color = color;
 		this.evaluated = false;
+		this.nodes = [];
 	}
 
 	var functionList = [
