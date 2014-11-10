@@ -29,8 +29,4 @@ angular.module('frontendApp')
 			reinitializeData();
 		}
 	};
-	$scope.$on('updateVars', function(){
- 		$scope.vars = FunctionService.getVars();
- 	});
-	$scope.vars = FunctionService.getVars();
 });

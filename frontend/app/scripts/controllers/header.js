@@ -55,6 +55,7 @@ angular.module('frontendApp')
 		$http.get($scope.serverURL+"/users/", {params: { userId: $scope.userId }}).
 		success(function (res) {
 			console.log("SUCCESS LOAD");
+			console.log(res);
 			$scope.loadedData = res;
 			var modalInstance = $modal.open({
 					templateUrl : 'myModalContent.html',
