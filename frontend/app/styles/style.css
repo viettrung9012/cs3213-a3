@@ -441,3 +441,11 @@ input[type=number]::-webkit-outer-spin-button {
 #variable-list{
 	padding-right: 15px;
 }
+
+#sounds{
+padding-right: 15px;
+}
+
+.nav-pills{
+	overflow-y: auto;
+}
