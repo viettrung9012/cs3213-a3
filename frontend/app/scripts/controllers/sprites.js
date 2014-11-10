@@ -23,7 +23,7 @@ angular.module('frontendApp')
  	$scope.$watch(
  		function() {return $scope.totalPlay;},
  		function() {
- 			if($scope.totalPlay <= $scope.list.length) {
+ 			if($scope.totalPlay >= $scope.list.length) {
  				$scope.play = false;
  				$scope.totalPlay = 0;
  			}
