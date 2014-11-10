@@ -81,6 +81,11 @@ angular.module('frontendApp')
 		broadcastSpriteList();
 	}
 
+	var removeSpriteFromList = function(index) {
+		spriteList.splice(index, 1);
+		broadcastSpriteList();
+	}
+
 	var updateSpriteList = function(index, list) {
 		spriteList[index] = list;
 		broadcastSpriteList();
@@ -130,6 +135,8 @@ angular.module('frontendApp')
 		updateSpriteList : updateSpriteList,
 		
 		replaceSpriteList : replaceSpriteList,
+
+		removeSpriteFromList: removeSpriteFromList,
 
 		updateBackground : updateBackground
 	}

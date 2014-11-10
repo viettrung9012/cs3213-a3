@@ -23,6 +23,10 @@ angular.module('frontendApp')
  		FunctionService.updateTabs($scope.alltabs);
  	});
 
+	$scope.removeSprite = function(index) {
+		SpriteService.removeSpriteFromList(index);
+	};
+
 	$scope.log = function () {
 		console.log(JSON.stringify($scope.data));
 		console.log(JSON.stringify(FunctionService.getDisplayFunctionList()));
