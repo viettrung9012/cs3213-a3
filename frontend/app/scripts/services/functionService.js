@@ -24,20 +24,20 @@ angular.module('frontendApp')
 	}
 
 	var functionList = [
-		new functionObject("setX", 0, 500, "#428bca"),
-		new functionObject("setY", 0, 500, "#428bca"),		
-		new functionObject("move", 0, 500, "#428bca"),
-		new functionObject("show", 0, 300, "#ec971f"),
-		new functionObject("hide", 0, 300, "#ec971f"),
-		new functionObject("set costume", 0, 100, "#449d44"),
-		new functionObject("set background", 0, 100, "#449d44"),
-		new functionObject("play sound", 0, 500, "#449d44"),
-		new functionObject("repeat", 0, 100, "#c9302c"),
+		new functionObject("setX", "0", 500, "#428bca"),
+		new functionObject("setY", "0", 500, "#428bca"),		
+		new functionObject("move", "0", 500, "#428bca"),
+		new functionObject("show", "0", 300, "#ec971f"),
+		new functionObject("hide", "0", 300, "#ec971f"),
+		new functionObject("set costume", "0", 100, "#449d44"),
+		new functionObject("set background", "0", 100, "#449d44"),
+		new functionObject("play sound","0", 500, "#449d44"),
+		new functionObject("repeat","0", 100, "#c9302c"),
 		new functionObject("repeat forever", 1000000, 10, "#c9302c"),
-		new functionObject("while", 0, 100, "#c9302c"),
-		new functionObject("if", 0, 100, "#c9302c"),
-		new functionObject("if collision", 0, 100, "#c9302c"),
-		new functionObject("=", 0, 50, "#31b0d5"),
+		new functionObject("while","0", 100, "#c9302c"),
+		new functionObject("if","0", 100, "#c9302c"),
+		new functionObject("if collision","0", 100, "#c9302c"),
+		new functionObject("=","0", 50, "#31b0d5"),
 	];
 	
 	var alltabs = [];

@@ -8,7 +8,13 @@
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-.controller('FunctionListCtrl', function ($scope, FunctionService) {
+.controller('FunctionListCtrl', function ($scope, FunctionService, SpriteService) {
+	$scope.vars = SpriteService.getVariables();
+	
+	$scope.$on('varUpdate', function(){
+		$scope.vars = SpriteService.getVariables();
+	});
+
 	var reinitializeData = function(){
 		$scope.data = JSON.parse(JSON.stringify(FunctionService.getFunctionList()))
 	}

@@ -49,9 +49,12 @@ angular.module('frontendApp')
 
 	var spriteList = [];
 	var background = 0;
+	var varNames = [];
+	var varValues = [];
 
 	var broadcastSpriteList = function() {
 		$rootScope.$broadcast('spriteListUpdate');
+		$rootScope.$broadcast('varUpdate');
 	};
 
 	var addSpriteList = function(sName, sImage, x, y) {
@@ -100,6 +103,20 @@ angular.module('frontendApp')
 		background = backgroundList[0];
 	}
 
+	var updateVariables = function(name, values) {
+		varNames = name;
+		varValues = values;
+		$rootScope.$broadcast('varUpdate');
+	}
+
+	var getVariables = function() {
+		var temp = [];
+		for(var j = 0; j < varNames.length; j++) {
+			temp.push([varNames[j], varValues[j]]);
+		}
+		return temp;
+	}
+
 	return {
 		getOriginalSpriteList : function(){
 			return oSpriteList;
@@ -138,6 +155,10 @@ angular.module('frontendApp')
 
 		removeSpriteFromList: removeSpriteFromList,
 
-		updateBackground : updateBackground
+		updateBackground : updateBackground,
+
+		updateVariables: updateVariables,
+
+		getVariables: getVariables,
 	}
 });

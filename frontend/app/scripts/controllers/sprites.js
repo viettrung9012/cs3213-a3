@@ -350,42 +350,44 @@ angular.module('frontendApp')
 
  	var checkSyntax = function(list, index) {
  		for(var i = 0; i < list.length; i++) {
- 			if (list[i].nodes.length > 0) {
- 				var temp = checkSyntax(list[i].nodes, index);
- 				if (temp[0] == true) {
- 					return temp;
- 				}
- 			}
- 			if(list[i].name.indexOf("if") != -1 || list[i].name == "while" || list[i].name == "=") {
- 				var foo = $scope.evaluate(list[i].expression, index, true);
- 				if(foo.constructor === Array) {
- 					return foo;
- 				}
- 			}
- 			if(list[i].name == "=") {
- 				var lexer = new ExpressionLexer(list[i].expression2);
- 				var arr = [];
- 				var token = lexer.getNextToken();
- 				while(token != "EOL") {
- 					arr.push(token);
- 					token = lexer.getNextToken();
- 				}
- 				if (arr.length != 1 || arr[0] == "ERROR" || !isNaN(arr[0]) || $scope.validOperators.indexOf(arr[0]) != -1) {
- 					var exception = "Invalid assignment at object " + $scope.list[index].name;
- 					return [true, exception];
- 				}
- 			}
- 			if(list[i].initialValue != 0) {
- 				var bar = $scope.evaluate(list[i].initialValue, index, true);
- 				if(bar.constructor === Array) {
- 					return bar;
- 				}
- 			}
- 			if(list[i].degrees != 0) {
- 				var yoo = $scope.evaluate(list[i].initialValue, index, true);
- 				if(yoo.constructor === Array) {
- 					return yoo; 
- 				}
+ 			if(!(list[i].name == "show" || list[i].name == "hide" || list[i].name == "repeat forever" || list[i].name == "if collision")) {
+	 			if (list[i].nodes.length > 0) {
+	 				var temp = checkSyntax(list[i].nodes, index);
+	 				if (temp[0] == true) {
+	 					return temp;
+	 				}
+	 			}
+	 			if(list[i].name.indexOf("if") != -1 || list[i].name == "while" || list[i].name == "=") {
+	 				var foo = $scope.evaluate(list[i].expression, index, true);
+	 				if(foo.constructor === Array) {
+	 					return foo;
+	 				}
+	 			}
+	 			if(list[i].name == "=") {
+	 				var lexer = new ExpressionLexer(list[i].expression2);
+	 				var arr = [];
+	 				var token = lexer.getNextToken();
+	 				while(token != "EOL") {
+	 					arr.push(token);
+	 					token = lexer.getNextToken();
+	 				}
+	 				if (arr.length != 1 || arr[0] == "ERROR" || !isNaN(arr[0]) || $scope.validOperators.indexOf(arr[0]) != -1) {
+	 					var exception = "Invalid assignment at object " + $scope.list[index].name;
+	 					return [true, exception];
+	 				}
+	 			}
+	 			if(list[i].initialValue != 0) {
+	 				var bar = $scope.evaluate(list[i].initialValue, index, true);
+	 				if(bar.constructor === Array) {
+	 					return bar;
+	 				}
+	 			}
+	 			if(list[i].degrees != 0) {
+	 				var yoo = $scope.evaluate(list[i].initialValue, index, true);
+	 				if(yoo.constructor === Array) {
+	 					return yoo; 
+	 				}
+	 			}
  			}
 
  		}
@@ -401,6 +403,7 @@ angular.module('frontendApp')
 				var data = getNext(functionQueue, spriteIndex);
 				if(data != null && $scope.stopPlay == false) {
 					runDataCommands(spriteIndex, data);
+					SpriteService.updateVariables($scope.varList, $scope.varValue);
 					doActions(data.delay);
 				} else {
 					$scope.totalPlay++;
