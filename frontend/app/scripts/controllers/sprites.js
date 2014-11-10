@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('frontendApp')
-  .controller('SpritesCtrl', function ($scope, $timeout, SpriteService, FunctionService) {
+  .controller('SpritesCtrl', function ($scope, $timeout, SpriteService, SweetAlert, FunctionService) {
  	$scope.sounds = SpriteService.getSoundList();
  	$scope.delay = 500;
  	$scope.timers = [];
  	$scope.varList = [];
  	$scope.varValue = [];
  	$scope.operators = ["+","-","*","/","|", "%", "&", "=", ">", "<", "!"];
- 	$scope.validOperators = ["+", "-", "*", "/", "%", "||", "&&", "==", ">", ">=", "<", "<=", "!="];
+ 	$scope.validOperators = ["+", "-", "*", "/", "%", "||", "&&", "==", ">", ">=", "<", "<=", "!=", "!"];
  	$scope.stopPlay = false;
  	$scope.totalPlay = 0;
  	$scope.list = SpriteService.getSpriteList();
@@ -23,7 +23,7 @@ angular.module('frontendApp')
  	$scope.$watch(
  		function() {return $scope.totalPlay;},
  		function() {
- 			if($scope.totalPlay <= $scope.list.length) {
+ 			if($scope.totalPlay >= $scope.list.length) {
  				$scope.play = false;
  				$scope.totalPlay = 0;
  			}
@@ -259,46 +259,47 @@ angular.module('frontendApp')
 	$scope.evaluate = function(expression, index, checkSyntax) {
 		var lexemes = new ExpressionLexer(expression);
 		var token = lexemes.getNextToken();
+		//var previousToken == null;
 		var exp = "";
 		while(token !== "EOL") {
 			if(token === "ERROR") {
 				exp = "ERROR";
 				break;
-			}else if(!isNaN(token)) {
-				exp += token;
-			} else if ($scope.validOperators.indexOf(token) != -1) {
-				exp += token;
+			}else if(!isNaN(token) || token == "(" || token == ")") {
+				exp = exp + " " + token;
+			}else if ($scope.validOperators.indexOf(token) != -1) {
+				exp = exp + " " + token;
 			} else if (token === "posX" || token === "positionX") {
-				exp += parseInt($scope.list[index].x).toString();
+				exp = exp + " " + parseInt($scope.list[index].x).toString();
 			} else if (token === "posY" || token === "positionY") {
-				exp += parseInt($scope.list[index].y).toString();
+				exp = exp + " " + parseInt($scope.list[index].y).toString();
 			} else if (token === "true" || token === "false") {
-				exp += token;
+				exp = exp + " " + token;
 			} else {
 				if($scope.varList.indexOf(token) != -1) {
-					exp += $scope.varValue[$scope.varList.indexOf(token)];
+					exp = exp + " " + $scope.varValue[$scope.varList.indexOf(token)];
 				} else {
 					if (checkSyntax == false) {
 						$scope.varList.push(token);
 						$scope.varValue.push(0);
 					}
-					exp += 0;
+					exp = exp + " " + " 0";
 				}
 			}
+			//previousToken == token;
 			token = lexemes.getNextToken();
 		}
-
+		console.log("EXP:" + exp);
 		if(exp === "ERROR" && checkSyntax === true) {
 			var error = "Syntax Error in expression \"" + expression + "\" of " + $scope.list[index].name;
+			console.log(error);
 			throw  error;
 		}
 		try {
 			return eval(exp);
 		} catch (e) {
-			if(e instanceof SyntaxError) {
-				var error = "Syntax Error in expression \"" + expression + "\" of " + $scope.list[index].name;
-				throw  error;
-			}
+			var error = "Syntax Error in expression \"" + expression + "\" of " + $scope.list[index].name;
+			return [true, error];
 		}
  	}
 
@@ -329,11 +330,54 @@ angular.module('frontendApp')
  	
 
  	$scope.runCommands = function() {
- 		$scope.totalPlay = 0;
- 		$scope.stopPlay = false;
+ 		var temp;
  		for(var i = 0; i < $scope.list.length; i++) {
- 			$scope.executeFunctions(i);
+ 			temp = checkSyntax($scope.list[i].data, i);
+ 			if(temp[0] === true) break;
  		}
+ 		if(temp[0] === false) {
+	 		$scope.totalPlay = 0;
+	 		$scope.stopPlay = false;
+	 		for(var i = 0; i < $scope.list.length; i++) {
+	 			$scope.executeFunctions(i);
+	 		}
+ 		} else {
+ 			$scope.stop();
+ 			//alert(temp[1]);
+ 			SweetAlert.swal("Oops!", temp[1], "error");
+ 		}
+ 	}
+
+ 	var checkSyntax = function(list, index) {
+ 		for(var i = 0; i < list.length; i++) {
+ 			if (list[i].nodes.length > 0) {
+ 				var temp = checkSyntax(list[i].nodes, index);
+ 				if (temp[0] == true) {
+ 					return temp;
+ 				}
+ 			}
+ 			if(list[i].name.indexOf("if") != -1 || list[i].name == "while" || list[i].name == "=") {
+ 				var foo = $scope.evaluate(list[i].expression, index, true);
+ 				if(foo.constructor === Array) {
+ 					return foo;
+ 				}
+ 			}
+ 			if(list[i].name == "=") {
+ 				var lexer = new ExpressionLexer(list[i].expression2);
+ 				var arr = [];
+ 				var token = lexer.getNextToken();
+ 				while(token != "EOL") {
+ 					arr.push(token);
+ 					token = lexer.getNextToken();
+ 				}
+ 				if (arr.length != 1 || arr[0] == "ERROR" || !isNaN(arr[0]) || $scope.validOperators.indexOf(arr[0]) != -1) {
+ 					var exception = "Invalid assignment at object " + $scope.list[index].name;
+ 					return [true, exception];
+ 				}
+ 			}
+ 		}
+
+ 		return [false];
  	}
 
 	$scope.executeFunctions = function(spriteIndex) {
