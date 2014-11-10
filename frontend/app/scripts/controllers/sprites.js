@@ -270,6 +270,10 @@ angular.module('frontendApp')
 			}else if ($scope.validOperators.indexOf(token) != -1) {
 				exp = exp + token;
 			} else if (token === "posX" || token === "positionX") {
+				console.log(expression);
+				console.log(index);
+				console.log($scope.list);
+				console.log($scope.list[index]);
 				exp = exp + " " + parseInt($scope.list[index].x).toString();
 			} else if (token === "posY" || token === "positionY") {
 				exp = exp + " " + parseInt($scope.list[index].y).toString();
@@ -415,24 +419,25 @@ angular.module('frontendApp')
 	}
 
  	var runDataCommands = function(index, data) {
+
  		if (data.name == "setX") {
- 			commandSetX(index, $scope.evaluate(data.value));
+ 			commandSetX(index, $scope.evaluate(data.value, index, false));
  		} else if (data.name == "setY") {
- 			commandSetY(index, $scope.evaluate(data.value));
+ 			commandSetY(index, $scope.evaluate(data.value, index, false));
  		} else if (data.name == "show") {
  			commandShow(index);
  		} else if (data.name == "hide") {
  			commandHide(index);
  		} else if (data.name == "move") {
- 			commandMove(index, $scope.evaluate(data.value), $scope.evaluate(data.degrees));
+ 			commandMove(index, $scope.evaluate(data.value, index, false), $scope.evaluate(data.degrees, index, false));
  		} else if (data.name == "set costume") {
- 			commandChangeCostume(index, $scope.evaluate(data.value));
+ 			commandChangeCostume(index, $scope.evaluate(data.value, index, false));
  		} else if (data.name == "set background") {
- 			commandChangeBackground($scope.evaluate(data.value));
+ 			commandChangeBackground($scope.evaluate(data.value, index, false));
  		} else if (data.name == "=") {
  			commandAssign(index, data.expression2, data.expression);
  		} else if (data.name == 'play sound') {
- 			commandPlaySound($scope.evaluate(data.value));
+ 			commandPlaySound($scope.evaluate(data.value, index, false));
  		} 
  		SpriteService.updateSpriteList(index, $scope.list[index]);
  	}
