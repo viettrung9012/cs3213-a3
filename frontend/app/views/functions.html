@@ -27,7 +27,7 @@
 <form name="myForm">
 <ul class="function-display">
 <li ng-repeat="data in alltabs" ui-tree="treeOptions" id="tree-root">
-	<div ng-attr-class="my-label {{($index==activeIndex) && 'my-active-label'}}" ng-click="setActive($index)">{{data.name}}
+	<div ng-attr-class="my-label {{($index==activeIndex) && 'my-active-label'}}" ng-click="setActive($index)">{{data.name}} (posX: {{data.x}}, posY: {{data.y}})
          <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="removeSprite($index)"><span class="glyphicon glyphicon-remove"></span></a>
     </div>
     <ol ui-tree-nodes="" ng-model="data.data">

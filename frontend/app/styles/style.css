@@ -251,7 +251,7 @@ input[type=number]::-webkit-outer-spin-button {
 .my-label{
 	position: relative;
 	display: block;
-	width: 150px;
+	width: 275px;
 	margin-right: 125px;
 	margin-top: 5px;
 	margin-left: 0px;
@@ -443,7 +443,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 #sounds{
-padding-right: 15px;
+	padding-right: 15px;
 }
 
 .nav-pills{

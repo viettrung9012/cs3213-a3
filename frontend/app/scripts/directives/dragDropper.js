@@ -15,8 +15,8 @@ angular.module('frontendApp')
       element.draggable({
           drag: function() {
             scope.$apply(function read() {
-              scope.model.x = element.css('left');
-              scope.model.y = element.css('top');
+              scope.model.x = parseInt(element.css('left'));
+              scope.model.y = parseInt(element.css('top'));
             });
           }
       });
