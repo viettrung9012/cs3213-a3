@@ -268,7 +268,7 @@ angular.module('frontendApp')
 			}else if(!isNaN(token) || token == "(" || token == ")") {
 				exp = exp + " " + token;
 			}else if ($scope.validOperators.indexOf(token) != -1) {
-				exp = exp + " " + token;
+				exp = exp + token;
 			} else if (token === "posX" || token === "positionX") {
 				exp = exp + " " + parseInt($scope.list[index].x).toString();
 			} else if (token === "posY" || token === "positionY") {
@@ -289,13 +289,13 @@ angular.module('frontendApp')
 			//previousToken == token;
 			token = lexemes.getNextToken();
 		}
-		console.log("EXP:" + exp);
+		//console.log("EXP:" + exp);
 		if(exp === "ERROR" && checkSyntax === true) {
 			var error = "Syntax Error in expression \"" + expression + "\" of " + $scope.list[index].name;
-			console.log(error);
-			throw  error;
+			return [true, error];
 		}
 		try {
+			//console.log(eval(exp));
 			return eval(exp);
 		} catch (e) {
 			var error = "Syntax Error in expression \"" + expression + "\" of " + $scope.list[index].name;
@@ -375,6 +375,19 @@ angular.module('frontendApp')
  					return [true, exception];
  				}
  			}
+ 			if(list[i].initialValue != 0) {
+ 				var bar = $scope.evaluate(list[i].initialValue, index, true);
+ 				if(bar.constructor === Array) {
+ 					return bar;
+ 				}
+ 			}
+ 			if(list[i].degrees != 0) {
+ 				var yoo = $scope.evaluate(list[i].initialValue, index, true);
+ 				if(yoo.constructor === Array) {
+ 					return yoo; 
+ 				}
+ 			}
+
  		}
 
  		return [false];
@@ -400,26 +413,24 @@ angular.module('frontendApp')
 
  	var runDataCommands = function(index, data) {
  		if (data.name == "setX") {
- 			commandSetX(index, data.value);
+ 			commandSetX(index, $scope.evaluate(data.value));
  		} else if (data.name == "setY") {
- 			commandSetY(index, data.value);
+ 			commandSetY(index, $scope.evaluate(data.value));
  		} else if (data.name == "show") {
  			commandShow(index);
  		} else if (data.name == "hide") {
  			commandHide(index);
  		} else if (data.name == "move") {
- 			commandMove(index, data.value, data.degrees);
+ 			commandMove(index, $scope.evaluate(data.value), $scope.evaluate(data.degrees));
  		} else if (data.name == "set costume") {
- 			commandChangeCostume(index, data.value);
+ 			commandChangeCostume(index, $scope.evaluate(data.value));
  		} else if (data.name == "set background") {
- 			commandChangeBackground(data.value);
+ 			commandChangeBackground($scope.evaluate(data.value));
  		} else if (data.name == "=") {
  			commandAssign(index, data.expression2, data.expression);
  		} else if (data.name == 'play sound') {
- 			commandPlaySound(data.value);
- 		} else if (data.name == "stop") {
-
- 		}
+ 			commandPlaySound($scope.evaluate(data.value));
+ 		} 
  		SpriteService.updateSpriteList(index, $scope.list[index]);
  	}
 
@@ -440,22 +451,34 @@ angular.module('frontendApp')
  	}
 
  	var commandChangeCostume = function(index, value) {
- 		$scope.list[index].costume = SpriteService.getCostumeList()[value].image;
+ 		if(!(value < SpriteService.getCostumeList().length && value >= 0)) {
+ 			value = Math.floor(Math.random() * SpriteService.getCostumeList().length);
+ 		}
+ 		$scope.list[index].costume = SpriteService.getCostumeList()[value].image; 
  	}
 
  	var commandPlaySound = function(value) {
+ 		if(!(value < $scope.sounds.length && value >= 0)) {
+	 		value = Math.floor(Math.random() * $scope.sounds.length);
+ 		}
  		var audio = new Audio($scope.sounds[value].image);
  		audio.play();
  	}
 
  	var commandAssign = function(index, op1, op2) {
  		var temp = $scope.evaluate(op2, index, false);
- 		if($scope.varList.indexOf(op1) != -1) {
- 			var i = $scope.varList.indexOf(op1);
- 			$scope.varValue[i] = temp;
- 		} else {
- 			$scope.varList.push(op1);
- 			$scope.varValue.push(temp);
+ 		if (op1 === "posX" || op1 === "positionX") {
+ 			$scope.list[index].x = temp;
+ 		} else if (op1 === "posY" || op1 === "positionY") {
+ 			$scope.list[index].y = temp;
+ 		} else{
+	 		if($scope.varList.indexOf(op1) != -1) {
+	 			var i = $scope.varList.indexOf(op1);
+	 			$scope.varValue[i] = temp;
+	 		} else {
+	 			$scope.varList.push(op1);
+	 			$scope.varValue.push(temp);
+	 		}
  		}
  	}
 
@@ -481,6 +504,9 @@ angular.module('frontendApp')
  	}
 
  	var commandChangeBackground = function(value) {
+ 		if(!(value < SpriteService.getBackgroundList().length && value >= 0)) {
+ 			value = Math.floor(Math.random()*SpriteService.getBackgroundList().length);
+ 		}
  		SpriteService.updateBackground(value);
  	}
 
